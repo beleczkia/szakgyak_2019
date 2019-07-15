@@ -1,1 +1,1 @@
-# szakgyak_2019
+# Szakmai gyakorlat 2019
