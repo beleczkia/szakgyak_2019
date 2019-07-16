@@ -1,9 +1,9 @@
-#Front-end megoldás - _Angular_
+# Front-end megoldás - _Angular_
 
-##Röviden a projektről
+## Röviden a projektről
 A weboldal egy táblázatot valamint egy grafikont tartalmaz, melyek az **SAP HANA** adatbázisból nyerik ki a megjelenített információkat **OData** használatával.
 
-##Függőségek
+## Függőségek
 
 A függőségek visszaállíthatóak például az [alábbi](https://www.npmjs.com/package/dependency-check) csomag használatával, az alábbi módon:
 
