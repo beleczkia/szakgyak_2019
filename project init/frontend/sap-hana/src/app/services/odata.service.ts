@@ -6,150 +6,121 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OdataService {
-  configUrl: string = '/hana/tarsasag.xsodata/';
-  defaultUrl: string = "tarsasag?$filter=ASZ_EVE eq " +
-                       2010 + 
-                       " and regio eq 'Dél-Alföld régió'";
-  
-  areaUrl: string = "";
-  areaSubject: BehaviorSubject<string> = 
-    new BehaviorSubject<string>(this.areaUrl);
+  private _year       : number = 2010;
+  private _configUrl  : string = '/hana/tarsasag.xsodata/';
+  private _defaultUrl : string = `tarsasag?$filter=ASZ_EVE eq ${this._year} and regio eq 'Dél-Alföld régió'`;
+  private _areaUrl    : string = null
+  private _regionName : string = "Dél-Alföld régió";
+  private _countyName : string = null;
+  private _cityName   : string = null;
 
-  regionName: string = "Dél-Alföld régió";
-  countyName: string = "";
-  cityName: string = "";
+  private _areaSubject: BehaviorSubject<string> = 
+    new BehaviorSubject<string>(this._areaUrl);
 
-  regionSubject: BehaviorSubject<string> = 
+  private _regionSubject: BehaviorSubject<string> = 
     new BehaviorSubject<string>("Dél-Alföld régió");
-  countySubject: BehaviorSubject<string> = 
+
+  private _countySubject: BehaviorSubject<string> = 
     new BehaviorSubject<string>("Bács-Kiskun");
 
-  yr: number = 2010;
-  yrSubject: BehaviorSubject<number> = new BehaviorSubject<number>(2010);
+  private _yearSubject: BehaviorSubject<number> = 
+    new BehaviorSubject<number>(2010);
 
-  mapRegions: Record<string, string[]> = {
-    "Dél-Alföld régió"         : ["Bács-Kiskun", 
-                                  "Békés", 
-                                  "Csongrád"],
-    "Dél-Dunántúl régió"       : ["Baranya",
-                                  "Somogy",
-                                  "Tolna"],
-    "Közép-Dunántúl régió"     : ["Fejér",
-                                  "Komárom-Esztergom",
-                                  "Veszprém"],
-    "Közép-Magyarország régió" : ["Budapest", 
-                                  "Pest"],
-    "Nyugat-Dunántúl régió"    : ["Győr-Moson-Sopron",
-                                  "Vas",
-                                  "Zala"],
-    "Észak-Alföld régió"       : ["Hajdú-Bihar",
-                                  "Jász-Nagykun-Szolnok",
-                                  "Szabolcs-Szatmár-Bereg"],
-    "Észak-Magyarország régió" : ["Borsod-Abaúj-Zemplén",
-                                  "Heves",
-                                  "Nógrád"],
-  };
+  constructor(private http: HttpClient) {}
 
-  mapCounties: Record<string, string> = {
-    "Bács-Kiskun"            : "path10",
-    "Csongrád"               : "path12",
-    "Győr-Moson-Sopron"      : "polygon16",
-    "Heves"                  : "polygon18",
-    "Komárom-Esztergom"      : "polygon20",
-    "Hajdú-Bihar"            : "polygon22",
-    "Jász-Nagykun-Szolnok"   : "polygon24",
-    "Veszprém"               : "polygon26",
-    "Vas"                    : "polygon28",
-    "Budapest"               : "polygon30",
-    "Fejér"                  : "polygon32",
-    "Békés"                  : "polygon34",
-    "Somogy"                 : "polygon36",
-    "Zala"                   : "polygon38",
-    "Tolna"                  : "polygon40",
-    "Baranya"                : "polygon42",
-    "Nógrád"                 : "polygon44",
-    "Pest"                   : "path46",
-    "Borsod-Abaúj-Zemplén"   : "polygon48",
-    "Szabolcs-Szatmár-Bereg" : "polygon50"
-  };
-   
-  constructor(private http: HttpClient) { }
-
-  getYr(): Observable<number> {
-    return this.yrSubject.asObservable();
+  getDefaultUrl(): string {
+    return this._defaultUrl;
   }
 
-  setYr(n): void {
-    this.yr = n;
-    this.yrSubject.next(n);
+  getYear(): Observable<number> {
+    return this._yearSubject.asObservable();
+  }
+
+  setYear(n): void {
+    this._year = n;
+    this._yearSubject.next(n);
   }
 
   getRegionSubject(): Observable<string> {
-    return this.regionSubject.asObservable();
+    return this._regionSubject.asObservable();
+  }
+
+  getRegionName(): string {
+    return this._regionName;
   }
 
   setRegionName(name: string): void {
-    this.regionName = name;
-    this.regionSubject.next(this.regionName);
-    this.countyName = "";
-    this.cityName = "";
+    this._regionName = name;
+    this._regionSubject.next(this._regionName);
+    this._countyName = null;
+    this._cityName = null;
     this.calculateAreaUrl();
-    this.areaSubject.next(this.areaUrl);
+    this._areaSubject.next(this._areaUrl);
   }
 
   getCountySubject(): Observable<string> {
-    return this.countySubject.asObservable();
+    return this._countySubject.asObservable();
+  }
+
+  getCountyName(): string {
+    return this._countyName;
   }
 
   setCountyName(name: string): void {
-    this.countyName = name;
-    this.countySubject.next(this.countyName);
+    this._cityName = null;
+    this._countyName = name;
+    this._countySubject.next(this._countyName);
     this.calculateAreaUrl();
-    this.areaSubject.next(this.areaUrl);
+    this._areaSubject.next(this._areaUrl);
+  }
+
+  getCityName(): string {
+    return this._cityName;
   }
 
   setCityName(name: string): void {
-    this.cityName = name;
+    this._cityName = name;
     this.calculateAreaUrl();
-    this.areaSubject.next(this.areaUrl);
+    this._areaSubject.next(this._areaUrl);
   }
 
-  calculateAreaUrl(): void {
-    if (this.countyName === "") {
-      this.areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this.yr}` + 
-                     ` and regio eq '${this.regionName}'`;
-    } else if (this.cityName === "") {
-      this.areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this.yr}` + 
-                     ` and megye eq '${this.countyName}'`;
+  /* Calculate the smallest selected area */
+  private calculateAreaUrl(): void {
+    if (this._countyName === null) {
+      this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
+                     ` and regio eq '${this._regionName}'`;
+    } else if (this._cityName === null) {
+      this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
+                     ` and megye eq '${this._countyName}'`;
     } else {
-      this.areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this.yr}` + 
-                     ` and telepules eq '${this.cityName}'`;
+      this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
+                     ` and telepules eq '${this._cityName}'`;
     }
   }
 
-  getAreaUrl(): Observable<string> {
-    return this.areaSubject.asObservable();
+  getAreaSubject(): Observable<string> {
+    return this._areaSubject.asObservable();
   }
 
   getData(params) {
-    console.log(this.configUrl + params);
-    return this.http.get(this.configUrl + params);
+    console.log(this._configUrl + params);
+    return this.http.get(this._configUrl + params);
   }
 
   getRegionData() {
     return this.getData(
-      `REGIONS?$filter=EV eq ${this.yr}&$format=json`);
+      `REGIONS?$filter=EV eq ${this._year}&$format=json`);
   }
 
   getCountyData(name: string) {
     return this.getData(
-      `COUNTIES?$filter=EV eq ${this.yr} and REGIO eq '${name}'`);
-    this.countyName = name;
+      `COUNTIES?$filter=EV eq ${this._year} and REGIO eq '${name}'`);
+    this._countyName = name;
   }
 
   getCityData(name: string) {
     return this.getData(
-      `CITIES?$filter=EV eq ${this.yr} and MEGYE eq '${name}'`);
-    this.cityName = name;
+      `CITIES?$filter=EV eq ${this._year} and MEGYE eq '${name}'`);
+    this._cityName = name;
   }
 }

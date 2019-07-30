@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { OdataService }     from './services/odata.service';
 import { DiagramComponent } from './diagram/diagram.component';
 import { TableComponent }   from './table/table.component';
-import { AppRoutingModule } from './app-routing.module';
 import { MapComponent } from './map/map.component';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { MapComponent } from './map/map.component';
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		AppRoutingModule
 	],
 	providers: [OdataService],
 	bootstrap: [AppComponent]

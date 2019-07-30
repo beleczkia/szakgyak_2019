@@ -15,26 +15,21 @@ export class DiagramComponent implements OnInit {
 
   ngOnInit() {
     this.odata
-      .getYr()
+      .getYear()
       .subscribe(n => { 
         this.selectedYear = n;
-        this.refreshData(this.selectedYear, this.odata.defaultUrl);
+        this.refreshData(this.selectedYear, this.odata.getDefaultUrl());
       });
     this.odata
-      .getAreaUrl()
+      .getAreaSubject()
       .subscribe(url => {
-        if (url != "") {
+        if (url != null) {
           this.refreshData(this.selectedYear, url);
         }
       });
   }
 
   refreshData(n: number, url: string): void {
-    if (url === "") {
-      url = "tarsasag?$filter=ASZ_EVE eq " + 
-            this.selectedYear +
-            " and regio eq 'Dél-Alföld régió'";
-    }
     this.odata
       .getData(url)
       .subscribe((res: any) => {
@@ -49,13 +44,13 @@ export class DiagramComponent implements OnInit {
       arr.push({label: item.TARS_ROV_NEV,y: item.JEGYZ_TOKE_ERT_HUF/1000000});
     });
 
-    let name = "";
-    if (this.odata.countyName === "") {
-      name = this.odata.regionName;
-    } else if (this.odata.cityName === "") {
-      name = this.odata.countyName;
+    let name: string;
+    if (this.odata.getCountyName() === null) {
+      name = this.odata.getRegionName();
+    } else if (this.odata.getCityName() === null) {
+      name = this.odata.getCountyName();
     } else {
-      name = this.odata.cityName;
+      name = this.odata.getCityName();
     }
 
     let chart = new CanvasJS.Chart("chartContainer", {

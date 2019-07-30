@@ -10,6 +10,51 @@ export class MapComponent implements OnInit {
   regionName: string;
   countyName: string;
 
+  mapRegions: Record<string, string[]> = {
+    "Dél-Alföld régió"         : ["Bács-Kiskun", 
+                                  "Békés", 
+                                  "Csongrád"],
+    "Dél-Dunántúl régió"       : ["Baranya",
+                                  "Somogy",
+                                  "Tolna"],
+    "Közép-Dunántúl régió"     : ["Fejér",
+                                  "Komárom-Esztergom",
+                                  "Veszprém"],
+    "Közép-Magyarország régió" : ["Budapest", 
+                                  "Pest"],
+    "Nyugat-Dunántúl régió"    : ["Győr-Moson-Sopron",
+                                  "Vas",
+                                  "Zala"],
+    "Észak-Alföld régió"       : ["Hajdú-Bihar",
+                                  "Jász-Nagykun-Szolnok",
+                                  "Szabolcs-Szatmár-Bereg"],
+    "Észak-Magyarország régió" : ["Borsod-Abaúj-Zemplén",
+                                  "Heves",
+                                  "Nógrád"],
+  };
+
+  mapCounties: Record<string, string> = {
+    "Bács-Kiskun"            : "path10",
+    "Csongrád"               : "path12",
+    "Győr-Moson-Sopron"      : "polygon16",
+    "Heves"                  : "polygon18",
+    "Komárom-Esztergom"      : "polygon20",
+    "Hajdú-Bihar"            : "polygon22",
+    "Jász-Nagykun-Szolnok"   : "polygon24",
+    "Veszprém"               : "polygon26",
+    "Vas"                    : "polygon28",
+    "Budapest"               : "polygon30",
+    "Fejér"                  : "polygon32",
+    "Békés"                  : "polygon34",
+    "Somogy"                 : "polygon36",
+    "Zala"                   : "polygon38",
+    "Tolna"                  : "polygon40",
+    "Baranya"                : "polygon42",
+    "Nógrád"                 : "polygon44",
+    "Pest"                   : "path46",
+    "Borsod-Abaúj-Zemplén"   : "polygon48",
+    "Szabolcs-Szatmár-Bereg" : "polygon50"
+  };
 
   constructor(private odata: OdataService) { }
 
@@ -18,47 +63,43 @@ export class MapComponent implements OnInit {
       .getRegionSubject()
       .subscribe(name => {
         if (this.regionName != null) {
-          let arr = this.odata.mapRegions[this.regionName];
-          for (let i = 0; i < arr.length; i++) {
-            if (arr[i] != null) {
-              let e = this.odata.mapCounties[arr[i]];
-              document
-                .getElementById(e)
-                .classList.remove("active");
-            }
-          }
+          this.deactivateRegion(this.regionName);
         }
         this.regionName = name;
-        this.refreshActiveArea(this.odata.mapRegions[name]);
+        this.activateRegion(name);
       });
     this.odata
       .getCountySubject()
       .subscribe(name => {
         if (this.countyName != null) {
-          document
-            .getElementById(this.odata.mapCounties[this.countyName])
-            .classList.remove("active");
-          let arr = this.odata.mapRegions[this.regionName];
-          for (let i = 0; i < arr.length; i++) {
-            let e = this.odata.mapCounties[arr[i]];
-            document
-              .getElementById(e)
-              .classList.remove("active");
-          }
+          this.deactivateRegion(this.regionName);
+          this.activateCounty(name);
         }
         this.countyName = name;
-        if (name != undefined) {
-          this.refreshActiveArea([name]);
-        }
       });
   } 
-  
-  refreshActiveArea(arr: string[]): void {
+
+  activateCounty(name: string): void {
+    let e = this.mapCounties[name];
+    document.getElementById(e).classList.add("active");
+  }
+
+  deactivateCounty(name: string): void {
+    let e = this.mapCounties[name];
+    document.getElementById(e).classList.remove("active");
+  }
+
+  activateRegion(name: string): void {
+    let arr = this.mapRegions[name];
     for (let i = 0; i < arr.length; i++) {
-      let e = this.odata.mapCounties[arr[i]];
-      document
-        .getElementById(e)
-        .classList.add("active");
+      this.activateCounty(arr[i]);
+    }
+  }
+
+  deactivateRegion(name: string): void {
+    let arr = this.mapRegions[name];
+    for (let i = 0; i < arr.length; i++) {
+      this.deactivateCounty(arr[i]);
     }
   }
 }

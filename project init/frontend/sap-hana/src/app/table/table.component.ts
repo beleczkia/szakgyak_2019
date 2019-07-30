@@ -23,15 +23,13 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.odata
-      .getYr()
+      .getYear()
       .subscribe(n => {
         this.selectedYear = n;
         this.listRegions();   
+        this.selectRegion(this.odata.getRegionName());
       });
-      document
-        .getElementById(this.selectedYear.toString())
-        .classList
-        .add("active");
+      this.activateYearButton(this.selectedYear);
   }
 
   // list every region within Hungary
@@ -65,15 +63,9 @@ export class TableComponent implements OnInit {
   }
 
   yearClicked(n: number) { 
-    document
-      .getElementById(this.selectedYear.toString())
-      .classList
-      .remove("active")
-    this.odata.setYr(n);
-    document
-      .getElementById(n.toString())
-      .classList
-      .add("active");
+    this.odata.setYear(n);
+    this.activateYearButton(n);
+    this.deactivateYearButton(n);
   }
 
   // to highlight the clicked row
@@ -92,5 +84,13 @@ export class TableComponent implements OnInit {
   cityClicked(n: number): void {
     this.selectedCityIndex = n;
     this.odata.setCityName(this.cityData[n].TELEPULES);
+  }
+
+  activateYearButton(n: number): void {
+    document.getElementById(n.toString()).classList.add("active");
+  }
+
+  deactivateYearButton(n: number): void {
+    document.getElementById(n.toString()).classList.remove("active");
   }
 }
