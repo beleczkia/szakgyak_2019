@@ -5,6 +5,12 @@ svg .Land {
 	fill: #f1f1f1;
 }
 
+svg .county:hover {
+	stroke-width: 6;
+	stroke: #000000;
+	fill: #cccccc;
+}
+
 svg .county.active {
 	stroke-width: 6;
 	stroke: #265d8c;

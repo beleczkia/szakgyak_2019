@@ -27,6 +27,27 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
+	// proxies: {
+	//   // "/hana": {
+	//   // 	target: "https://oktnb132.inf.elte.hu:51072",
+	//   // 	secure: false,
+	//   // 	changeOrigin: true,
+	//   // 	pathRewrite: {"^/hana": ""},
+	//   // 	onProxyRes(proxyRes,req,res){
+	//   // 		proxyRes.headers["Access-Control-Allow-Origin"] = "*"
+	//   // 	}	
+	//   // }
+	//   //
+	//   // '/hana': {
+	//   //   'target': 'https://oktnb132.inf.elte.hu:51072',
+	//   //   'secure': false,
+	//   //   'changeOrigin': true,
+	//   //   'pathRewrite': { '^/hana': '' },
+	//   //   onProxyRes(proxyRes, req, res) {
+	//   //     proxyRes.headers["Access-Control-Allow-Origin"] = "*"
+	//   //   }
+	//   // }
+	// }
   });
 };

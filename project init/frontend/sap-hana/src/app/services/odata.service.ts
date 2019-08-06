@@ -6,13 +6,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OdataService {
-  private _year       : number = 2010;
-  private _configUrl  : string = '/hana/tarsasag.xsodata/';
-  private _defaultUrl : string = `tarsasag?$filter=ASZ_EVE eq ${this._year} and regio eq 'Dél-Alföld régió'`;
-  private _areaUrl    : string = null
-  private _regionName : string = "Dél-Alföld régió";
-  private _countyName : string = null;
-  private _cityName   : string = null;
+  private _year        : number = 2010;
+  private _configUrl   : string = "/hana/tarsasag.xsodata/";
+  private _defaultUrl  : string = `tarsasag?$filter=ASZ_EVE eq ${this._year} and regio eq 'Dél-Alföld régió'`;
+  private _areaUrl     : string = null
+  private _regionName  : string = "Dél-Alföld régió";
+  private _countyName  : string = null;
+  private _cityName    : string = null;
+
+  // private _companyName : string = null;
 
   private _areaSubject: BehaviorSubject<string> = 
     new BehaviorSubject<string>(this._areaUrl);
@@ -21,10 +23,53 @@ export class OdataService {
     new BehaviorSubject<string>("Dél-Alföld régió");
 
   private _countySubject: BehaviorSubject<string> = 
-    new BehaviorSubject<string>("Bács-Kiskun");
+    new BehaviorSubject<string>("");
+
+  private _citySubject: BehaviorSubject<string> = 
+    new BehaviorSubject<string>("");
 
   private _yearSubject: BehaviorSubject<number> = 
     new BehaviorSubject<number>(2010);
+
+  // private _regionNames: string[] = [
+  //   "Dél-Alföld régió", 
+  //   "Dél-Dunántúl régió",
+  //   "Közép-Dunántúl régió",
+  //   "Közép-Magyarország régió", 
+  //   "Észak-Alföld régió",
+  //   "Észak-Magyarország régió"
+  // ];
+  //
+  // private _countyNames: string[] = [
+  //   "Bács-Kiskun",
+  //   "Csongrád",
+  //   "Győr-Moson-Sopron",
+  //   "Heves",
+  //   "Komárom-Esztergom",
+  //   "Hajdú-Bihar",
+  //   "Jász-Nagykun-Szolnok",
+  //   "Veszprém",
+  //   "Vas",
+  //   "Budapest",
+  //   "Fejér",
+  //   "Békés",
+  //   "Somogy",
+  //   "Zala",
+  //   "Tolna",
+  //   "Baranya",
+  //   "Nógrád",
+  //   "Pest",
+  //   "Borsod-Abaúj-Zemplén",
+  //   "Szabolcs-Szatmár-Bereg"
+  // ];
+  //
+  // getRegionNames() {
+  //   return this._regionNames;
+  // }
+  //
+  // getCountyNames() {
+  //   return this._countyNames;
+  // }
 
   constructor(private http: HttpClient) {}
 
@@ -80,21 +125,26 @@ export class OdataService {
 
   setCityName(name: string): void {
     this._cityName = name;
+    this._citySubject.next(this._cityName);
     this.calculateAreaUrl();
     this._areaSubject.next(this._areaUrl);
+  }
+
+  getCitySubject(): Observable<string> {
+    return this._citySubject.asObservable();
   }
 
   /* Calculate the smallest selected area */
   private calculateAreaUrl(): void {
     if (this._countyName === null) {
       this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
-                     ` and regio eq '${this._regionName}'`;
+                      ` and regio eq '${this._regionName}'`;
     } else if (this._cityName === null) {
       this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
-                     ` and megye eq '${this._countyName}'`;
+                      ` and megye eq '${this._countyName}'`;
     } else {
       this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
-                     ` and telepules eq '${this._cityName}'`;
+                      ` and telepules eq '${this._cityName}'`;
     }
   }
 
@@ -113,14 +163,38 @@ export class OdataService {
   }
 
   getCountyData(name: string) {
+    this._countyName = name;
     return this.getData(
       `COUNTIES?$filter=EV eq ${this._year} and REGIO eq '${name}'`);
-    this._countyName = name;
   }
 
   getCityData(name: string) {
+    this._cityName = name;
     return this.getData(
       `CITIES?$filter=EV eq ${this._year} and MEGYE eq '${name}'`);
-    this._cityName = name;
+  }
+
+  // TODO: kell?
+  // ez minél több szűkítést ad hozzá 
+  // a lekérdezéshez az alapján, hogy mi nem null
+  getCompanyData() {
+    // this._companyName = name;
+
+    let regionFilter: string = "";
+    let countyFilter: string = "";
+    let cityFilter: string = "";
+
+    if (this._regionName != null) {
+      regionFilter = `regio eq '${this._regionName}' `;
+    }
+    if (this._countyName != null) {
+      countyFilter = `and megye eq '${this._countyName}' `;
+    }
+    if (this._cityName != null) {
+      cityFilter = `and telepules eq '${this._cityName}' `;
+    }
+
+    return this.getData("tarsasag?$filter=" + regionFilter + 
+      countyFilter + cityFilter + "and ASZ_EVE eq " + this._year);
   }
 }
