@@ -7,8 +7,8 @@ import { OdataService } from '../services/odata.service';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  regionName: string;
-  countyName: string;
+  regionName: string = null;
+  countyName: string = null;
 
   mapRegions: Record<string, string[]> = {
     "Dél-Alföld régió"         : ["Bács-Kiskun", 
@@ -62,6 +62,7 @@ export class MapComponent implements OnInit {
     this.odata
       .getRegionSubject()
       .subscribe(name => {
+        // console.log("getRegionSubject: got", name, "this.regionName: ", this.regionName);
         if (this.regionName != null) {
           this.deactivateCounty(this.countyName);
           this.deactivateRegion(this.regionName);
@@ -72,23 +73,37 @@ export class MapComponent implements OnInit {
     this.odata
       .getCountySubject()
       .subscribe(name => {
-        if (this.countyName != null) {
+        if (name != null) { // TODO: miért?
           this.deactivateCounty(this.countyName);
           this.deactivateRegion(this.regionName);
-          this.activateCounty(name);
+          if (name != null) {
+            this.activateCounty(name);
+          } else {
+            console.log("ERR: getCountySubject in map.component.ts; name is null");
+          }
         }
         this.countyName = name;
       });
   } 
 
   activateCounty(name: string): void {
-    let e = this.mapCounties[name];
-    document.getElementById(e).classList.add("active");
+    if (name != null) {
+      // console.log("activateCounty: activated ", name);
+      let e = this.mapCounties[name];
+      document.getElementById(e).classList.add("active");
+    } else {
+      console.log("ERR in map.component.ts at activateCounty: name is null");
+    }
   }
 
   deactivateCounty(name: string): void {
-    let e = this.mapCounties[name];
-    document.getElementById(e).classList.remove("active");
+    if (name != null) {
+      // console.log("deactivateCounty: deactivated ", name);
+      let e = this.mapCounties[name];
+      document.getElementById(e).classList.remove("active");
+    } else {
+      console.log("ERR in map.component.ts at deactivateCounty: name is null");
+    }
   }
 
   activateRegion(name: string): void {

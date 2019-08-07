@@ -72,11 +72,9 @@ export class TableComponent implements OnInit {
       .getCountyData(name)
       .subscribe((res: any) => {
         this.countyData = res.d.results;
-        console.log(`COUNTYDATA = ${this.countyData}`);
       });
     this.odata.setCountyName(null);
     this.cityData = null;
-    // this.companyData = null;
   }
 
   // list every city within the county 
@@ -88,9 +86,7 @@ export class TableComponent implements OnInit {
       .getCityData(name)
       .subscribe((res: any) => {
         this.cityData = res.d.results;
-      console.log(`CITYDATA = ${this.cityData}`);
       });
-    // this.companyData = null;
   }
 
   // list every company within the city,
@@ -98,12 +94,6 @@ export class TableComponent implements OnInit {
   selectCity(name: string, n: number): void {
     this.selectedCityIndex = n;
     this.odata.setCityName(this.cityData[n].TELEPULES);
-    // this.odata
-    //   .getCompanyData(name)
-    //   .subscribe((res: any) => {
-    //     this.companyData = res.d.results;
-    //     console.log(`COMPANYDATA = ${this.companyData}`);
-    //   });
   }
 
   yearClicked(n: number): void { 
@@ -111,31 +101,6 @@ export class TableComponent implements OnInit {
     this.activateYearButton(n);
     this.deactivateYearButton(n);
   }
-
-  // // to highlight the clicked region
-  // regionClicked(n: number): void {
-  //   this.selectedRegionIndex = n;
-  //   this.odata.setRegionName(this.regionData[n].REGIO);
-  // }
-
-  // // to highlight the clicked county
-  // countyClicked(n: number): void {
-  //   this.selectedCountyIndex = n;
-  //   this.odata.setCountyName(this.countyData[n].MEGYE);
-  // }
-
-  // // to highlight the clicked city
-  // cityClicked(n: number): void {
-  //   this.selectedCityIndex = n;
-  //   this.odata.setCityName(this.cityData[n].TELEPULES);
-  // }
-
-  // TODO: kell?
-  // to highlight the clicked company
-  // companyClicked(n: number): void {
-  //   this.selectedCompanyIndex = n;
-  //   this.odata.setCompanyName(this.companyData[n].TARS_ROV_NEV);
-  // }
 
   activateYearButton(n: number): void {
     document.getElementById(n.toString()).classList.add("active");

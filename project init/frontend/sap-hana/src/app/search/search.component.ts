@@ -29,15 +29,13 @@ export class SearchComponent implements OnInit {
         map((event: any) => {
           return event.target.value;
         }),
-        filter(res => res.length > 2),
+        // filter(res => res.length > 2),
         debounceTime(1000),
         distinctUntilChanged())
       .subscribe((text: string) => {
+        let searchArg = `substringof(tolower('${text}'), tolower(TARS_ROV_NEV))`;
         this.odata
-          .getData(
-            "tarsasag?$filter=substringof(tolower(" + 
-            "'" + text + "'" +
-            "),tolower(TARS_ROV_NEV))")
+          .getCompanyData(searchArg)
           .subscribe((res: any) => {
             this.companyData = res.d.results;
             // console.log(`COMPANYDATA = ${this.companyData}`);
@@ -65,7 +63,7 @@ export class SearchComponent implements OnInit {
       .getCompanyData()
       .subscribe((res: any) => {
         this.companyData = res.d.results;
-        console.log(`COMPANYDATA = ${this.companyData}`);
+        // console.log(`COMPANYDATA = ${this.companyData}`);
       })
   }
 

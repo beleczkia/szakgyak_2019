@@ -23,10 +23,10 @@ export class OdataService {
     new BehaviorSubject<string>("Dél-Alföld régió");
 
   private _countySubject: BehaviorSubject<string> = 
-    new BehaviorSubject<string>("");
+    new BehaviorSubject<string>(null);
 
   private _citySubject: BehaviorSubject<string> = 
-    new BehaviorSubject<string>("");
+    new BehaviorSubject<string>(null);
 
   private _yearSubject: BehaviorSubject<number> = 
     new BehaviorSubject<number>(2010);
@@ -71,7 +71,7 @@ export class OdataService {
   //   return this._countyNames;
   // }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getDefaultUrl(): string {
     return this._defaultUrl;
@@ -95,6 +95,7 @@ export class OdataService {
   }
 
   setRegionName(name: string): void {
+    console.log("setRegionName:", name);
     this._regionName = name;
     this._regionSubject.next(this._regionName);
     this._countyName = null;
@@ -112,6 +113,7 @@ export class OdataService {
   }
 
   setCountyName(name: string): void {
+    console.log("setCountyName:", name);
     this._cityName = null;
     this._countyName = name;
     this._countySubject.next(this._countyName);
@@ -124,6 +126,7 @@ export class OdataService {
   }
 
   setCityName(name: string): void {
+    console.log("setCityName:", name);
     this._cityName = name;
     this._citySubject.next(this._cityName);
     this.calculateAreaUrl();
@@ -169,7 +172,6 @@ export class OdataService {
   }
 
   getCityData(name: string) {
-    this._cityName = name;
     return this.getData(
       `CITIES?$filter=EV eq ${this._year} and MEGYE eq '${name}'`);
   }
@@ -177,12 +179,11 @@ export class OdataService {
   // TODO: kell?
   // ez minél több szűkítést ad hozzá 
   // a lekérdezéshez az alapján, hogy mi nem null
-  getCompanyData() {
-    // this._companyName = name;
-
+  getCompanyData(searchArg: string) {
     let regionFilter: string = "";
     let countyFilter: string = "";
     let cityFilter: string = "";
+    let query: string = "";
 
     if (this._regionName != null) {
       regionFilter = `regio eq '${this._regionName}' `;
@@ -194,7 +195,13 @@ export class OdataService {
       cityFilter = `and telepules eq '${this._cityName}' `;
     }
 
-    return this.getData("tarsasag?$filter=" + regionFilter + 
-      countyFilter + cityFilter + "and ASZ_EVE eq " + this._year);
+    query += "tarsasag?$filter=" + regionFilter + 
+      countyFilter + cityFilter + "and ASZ_EVE eq " + this._year;
+
+    if (searchArg != undefined) {
+      query += " and " + searchArg;
+    }
+
+    return this.getData(query);
   }
 }
