@@ -8,8 +8,8 @@ import { OdataService } from '../services/odata.service';
   styleUrls: ['./diagram.component.scss']
 })
 export class DiagramComponent implements OnInit {
-  selectedYear : number = 2010;
-  data         : any    = [];
+  selectedYear: number = 2010;
+  data: any = [];
 
   constructor(private odata: OdataService) { }
 

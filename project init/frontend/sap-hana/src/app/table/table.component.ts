@@ -21,29 +21,7 @@ export class TableComponent implements OnInit {
   selectedCountyIndex : number = 0;
   selectedCityIndex   : number = 0;
 
-  // companyColumn : string = "Társaság neve";
-  // companyName   : string = null;
-  // companyData   : any    = null;
-  // selectedCompanyIndex : number = 0;
-
   constructor(private odata: OdataService) {}
-
-  // // TODO
-  // toggleRegionFilterGroup(event, index): void {
-  //   let element = event.target;
-  //   element.classList.toggle("active");
-  //   if(this.data[index].isActive) {
-  //     this.data[index].isActive = false;
-  //   } else {
-  //     this.data[index].isActive = true;
-  //   }      
-  //   var panel = element.nextElementSibling;
-  //   if (panel.style.maxHeight) {
-  //     panel.style.maxHeight = null;
-  //   } else {
-  //     panel.style.maxHeight = panel.scrollHeight + "px";
-  //   }
-  // }
 
   ngOnInit(): void {
     this.odata
@@ -66,6 +44,9 @@ export class TableComponent implements OnInit {
   // list every county within the region
   // and highlight the selected row
   selectRegion(name: string, n: number): void {
+    this.odata.setCountyName(null);
+    this.odata.setCityName(null);
+    this.cityData = null;
     this.selectedRegionIndex = n;
     this.odata.setRegionName(this.regionData[n].REGIO);
     this.odata
@@ -73,8 +54,6 @@ export class TableComponent implements OnInit {
       .subscribe((res: any) => {
         this.countyData = res.d.results;
       });
-    this.odata.setCountyName(null);
-    this.cityData = null;
   }
 
   // list every city within the county 
@@ -102,10 +81,12 @@ export class TableComponent implements OnInit {
     this.deactivateYearButton(n);
   }
 
+  // TODO: nincs year button
   activateYearButton(n: number): void {
     document.getElementById(n.toString()).classList.add("active");
   }
 
+  // TODO: nincs year button
   deactivateYearButton(n: number): void {
     document.getElementById(n.toString()).classList.remove("active");
   }

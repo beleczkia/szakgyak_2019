@@ -14,8 +14,6 @@ export class OdataService {
   private _countyName  : string = null;
   private _cityName    : string = null;
 
-  // private _companyName : string = null;
-
   private _areaSubject: BehaviorSubject<string> = 
     new BehaviorSubject<string>(this._areaUrl);
 
@@ -31,47 +29,7 @@ export class OdataService {
   private _yearSubject: BehaviorSubject<number> = 
     new BehaviorSubject<number>(2010);
 
-  // private _regionNames: string[] = [
-  //   "Dél-Alföld régió", 
-  //   "Dél-Dunántúl régió",
-  //   "Közép-Dunántúl régió",
-  //   "Közép-Magyarország régió", 
-  //   "Észak-Alföld régió",
-  //   "Észak-Magyarország régió"
-  // ];
-  //
-  // private _countyNames: string[] = [
-  //   "Bács-Kiskun",
-  //   "Csongrád",
-  //   "Győr-Moson-Sopron",
-  //   "Heves",
-  //   "Komárom-Esztergom",
-  //   "Hajdú-Bihar",
-  //   "Jász-Nagykun-Szolnok",
-  //   "Veszprém",
-  //   "Vas",
-  //   "Budapest",
-  //   "Fejér",
-  //   "Békés",
-  //   "Somogy",
-  //   "Zala",
-  //   "Tolna",
-  //   "Baranya",
-  //   "Nógrád",
-  //   "Pest",
-  //   "Borsod-Abaúj-Zemplén",
-  //   "Szabolcs-Szatmár-Bereg"
-  // ];
-  //
-  // getRegionNames() {
-  //   return this._regionNames;
-  // }
-  //
-  // getCountyNames() {
-  //   return this._countyNames;
-  // }
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getDefaultUrl(): string {
     return this._defaultUrl;
@@ -117,8 +75,12 @@ export class OdataService {
     this._cityName = null;
     this._countyName = name;
     this._countySubject.next(this._countyName);
+    // TODO: refaktor
+    let oldUrl = this._areaUrl;
     this.calculateAreaUrl();
-    this._areaSubject.next(this._areaUrl);
+    if (oldUrl != this._areaUrl) {
+      this._areaSubject.next(this._areaUrl);
+    }
   }
 
   getCityName(): string {
@@ -195,7 +157,7 @@ export class OdataService {
       cityFilter = `and telepules eq '${this._cityName}' `;
     }
 
-    query += "tarsasag?$filter=" + regionFilter + 
+    query += "tarsasag?$orderby=TARS_ROV_NEV&$filter=" + regionFilter + 
       countyFilter + cityFilter + "and ASZ_EVE eq " + this._year;
 
     if (searchArg != undefined) {

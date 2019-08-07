@@ -21,8 +21,6 @@ export class SearchComponent implements OnInit {
 
   constructor(private odata: OdataService) { }
 
-  showFilter: boolean = false;
-
   ngOnInit() {
     fromEvent(this.companySearchInput.nativeElement, "keyup")
       .pipe(
@@ -34,6 +32,7 @@ export class SearchComponent implements OnInit {
         distinctUntilChanged())
       .subscribe((text: string) => {
         let searchArg = `substringof(tolower('${text}'), tolower(TARS_ROV_NEV))`;
+        // TODO
         this.odata
           .getCompanyData(searchArg)
           .subscribe((res: any) => {
@@ -44,26 +43,33 @@ export class SearchComponent implements OnInit {
     this.odata
       .getRegionSubject()
       .subscribe(name => {
-        this.refreshResults();
+        if (name != null) {
+          this.refreshResults();
+        }
       })
     this.odata
       .getCountySubject()
       .subscribe(name => {
-        this.refreshResults();
+        if (name != null) {
+          this.refreshResults();
+        }
       })
     this.odata
       .getCitySubject()
       .subscribe(name => {
-        this.refreshResults();
+        if (name != null) {
+          this.refreshResults();
+        }
       })
   }
 
   refreshResults(): void {
+    // TODO
     this.odata
-      .getCompanyData()
+      .getCompanyData(null)
       .subscribe((res: any) => {
         this.companyData = res.d.results;
-        // console.log(`COMPANYDATA = ${this.companyData}`);
+        console.log(`refreshResults lefutott!`);
       })
   }
 
