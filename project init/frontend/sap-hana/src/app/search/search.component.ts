@@ -13,11 +13,13 @@ export class SearchComponent implements OnInit {
   companySearchInput: ElementRef;
   isSearch: boolean = true;
 
-  // TODO
-  // years: number[] = [ 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 ];
   companyData: any = null;
 
-  companyColumns: string[] = ["Név","Régió","Megye","Település"];
+  companyColumns: string[] = ["Adószám", 
+                              "Név", 
+                              "Állapot", 
+                              "Gazdasági forma",
+                              "Jegyzett tőke [HUF]"];
 
   constructor(private odata: OdataService) { }
 
@@ -28,24 +30,20 @@ export class SearchComponent implements OnInit {
           return event.target.value;
         }),
         // filter(res => res.length > 2),
-        debounceTime(1000),
+        debounceTime(300),
         distinctUntilChanged())
       .subscribe((text: string) => {
         let searchArg = `substringof(tolower('${text}'), tolower(TARS_ROV_NEV))`;
-        // TODO
         this.odata
           .getCompanyData(searchArg)
           .subscribe((res: any) => {
             this.companyData = res.d.results;
-            // console.log(`COMPANYDATA = ${this.companyData}`);
           });
       })
     this.odata
       .getRegionSubject()
       .subscribe(name => {
-        if (name != null) {
-          this.refreshResults();
-        }
+        this.refreshResults();
       })
     this.odata
       .getCountySubject()
@@ -64,19 +62,14 @@ export class SearchComponent implements OnInit {
   }
 
   refreshResults(): void {
-    // TODO
     this.odata
       .getCompanyData(null)
       .subscribe((res: any) => {
         this.companyData = res.d.results;
-        console.log(`refreshResults lefutott!`);
       })
   }
 
   selectYear(n: number) {
     this.odata.setYear(n);
   }
-
-  // TODO
-  companyClicked() {}
 }

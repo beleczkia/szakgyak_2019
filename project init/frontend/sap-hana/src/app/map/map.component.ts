@@ -62,18 +62,19 @@ export class MapComponent implements OnInit {
     this.odata
       .getRegionSubject()
       .subscribe(name => {
-        // console.log("getRegionSubject: got", name, "this.regionName: ", this.regionName);
         if (this.regionName != null) {
           this.deactivateCounty(this.countyName);
           this.deactivateRegion(this.regionName);
         }
-        this.regionName = name;
-        this.activateRegion(name);
+        if (name != null) {
+          this.regionName = name;
+          this.activateRegion(name);
+        }
       });
     this.odata
       .getCountySubject()
       .subscribe(name => {
-        if (name != null) { // TODO: miért?
+        if (name != null) {
           this.deactivateCounty(this.countyName);
           this.deactivateRegion(this.regionName);
           if (name != null) {
@@ -88,7 +89,6 @@ export class MapComponent implements OnInit {
 
   activateCounty(name: string): void {
     if (name != null) {
-      // console.log("activateCounty: activated ", name);
       let e = this.mapCounties[name];
       document.getElementById(e).classList.add("active");
     } else {
@@ -98,7 +98,6 @@ export class MapComponent implements OnInit {
 
   deactivateCounty(name: string): void {
     if (name != null) {
-      // console.log("deactivateCounty: deactivated ", name);
       let e = this.mapCounties[name];
       document.getElementById(e).classList.remove("active");
     } else {
@@ -119,60 +118,4 @@ export class MapComponent implements OnInit {
       this.deactivateCounty(arr[i]);
     }
   }
-
-  // countyClicked(event): void {
-  //   // ----------------------------
-  //   // a) mapRegionsből kikeresem, hogy a kattintott megye hol van
-  //   //    ezek után meghívom a table regionClicked metódusát
-  //   //        ekkor kilistázza a megyéket
-  //   //    ezek után meg kell hívni a countyClicked metódust is,
-  //   //    hogy láthassuk a megyében szereplő településeket
-  //   // ----------------------------
-  //   // b) illetve beszínezett megyéknek is más fill hover css kell
-  //   // ----------------------------
-  //   
-  //   // TODO: átnevezni
-  //   // erre semmi szükség, a table-t kell feliratkoztatni a névváltoztatásokra
-  //   // let regionSearch = function (): string {
-  //   //   for (let region in this.mapRegions) {
-  //   //     for (let i = 0; i < region.length; i++) {
-  //   //       if (region[i] === this.countyName) {
-  //   //         return region;
-  //   //       }
-  //   //     }
-  //   //   } 
-  //   // }
-
-  //   let polygon: string = event.target.attributes.id.nodeValue;
-
-  //   for (let county in this.mapCounties) {
-  //     if (this.mapCounties[county] === polygon) {
-  //       this.deactivateRegion(this.regionName);
-  //       this.deactivateCounty(this.countyName);
-
-  //       // this.regionName = regionSearch();
-  //       for (let region in this.mapRegions) {
-  //         // console.log("CIKLUS REGION VALTOZO: " + region);
-  //         for (let i = 0; i < region.length; i++) {
-  //           // console.log("ELAGAZAS FELTETELBEN: " + this.mapRegions[region]);
-  //           if (this.mapRegions[region][i] === county) {
-  //             // console.log("ELAGAZASBA BEMENT: " + county);
-  //             this.regionName = region;
-  //             // console.log("ELAGAZASBAN ERTEKET ADOTT: " + this.regionName);
-  //           }
-  //         }
-  //       } 
-  //       this.odata.setRegionName(this.regionName);
-  //       console.log("REGIO :" + this.regionName)
-
-  //       this.countyName = county;
-  //       this.odata.setCountyName(county);
-  //       console.log("MEGYE :" + this.countyName)
-
-  //       this.activateCounty(county);
-
-  //       return;
-  //     }
-  //   }
-  // }
 }

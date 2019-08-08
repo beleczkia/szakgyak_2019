@@ -17,15 +17,15 @@ export class TableComponent implements OnInit {
   regionName    : string   = null;
   countyName    : string   = null;
   selectedYear  : number   = 2010;
-  selectedRegionIndex : number = 0;
-  selectedCountyIndex : number = 0;
-  selectedCityIndex   : number = 0;
+  selectedRegionIndex : number = null;
+  selectedCountyIndex : number = null;
+  selectedCityIndex   : number = null;
 
   constructor(private odata: OdataService) {}
 
   ngOnInit(): void {
     this.odata
-      .getYear()
+      .getYearSubject()
       .subscribe(n => {
         this.selectedYear = n;
         this.listRegions();   
@@ -44,16 +44,21 @@ export class TableComponent implements OnInit {
   // list every county within the region
   // and highlight the selected row
   selectRegion(name: string, n: number): void {
-    this.odata.setCountyName(null);
-    this.odata.setCityName(null);
-    this.cityData = null;
-    this.selectedRegionIndex = n;
-    this.odata.setRegionName(this.regionData[n].REGIO);
-    this.odata
-      .getCountyData(name)
-      .subscribe((res: any) => {
-        this.countyData = res.d.results;
-      });
+    // reset, if the user deselects the region
+    if (this.selectedRegionIndex === n) {
+      this.resetData();
+    } else {
+      this.odata.setCountyName(null);
+      this.odata.setCityName(null);
+      this.cityData = null;
+      this.selectedRegionIndex = n;
+      this.odata.setRegionName(this.regionData[n].REGIO);
+      this.odata
+        .getCountyData()
+        .subscribe((res: any) => {
+          this.countyData = res.d.results;
+        });
+    }
   }
 
   // list every city within the county 
@@ -75,19 +80,18 @@ export class TableComponent implements OnInit {
     this.odata.setCityName(this.cityData[n].TELEPULES);
   }
 
-  yearClicked(n: number): void { 
+  yearSelected(n: number): void { 
+    console.log(`setYear(${n})`);
     this.odata.setYear(n);
-    this.activateYearButton(n);
-    this.deactivateYearButton(n);
   }
 
-  // TODO: nincs year button
-  activateYearButton(n: number): void {
-    document.getElementById(n.toString()).classList.add("active");
-  }
-
-  // TODO: nincs year button
-  deactivateYearButton(n: number): void {
-    document.getElementById(n.toString()).classList.remove("active");
+  // deselect all options
+  resetData(): void {
+      this.selectedRegionIndex = null;
+      this.selectedCountyIndex = null;
+      this.selectedCityIndex = null;
+      this.countyData = null;
+      this.cityData = null;
+      this.odata.resetData();
   }
 }

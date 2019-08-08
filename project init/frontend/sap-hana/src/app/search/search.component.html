@@ -1,80 +1,3 @@
-<!--
-<button type="button" 
-        class="btn btn-info" 
-        (click)="showFilter = !showFilter">Szűrő</button>
-<div id="filter-group" 
-     *ngIf="showFilter">
-  <div id="year-filter-group">
-    <select (change)="selectYear($event.target.value)">
-      <option *ngFor="let n of years" 
-              value="{{n}}">{{n}}</option>
-    </select>
-  </div>
-  <div id="region-filter-group">
-    <div id="region-filter"
-         *ngFor="let name of regionNames; let i = index">
-      <input type="checkbox" 
-             name="regioCheckbox{{i}}" 
-             value="{{name}}"
-             (click)="listCounties(name)">{{name}}
-    </div>
-  </div>
-  <div id="county-filter-group">
-    <div id="county-filter"
-         *ngFor="let name of countyNames; let i = index">
-      <input type="checkbox" 
-             name="countyCheckbox{{i}}" 
-             value="{{name}}">{{name}}
-    </div>
-  </div>
-</div>
--->
-
-<!--
-<div class="btn-group">
-  <button type="button" 
-          value="2010" 
-          id="2010"
-          (click)="yearClicked($event.target.value)"
-          class="btn btn-primary">2010</button>
-  <button type="button" 
-          value="2011" 
-          id="2011"
-          (click)="yearClicked($event.target.value)"
-          class="btn btn-primary">2011</button>
-  <button type="button" 
-          value="2012" 
-          id="2012"
-          (click)="yearClicked($event.target.value)" 
-          class="btn btn-primary">2012</button>
-  <button type="button" 
-          value="2013" 
-          id="2013"
-          (click)="yearClicked($event.target.value)" 
-          class="btn btn-primary">2013</button>
-  <button type="button" 
-          value="2014" 
-          id="2014"
-          (click)="yearClicked($event.target.value)" 
-          class="btn btn-primary">2014</button>
-  <button type="button" 
-          value="2015" 
-          id="2015"
-          (click)="yearClicked($event.target.value)" 
-          class="btn btn-primary">2015</button>
-  <button type="button" 
-          value="2016" 
-          id="2016"
-          (click)="yearClicked($event.target.value)" 
-          class="btn btn-primary">2016</button>
-  <button type="button" 
-          value="2017" 
-          id="2017"
-          (click)="yearClicked($event.target.value)" 
-          class="btn btn-primary">2017</button>
-</div>
--->
-
 <input type="text" 
        #companySearchInput 
        class="form-control" 
@@ -82,26 +5,25 @@
 
 <!-- company listing -->
 <div id="company-list">
-
-<!-- companies -->
-<div class="table-limiter">
-  <div>
-    <table>
-      <tr class="table-heading">
-        <th>{{companyColumns[0]}}</th>
-        <th>{{companyColumns[1]}}</th>
-        <th>{{companyColumns[2]}}</th>
-        <th>{{companyColumns[3]}}</th>
-      </tr>
-      <tr *ngFor="let e of companyData; let i = index"
-        (click)="companyClicked(i)">
-        <td>{{e.TARS_ROV_NEV}}</td>
-        <td>{{e.regio}}</td>
-        <td>{{e.megye}}</td>
-        <td>{{e.telepules}}</td>
-      </tr>
-    </table>
+  <!-- companies -->
+  <div class="table-limiter">
+    <div>
+      <table>
+        <tr class="table-heading">
+          <th>{{companyColumns[0]}}</th>
+          <th>{{companyColumns[1]}}</th>
+          <th>{{companyColumns[2]}}</th>
+          <th>{{companyColumns[3]}}</th>
+          <th>{{companyColumns[4]}}</th>
+        </tr>
+        <tr *ngFor="let e of companyData; let i = index">
+          <td>{{e.ADOSZAM}}</td>
+          <td>{{e.TARS_ROV_NEV}}</td>
+          <td>{{e.cegall}}</td>
+          <td>{{e.gazd_form}}</td>
+          <td>{{e.JEGYZ_TOKE_ERT_HUF}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
-
 </div>

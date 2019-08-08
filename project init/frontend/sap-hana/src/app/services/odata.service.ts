@@ -8,9 +8,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class OdataService {
   private _year        : number = 2010;
   private _configUrl   : string = "/hana/tarsasag.xsodata/";
-  private _defaultUrl  : string = `tarsasag?$filter=ASZ_EVE eq ${this._year} and regio eq 'Dél-Alföld régió'`;
+  private _defaultUrl  : string = `tarsasag?$filter=ASZ_EVE eq ${this._year}`;
   private _areaUrl     : string = null
-  private _regionName  : string = "Dél-Alföld régió";
+  private _regionName  : string = null;
   private _countyName  : string = null;
   private _cityName    : string = null;
 
@@ -18,7 +18,7 @@ export class OdataService {
     new BehaviorSubject<string>(this._areaUrl);
 
   private _regionSubject: BehaviorSubject<string> = 
-    new BehaviorSubject<string>("Dél-Alföld régió");
+    new BehaviorSubject<string>(null);
 
   private _countySubject: BehaviorSubject<string> = 
     new BehaviorSubject<string>(null);
@@ -31,16 +31,23 @@ export class OdataService {
 
   constructor(private http: HttpClient) {}
 
+  // TODO
+  setAreaUrl(url: string): void {
+    this._areaUrl = url;
+    this._areaSubject.next(url);
+  }
+
   getDefaultUrl(): string {
     return this._defaultUrl;
   }
 
-  getYear(): Observable<number> {
+  getYearSubject(): Observable<number> {
     return this._yearSubject.asObservable();
   }
 
   setYear(n): void {
     this._year = n;
+    this.calculateAreaUrl();
     this._yearSubject.next(n);
   }
 
@@ -75,7 +82,6 @@ export class OdataService {
     this._cityName = null;
     this._countyName = name;
     this._countySubject.next(this._countyName);
-    // TODO: refaktor
     let oldUrl = this._areaUrl;
     this.calculateAreaUrl();
     if (oldUrl != this._areaUrl) {
@@ -91,8 +97,11 @@ export class OdataService {
     console.log("setCityName:", name);
     this._cityName = name;
     this._citySubject.next(this._cityName);
+    let oldUrl = this._areaUrl;
     this.calculateAreaUrl();
-    this._areaSubject.next(this._areaUrl);
+    if (oldUrl != this._areaUrl) {
+      this._areaSubject.next(this._areaUrl);
+    }
   }
 
   getCitySubject(): Observable<string> {
@@ -101,20 +110,26 @@ export class OdataService {
 
   /* Calculate the smallest selected area */
   private calculateAreaUrl(): void {
-    if (this._countyName === null) {
+    if (this._regionName === null) {
+      return;
+    } else if (this._countyName === null) {
       this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
-                      ` and regio eq '${this._regionName}'`;
+        ` and regio eq '${this._regionName}'`;
     } else if (this._cityName === null) {
       this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
-                      ` and megye eq '${this._countyName}'`;
+        ` and megye eq '${this._countyName}'`;
     } else {
       this._areaUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}` + 
-                      ` and telepules eq '${this._cityName}'`;
+        ` and telepules eq '${this._cityName}'`;
     }
   }
 
   getAreaSubject(): Observable<string> {
     return this._areaSubject.asObservable();
+  }
+
+  getAreaUrl(): string { 
+    return this._areaUrl;
   }
 
   getData(params) {
@@ -127,10 +142,9 @@ export class OdataService {
       `REGIONS?$filter=EV eq ${this._year}&$format=json`);
   }
 
-  getCountyData(name: string) {
-    this._countyName = name;
+  getCountyData() {
     return this.getData(
-      `COUNTIES?$filter=EV eq ${this._year} and REGIO eq '${name}'`);
+      `COUNTIES?$filter=EV eq ${this._year} and REGIO eq '${this._regionName}'`);
   }
 
   getCityData(name: string) {
@@ -138,9 +152,7 @@ export class OdataService {
       `CITIES?$filter=EV eq ${this._year} and MEGYE eq '${name}'`);
   }
 
-  // TODO: kell?
-  // ez minél több szűkítést ad hozzá 
-  // a lekérdezéshez az alapján, hogy mi nem null
+  /* Return all companies in the smallest selected area */
   getCompanyData(searchArg: string) {
     let regionFilter: string = "";
     let countyFilter: string = "";
@@ -148,7 +160,7 @@ export class OdataService {
     let query: string = "";
 
     if (this._regionName != null) {
-      regionFilter = `regio eq '${this._regionName}' `;
+      regionFilter = ` and regio eq '${this._regionName}' `;
     }
     if (this._countyName != null) {
       countyFilter = `and megye eq '${this._countyName}' `;
@@ -157,13 +169,21 @@ export class OdataService {
       cityFilter = `and telepules eq '${this._cityName}' `;
     }
 
-    query += "tarsasag?$orderby=TARS_ROV_NEV&$filter=" + regionFilter + 
-      countyFilter + cityFilter + "and ASZ_EVE eq " + this._year;
+    query += "tarsasag?$orderby=TARS_ROV_NEV&$filter=ASZ_EVE eq " + 
+      this._year + regionFilter + countyFilter + cityFilter;
 
     if (searchArg != undefined) {
       query += " and " + searchArg;
     }
 
     return this.getData(query);
+  }
+
+  // deselect all options
+  resetData(): void {
+    this.setCityName(null);
+    this.setCountyName(null);
+    this.setRegionName(null);
+    this.setAreaUrl(null);
   }
 }

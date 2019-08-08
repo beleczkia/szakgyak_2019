@@ -15,10 +15,16 @@ export class DiagramComponent implements OnInit {
 
   ngOnInit() {
     this.odata
-      .getYear()
+      .getYearSubject()
       .subscribe(n => { 
+        console.log("ÉV FRISSÜLT");
         this.selectedYear = n;
-        this.refreshData(this.selectedYear, this.odata.getDefaultUrl());
+        let url = null;
+        if (this.odata.getAreaUrl() != null)
+          url = this.odata.getAreaUrl();
+        else
+          url = this.odata.getDefaultUrl();
+        this.refreshData(this.selectedYear, url); 
       });
     this.odata
       .getAreaSubject()
@@ -45,7 +51,9 @@ export class DiagramComponent implements OnInit {
     });
 
     let name: string;
-    if (this.odata.getCountyName() === null) {
+    if (this.odata.getRegionName() === null) {
+      name = "Magyarország";
+    } else if (this.odata.getCountyName() === null) {
       name = this.odata.getRegionName();
     } else if (this.odata.getCityName() === null) {
       name = this.odata.getCountyName();

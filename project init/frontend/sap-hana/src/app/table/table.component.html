@@ -1,3 +1,15 @@
+<!-- years -->
+<select (change)="yearSelected($event.target.value)">
+  <option value="2010">2010</option>
+  <option value="2011">2011</option>
+  <option value="2012">2012</option>
+  <option value="2013">2013</option>
+  <option value="2014">2014</option>
+  <option value="2015">2015</option>
+  <option value="2016">2016</option>
+  <option value="2017">2017</option>
+</select>
+
 <!-- regions -->
 <table>
   <tr class="table-heading">
@@ -41,7 +53,6 @@
         <th>{{cityColumns[1]}}</th>
         <th>{{cityColumns[2]}}</th>
       </tr>
-      <!-- TODO: selectCity hívódik meg először, és cityClicked csak utána-->
       <tr *ngFor="let e of cityData; let i = index"
         (click)="selectCity(e.TELEPULES, i)"
         [class.active]="i === selectedCityIndex">
