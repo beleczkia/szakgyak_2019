@@ -184,6 +184,8 @@ export class OdataService {
     this.setCityName(null);
     this.setCountyName(null);
     this.setRegionName(null);
-    this.setAreaUrl(null);
+    this.setAreaUrl(this._defaultUrl);
+    // console.log(this._year);
+    console.log(this._areaUrl);
   }
 }

@@ -1,11 +1,5 @@
-select {
-	width: 100%;
-	text-align-last: center;
-}
-
 .table-limiter {
 	overflow-y: scroll;
-	max-height: 200px;
 }
 
 table {
@@ -15,7 +9,6 @@ table {
 	overflow: auto;
 	display: inline-block;
 	position: relative;
-	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-right: 10px;
 	padding-left: 10px;
@@ -25,6 +18,7 @@ th {
 	position: sticky;
 	top: 0;
 	width: 58%;
+	background-color: #f1f1f1;
 }
 
 .table-heading {

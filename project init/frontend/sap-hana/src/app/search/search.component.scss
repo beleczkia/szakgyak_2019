@@ -1,3 +1,4 @@
+/*
 #year-filter-group {
 	float: left;
 	padding-top: 10px;
@@ -5,7 +6,6 @@
 	padding-right: 10px;
 	padding-left: 10px;
 }
-
 #region-filter-group {
 	max-height: 200px;
 	overflow-y: scroll;
@@ -15,7 +15,6 @@
 	padding-right: 10px;
 	padding-left: 10px;
 }
-
 #county-filter-group {
 	max-height: 200px;
 	overflow-y: scroll;
@@ -25,20 +24,18 @@
 	padding-right: 10px;
 	padding-left: 10px;
 }
+*/
 
 .table-limiter {
 	overflow-y: scroll;
-	max-height: 200px;
 }
-
 table {
 	width: 100%;
 	display: block;
-	height: 100%;
+	height: 30vh;
 	overflow: auto;
 	display: inline-block;
 	position: relative;
-	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-right: 10px;
 	padding-left: 10px;
@@ -47,7 +44,8 @@ table {
 th {
 	position: sticky;
 	top: 0;
-	width: 20%;
+	width: 16%;
+	background-color: #f1f1f1;
 }
 
 .table-heading {

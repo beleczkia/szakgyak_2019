@@ -15,10 +15,13 @@ export class SearchComponent implements OnInit {
 
   companyData: any = null;
 
-  companyColumns: string[] = ["Adószám", 
-                              "Név", 
+  searchFilter: string = "TARS_ROV_NEV";
+
+  companyColumns: string[] = ["Név", 
+                              "Cím",
                               "Állapot", 
                               "Gazdasági forma",
+                              "Adószám", 
                               "Jegyzett tőke [HUF]"];
 
   constructor(private odata: OdataService) { }
@@ -33,7 +36,8 @@ export class SearchComponent implements OnInit {
         debounceTime(300),
         distinctUntilChanged())
       .subscribe((text: string) => {
-        let searchArg = `substringof(tolower('${text}'), tolower(TARS_ROV_NEV))`;
+        let searchArg = "substringof(tolower('" + 
+          text + "'), tolower(" + this.searchFilter + "))";
         this.odata
           .getCompanyData(searchArg)
           .subscribe((res: any) => {
@@ -69,7 +73,7 @@ export class SearchComponent implements OnInit {
       })
   }
 
-  selectYear(n: number) {
-    this.odata.setYear(n);
+  filterChanged(str: string): void {
+    this.searchFilter = str;   
   }
 }
