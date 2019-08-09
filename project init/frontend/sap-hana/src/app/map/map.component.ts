@@ -79,8 +79,6 @@ export class MapComponent implements OnInit {
           this.deactivateRegion(this.regionName);
           if (name != null) {
             this.activateCounty(name);
-          } else {
-            console.log("ERR: getCountySubject in map.component.ts; name is null");
           }
         }
         this.countyName = name;
@@ -91,8 +89,6 @@ export class MapComponent implements OnInit {
     if (name != null) {
       let e = this.mapCounties[name];
       document.getElementById(e).classList.add("active");
-    } else {
-      console.log("ERR in map.component.ts at activateCounty: name is null");
     }
   }
 
@@ -100,8 +96,6 @@ export class MapComponent implements OnInit {
     if (name != null) {
       let e = this.mapCounties[name];
       document.getElementById(e).classList.remove("active");
-    } else {
-      console.log("ERR in map.component.ts at deactivateCounty: name is null");
     }
   }
 

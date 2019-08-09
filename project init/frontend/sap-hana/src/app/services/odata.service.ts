@@ -60,7 +60,6 @@ export class OdataService {
   }
 
   setRegionName(name: string): void {
-    console.log("setRegionName:", name);
     this._regionName = name;
     this._regionSubject.next(this._regionName);
     this._countyName = null;
@@ -78,7 +77,6 @@ export class OdataService {
   }
 
   setCountyName(name: string): void {
-    console.log("setCountyName:", name);
     this._cityName = null;
     this._countyName = name;
     this._countySubject.next(this._countyName);
@@ -94,7 +92,6 @@ export class OdataService {
   }
 
   setCityName(name: string): void {
-    console.log("setCityName:", name);
     this._cityName = name;
     this._citySubject.next(this._cityName);
     let oldUrl = this._areaUrl;
@@ -185,7 +182,5 @@ export class OdataService {
     this.setCountyName(null);
     this.setRegionName(null);
     this.setAreaUrl(this._defaultUrl);
-    // console.log(this._year);
-    console.log(this._areaUrl);
   }
 }

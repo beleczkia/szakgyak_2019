@@ -81,7 +81,6 @@ export class TableComponent implements OnInit {
   }
 
   yearSelected(n: number): void { 
-    console.log(`setYear(${n})`);
     this.odata.setYear(n);
   }
 

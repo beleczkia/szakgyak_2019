@@ -17,7 +17,6 @@ export class DiagramComponent implements OnInit {
     this.odata
       .getYearSubject()
       .subscribe(n => { 
-        console.log("ÉV FRISSÜLT");
         this.selectedYear = n;
         let url = null;
         if (this.odata.getAreaUrl() != null)
