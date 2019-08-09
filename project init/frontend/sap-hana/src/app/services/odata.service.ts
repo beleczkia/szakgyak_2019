@@ -37,6 +37,10 @@ export class OdataService {
     this._areaSubject.next(url);
   }
 
+  calculateDefaultAreaUrl(): void {
+    this._defaultUrl = `tarsasag?$filter=ASZ_EVE eq ${this._year}`;
+  }
+
   getDefaultUrl(): string {
     return this._defaultUrl;
   }
@@ -47,6 +51,7 @@ export class OdataService {
 
   setYear(n): void {
     this._year = n;
+    this.calculateDefaultAreaUrl();
     this.calculateAreaUrl();
     this._yearSubject.next(n);
   }
