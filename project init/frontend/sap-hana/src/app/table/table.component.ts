@@ -32,7 +32,7 @@ export class TableComponent implements OnInit {
       });
   }
 
-  // list every region within Hungary
+  /* list every region within Hungary */
   listRegions(): void {
     this.odata
       .getRegionData()
@@ -41,10 +41,10 @@ export class TableComponent implements OnInit {
       });
   }
 
-  // list every county within the region
-  // and highlight the selected row
+  /* list every county within the region
+   * and highlight the selected row */
   selectRegion(name: string, n: number): void {
-    // reset, if the user deselects the region
+    /* reset, if the user deselects the region */
     if (this.selectedRegionIndex === n) {
       this.resetData();
     } else {
@@ -61,8 +61,8 @@ export class TableComponent implements OnInit {
     }
   }
 
-  // list every city within the county 
-  // and highlight the selected row
+  /* list every city within the county 
+   * and highlight the selected row */
   selectCounty(name: string, n: number): void {
     this.selectedCountyIndex = n;
     this.odata.setCountyName(this.countyData[n].MEGYE);
@@ -73,8 +73,8 @@ export class TableComponent implements OnInit {
       });
   }
 
-  // list every company within the city,
-  // and highlight the selected row
+  /* list every company within the city,
+   * and highlight the selected row */
   selectCity(name: string, n: number): void {
     this.selectedCityIndex = n;
     this.odata.setCityName(this.cityData[n].TELEPULES);
@@ -84,7 +84,7 @@ export class TableComponent implements OnInit {
     this.odata.setYear(n);
   }
 
-  // deselect all options
+  /* deselect all options */
   resetData(): void {
       this.selectedRegionIndex = null;
       this.selectedCountyIndex = null;

@@ -32,7 +32,6 @@ export class SearchComponent implements OnInit {
         map((event: any) => {
           return event.target.value;
         }),
-        // filter(res => res.length > 2),
         debounceTime(300),
         distinctUntilChanged())
       .subscribe((text: string) => {

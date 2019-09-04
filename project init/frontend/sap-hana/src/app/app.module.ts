@@ -6,7 +6,7 @@ import { OdataService }     from './services/odata.service';
 import { DiagramComponent } from './diagram/diagram.component';
 import { TableComponent }   from './table/table.component';
 import { MapComponent }     from './map/map.component';
-import { SearchComponent } from './search/search.component';
+import { SearchComponent }  from './search/search.component';
 
 @NgModule({
   declarations: [

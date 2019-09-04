@@ -31,7 +31,6 @@ export class OdataService {
 
   constructor(private http: HttpClient) {}
 
-  // TODO
   setAreaUrl(url: string): void {
     this._areaUrl = url;
     this._areaSubject.next(url);
@@ -181,7 +180,7 @@ export class OdataService {
     return this.getData(query);
   }
 
-  // deselect all options
+  /* Deselect all options */
   resetData(): void {
     this.setCityName(null);
     this.setCountyName(null);
