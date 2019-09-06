@@ -1,0 +1,42 @@
+<!-- search bar -->
+<input type="text" 
+       #companySearchInput 
+       class="form-control" 
+       placeholder="Keresés..." />
+
+<!-- search filters -->
+<div class="custom-dropdown">
+  <select style="width:150px;" 
+          (change)="filterChanged($event.target.value)">
+    <option value="TARS_ROV_NEV">Név szerint</option>
+    <option value="CIM_EGYBEN">Cím szerint</option>
+    <option value="ADOSZAM">Adószám szerint</option>
+  </select>
+</div>
+
+<!-- company listing -->
+<div id="company-list">
+  <!-- companies -->
+  <div class="table-limiter">
+    <div>
+      <table>
+        <tr class="table-heading">
+          <th>{{companyColumns[0]}}</th>
+          <th>{{companyColumns[1]}}</th>
+          <th>{{companyColumns[2]}}</th>
+          <th>{{companyColumns[3]}}</th>
+          <th>{{companyColumns[4]}}</th>
+          <th>{{companyColumns[5]}}</th>
+        </tr>
+        <tr *ngFor="let e of companyData; let i = index">
+          <td>{{e.TARS_ROV_NEV}}</td>
+          <td>{{e.CIM_EGYBEN}}</td>
+          <td>{{e.cegall}}</td>
+          <td>{{e.gazd_form}}</td>
+          <td>{{e.ADOSZAM}}</td>
+          <td>{{e.JEGYZ_TOKE_ERT_HUF}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

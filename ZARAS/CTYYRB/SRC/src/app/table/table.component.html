@@ -1,0 +1,68 @@
+<!-- years -->
+<div class="custom-dropdown">
+  <select style="width: 100px;" 
+          (change)="yearSelected($event.target.value)">
+    <option value="2010">2010</option>
+    <option value="2011">2011</option>
+    <option value="2012">2012</option>
+    <option value="2013">2013</option>
+    <option value="2014">2014</option>
+    <option value="2015">2015</option>
+    <option value="2016">2016</option>
+    <option value="2017">2017</option>
+  </select>
+</div>
+
+<!-- regions -->
+<table>
+  <tr class="table-heading">
+    <th>{{regionColumns[0]}}</th>
+    <th>{{regionColumns[1]}}</th>
+    <th>{{regionColumns[2]}}</th>
+  </tr>
+  <tr *ngFor="let e of regionData; let i = index" 
+    (click)="selectRegion(e.REGIO, i)" 
+    [class.active]="i === selectedRegionIndex">
+    <td>{{e.REGIO.replace(" régió","")}}</td>
+    <td>{{e.ERTEK | number}}</td>
+    <td>{{e.MENNYISEG}}</td>
+  </tr>
+</table>
+
+<!-- counties -->
+<div *ngIf="countyData != null">
+  <table>
+    <tr class="table-heading">
+      <th>{{countyColumns[0]}}</th>
+      <th>{{countyColumns[1]}}</th>
+      <th>{{countyColumns[2]}}</th>
+    </tr>
+    <tr *ngFor="let e of countyData; let i = index"
+      (click)="selectCounty(e.MEGYE, i)" 
+      [class.active]="i === selectedCountyIndex">
+      <td>{{e.MEGYE}}</td>
+      <td>{{e.ERTEK | number}}</td>
+      <td>{{e.MENNYISEG}}</td>
+    </tr>
+  </table>
+</div>
+
+<!-- cities -->
+<div class="table-limiter">
+  <div *ngIf="cityData != null">
+    <table>
+      <tr class="table-heading">
+        <th>{{cityColumns[0]}}</th>
+        <th>{{cityColumns[1]}}</th>
+        <th>{{cityColumns[2]}}</th>
+      </tr>
+      <tr *ngFor="let e of cityData; let i = index"
+        (click)="selectCity(e.TELEPULES, i)"
+        [class.active]="i === selectedCityIndex">
+        <td>{{e.TELEPULES}}</td>
+        <td>{{e.ERTEK | number}}</td>
+        <td>{{e.MENNYISEG}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

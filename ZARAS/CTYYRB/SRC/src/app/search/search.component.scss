@@ -1,0 +1,49 @@
+.table-limiter {
+	overflow-y: scroll;
+}
+table {
+	width: 100%;
+	display: block;
+	height: 30vh;
+	overflow: auto;
+	display: inline-block;
+	position: relative;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+th {
+	position: sticky;
+	top: 0;
+	width: 16%;
+	background-color: #f1f1f1;
+}
+
+.table-heading {
+	position: sticky;
+	top: 0;
+}
+
+.table-heading:hover {
+	color: #000000;
+	background-color: #f1f1f1;
+}
+
+table tr.active {
+	color: #000000;
+	background-color: #cccccc;
+}
+
+td {
+	border: 1px solid #ccc;
+}
+
+tr:hover {
+	color: #f1f1f1;
+	background-color: #337AB7;
+}
+
+button.active {
+	background-color: #265d8c;
+}
