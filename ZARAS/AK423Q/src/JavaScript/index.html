@@ -1,0 +1,1139 @@
+<html>
+	<body>
+		<script>
+			//kezdés : AN INTRODUCTION
+			//vége : DATA TYPES
+			
+			"use strict"
+			
+			/*
+			let message="OMG";
+			document.write(message + "\r");
+			var message2="Shit";
+			document.write(message2 + "\t");
+			*/
+			//technikailag a két változódeklarálás ugyanaz, a var "régimódi"
+			
+			/*
+			const message3="Hello";
+			message3="tegla";
+			alert(message3);
+			*/
+			//konstans változónak értéket adni nem lehet
+			
+			/*
+			document.write("Hello " + message + "\n\n");
+			document.write(typeof true + "\n" + typeof alert + "\n\n");
+			*/
+			//típusok lekérdezése - stringet kapunk
+			
+			/*
+			document.write("6" / "2" + "\n");
+			document.write((7**3)%11 + "\n\n");
+			document.write((0 == false) + "\n" + (0 === "false") + "\n\n");
+			*/
+			//=== - szigorú egyenlőség, konverzió nélkül
+			
+			//var age = prompt("How old are you?", "");
+			//document.write("You are " + age + " years old.\n");
+			//prompt - felugróban várunk szöveges választ a felhasználótól
+			
+			//var isStudent = confirm("Enter the page!");
+			//document.write(isStudent);
+			//confirm - visszajelzést várunk a felhasználótól felugróban ok és mégse gombokkal
+			
+			/*
+			if (age>=0 && age<18) {
+				document.write("Még kiskorú vagy!\n");
+			}
+			else if (age>0 && age<100) {
+				document.write("Már nagykorú vagy.\n");
+			}
+			else {
+				document.write("Te minden bizonnyal halott ember vagy!\n");
+			}
+			*/
+			//if szerkezet
+			
+			/*
+			var eredmeny = 0;
+			while (eredmeny !== 3) {
+				eredmeny = Number(prompt("1+2=?", ""));
+			}
+			*/
+			//while szerkezet
+			
+			/*
+			var eredmeny2;
+			do {
+				eredmeny2 = Number(prompt("4-2=?", ""));
+			} while (eredmeny2 !== 2);
+			*/
+			//do-while szerkezet
+			
+			/*
+			for (var i = 0; ; i+=2) {
+				if (i%7==3) break;
+				if (i%3==1) continue;
+				document.write(i + '\n');
+			}
+			*/
+			//for szerkezet, félbeszakítással, léptetéssel
+			
+			/*
+			var elojel = "-";
+			while (elojel!="0") {
+				elojel=prompt("3*3-9 előjele? (-/0/+)", "");
+				switch(elojel) {
+					case "-":
+						alert("Not -.");
+						break;
+					case "0":
+						alert("You are right.");
+						break;
+					case "+":
+						alert("Not +.");
+						break;
+					default:
+						alert("And why???");
+				}
+			}
+			*/
+			//switch szerkezet
+			
+			/*
+			function muvelet(a=0, b=0) {
+				return a+b+1;
+			}
+			document.write("Eredmeny: " + muvelet(1, 5) + '\n');
+			document.write("Eredmeny: " + muvelet(1) + '\n');
+			document.write("Eredmeny: " + muvelet() + '\n');
+			*/
+			//függvény, paraméterekkel és visszatérési értékkel
+			//függvény meghívása
+			
+			//var sayHi = function(){ alert("Hi!");}
+			//sayHi();sayHi();
+			//működőképes konstrukció!!!
+			
+			/*
+			function muvelet2(a, b) {
+				return b(a);
+			}
+			document.write(muvelet2(5, function(x) {return x*2+1;}) + '\n');
+			*/
+			//szintén működő konstrukció
+			
+			/*
+			var muvelet3 = (arg1, arg2, arg3) => ((arg1+arg2)*arg3);
+			document.write(muvelet3(1, 1, 1) + '\n');
+			*/
+			//függvény újfajta deklarációja
+			
+			/*
+			var user = {
+				name : "Gaben",
+				age : 21,
+				"is Admin" : true,
+			}
+			var key = "is Admin";
+			alert(user[key]);
+			*/
+			//ha az adattag neve csak egyetlen szó, akkor használható
+			// .adattagnév módon is
+			
+			/*
+			var benneVan = ("age" in user);
+			var benneVan2 = ("age " in user);
+			alert(benneVan + '\n' + benneVan2);
+			*/
+			//így kérdezhető lesz, hogy van-e adott nevű adattag
+			
+			/*
+			for (var key in user){
+				document.write(key + " " + user[key] + "\n");
+			}
+			*/
+			//ezzel kiíratjuk az adattagok nevét és értékét
+			
+			/*
+			var codes = {
+				"56" : "német",
+				"70" : "francia",
+				"12" : "lengyel"
+			}
+			for (var code in codes) {
+				alert(codes[code]);
+			}
+			*/
+			//az integer jellegű argumentumoknál rendez
+			
+			/*
+			var user2 = user;
+			user2.name = "Farkas";
+			for (var key in user){
+				alert(key + " " + user[key] + "\n");
+			}
+			*/
+			//objectet csak cím szerint másol, user és user2 egyazon
+			// objektumra mutatnak, user2-ben a módosítás user1-nél is
+			// megjelenik
+			
+			/*
+			function clone(cloning) {
+				if (typeof cloning != "object") {
+					alert("nothing");
+					return null;
+				}
+				var obj = {};
+				for (var key in cloning) {
+					if (typeof key == "object"){
+						obj[key] = clone(cloning[key]);
+					} else {
+						obj[key] = cloning[key];
+					}
+				}
+				return obj;
+			}
+			var user2 = clone(user);
+			user2.name = "Farkas";
+			for (var key in user){
+				alert(key + " " + user[key] + "\n");
+			}
+			*/
+			//érték szerinti másolás, duplikálás
+			
+			/*
+			var user3 = {};
+			var user4 = {
+				"name" : "A BV",
+				"year" : 2000
+			}
+			Object.assign(user3, user, user4);
+			for (var key in user3){
+				alert(key + " " + user3[key] + "\n");
+			}
+			*/
+			//több más object együttes értékadása egynek
+			// ha egyező argumentumnevek vannak, az utolsóban lévő
+			// érték marad meg, a többi elvész
+			// két argumentum esetén technikailag klónozás történik
+			
+			/*
+			var circle = {
+				point : {
+					x : 10,
+					y : 5
+				},
+				radius : 7
+			}
+			var circle2 = clone(circle);
+			circle2.point.y = 6;
+			alert(circle.point.x + "\n" + circle.point.y +
+					"\n" + circle.radius);
+			*/
+			//object in object, ennek megfelelően a clone is
+			// módosítva lett
+			
+			/*
+			var tomb = {};
+			for (var i = 0; i < 10; i++) {
+				tomb[i] = (i * i);
+			}
+			var output = "";
+			for (var key in tomb){
+				output += (key + "^2 : " + tomb[key] + "\n");
+			}
+			alert(output);
+			*/
+			//az object tömbként történő hasznosítása
+			
+			/*
+			var tomb2 = {};
+			for (var i = 0; i < 5; i++) {
+				tomb2[i] = prompt("tomb[" + i + "]=", "");
+			}
+			var output = "";
+			for (var i = 0; i < 5; i++) {
+				output += tomb2[i] + "\n";
+			}
+			alert(output);
+			*/
+			//beolvasás tömbbe
+			
+			/*
+			var tomb3 = {};
+			var input;
+			for (var i = 0; i < 10; i++){
+				input = prompt("halmazba a következőt: ", "");
+				if (!((input + ".") in tomb3)){
+					tomb3[(input+ ".")] = input;
+				}
+			}
+			var output = "";
+			for (var key in tomb3){
+				output += tomb3[key] + " ";
+			}
+			alert(output);
+			*/
+			//alapszintű unordered halmaz, ebből kifolyólag mapként
+			// is használható
+			
+			/*
+			var id1 = Symbol("First ID");
+			var id2 = Symbol("Second ID");
+			alert(id1.toString() + "\n" + id1.description);
+			*/
+			//symbol létrehozása, a toString jelen esetben a következő
+			// eredményt adja: "Symbol(First ID)\nFirst ID"
+			
+			/*
+			let user20 = {
+				name : "Gaben",
+				[age]: 21 -- ez nem akaródzik működni
+			}
+			var id0 = Symbol("First ID");
+			user20[id0] = "ID value 1";
+			for (var key in user20) {
+				alert(key + " " + user20[key]);
+			}
+			*/
+			//a szimbolikus attribútumok nem kerülnek kiírásra, a mi
+			// clone eljárásunk sem fogja a szimbolikus értékeket másolni,
+			// viszont az Object.assign ezt megteszi
+			
+			/*
+			var id50 = Symbol.for("id");
+			var id51 = Symbol.for("id");
+			alert(id50 === id51);
+			*/
+			//azonos nevű szimbólumok
+			
+			/*
+			var user0 = {
+				name : "Gaben",
+				age : 21,
+				udv2() {
+					this.age++;
+					alert(this.age);
+				}
+			}
+			user0.udv = function() {
+				alert("Hello");
+			}
+			user0.udv();
+			user0.udv2();
+			user0.udv2();
+			*/
+			//a user0-nak lehet "tagfüggvénye", kétféleképpen, benne
+			// this kulcsszóval is
+			
+			/*
+			var user00 = { name : "Gaben" };
+			var admin = { name : "Admin" };
+			function udv3(){
+				alert(this.name);
+			}
+			user00.udv = udv3;
+			admin.udv = udv3;
+			user00.udv();
+			admin.udv();
+			*/
+			//a this "külső használhatósága"
+			
+			/*
+			function User(name, age) {
+				//alert(new.target);
+				this.name = name;
+				this.age = age;
+				this.isAdmin = false;
+			}
+			var user = new User("Gaben", 21);
+			var user2 = new User("Paul", 20);
+			//var user3 = User("George", 40); //nem azonos az előzőkkel
+			alert(user.name + "\n" + user.age + "\n" + user.isAdmin);
+			*/
+			//új objektum létrehozása függvénnyel "konstruktorszerűen"
+			
+			/*
+			var str = "Hello";
+			str = str.toUpperCase();
+			alert(str);
+			*/
+			//sztring nagybetűssé alakítása
+			
+			/*
+			var n = 1.2745;
+			alert(n.toFixed(1));
+			*/
+			//kerekítés a paraméternek megfelelő számú tizedesjegyre
+			
+			/*
+			var x = new Number(3);
+			alert(typeof x);
+			*/
+			//így is létrehozható változó, erősen ellenjavallt,
+			// típusa object
+			
+			/*
+			var billion = 2e-4;
+			alert(billion);
+			*/
+			//számérték normálalakban is megadható
+			
+			/*
+			var hexa = 0x12C
+			alert(hexa);
+			var binary = 0b100101100;
+			alert(binary);
+			var octal = 0o454;
+			alert(octal);
+			*/
+			//számérték hexadecimális, bináris és oktális alakban is
+			// megadható
+			
+			/*
+			var num = 300;
+			alert(num.toString(16));
+			alert(num.toString(5));
+			alert(num.toString(20));
+			*/
+			//számérték sztringgé konvertálása megadott számrendszerben
+			
+			/*
+			alert(300..toString(20));
+			alert((300).toString(20));
+			alert(12345672..toString(16));
+			*/
+			//közvetlenül számar is meghívható a toString, de ekkor a
+			// szám után két pontot kell alkalmazni, illetve ezt meg
+			// lehet csinálni úgy is, hogy a számot zárójelbe tesszük,
+			// és csak egy pontot teszünk utána
+			
+			/*
+			alert(Math.floor(3.6));
+			alert(Math.ceil(3.1));
+			alert(Math.round(3.5));
+			alert(Math.trunc(3.6));
+			*/
+			//rendre alsó egészrész, felső egészrész, kerekítés,
+			// tizedesjegy utáni rész levágása
+			//több tizedesjegy esetén először felszorzás, majd a
+			// megfelelő művelet után leosztás (vagy fordítva)
+			
+			/*
+			alert(isNaN(NaN));
+			alert(isNaN(12));
+			alert(isNaN("a2"));
+			*/
+			//annak eldöntése, hogy az argumentum nem szám
+			
+			/*
+			alert(isFinite(NaN));
+			alert(isFinite("a2"));
+			alert(isFinite(99999999999999999999999999));
+			alert(isFinite(0.1));
+			alert(isFinite(1/0));
+			*/
+			//annak eldöntése, hogy egy szám véges-e
+			
+			/*
+			alert(Object.is(NaN, NaN));
+			alert(Object.is(0.1+0.2, 0.3));
+			alert(Object.is(3, 3));
+			*/
+			//két érték egyenlősége, abból a szempontból eltér a
+			// ===-től, hogy itt két NaN összehasonlítása igaz lesz
+			
+			/*
+			alert(parseInt("a1b2.1"));
+			alert(parseFloat("a1b2.1"));
+			alert(parseInt("1a1a1a111"));
+			alert(parseFloat("1a1a1.11"));
+			alert(parseInt("100px"));
+			alert(parseInt("12ab", 3));
+			*/
+			//egy sztring elejéről leparszolja a számot, ha az elején
+			// nem az van, akkor NaN a visszatérési érték, a parseInt
+			// opcionális második paramétere megmondja, hogy milyen
+			// számrendszerben történjen ez (mondhatni hogy mely
+			// karaktereket parszolja le a sztringről)
+			
+			/*
+			var y = prompt("Véletlenszám 0-tól eddig:", "");
+			alert(Math.trunc(Math.random()*y));
+			*/
+			//véletlenszám generálása(kb 16 értékes jeggyel)
+			
+			/*
+			alert(Math.max(1, 3, 2));
+			alert(Math.min(3, 2, 1));
+			*/
+			//számhalmazból maximum, minimum kiválasztása
+			
+			/*
+			alert(Math.pow(2, 30));
+			alert(Math.pow(0.5, 10));
+			*/
+			//hatványozás
+			
+			//további Math függvények: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Math
+			
+			/*
+			alert(`1 + 2 = ${1 + 2}`);
+			*/
+			//két ` közé beágyazható kifejezés ${...} formában
+			
+			/*
+			alert("\u{1F60D}");
+			*/
+			//hosszú unicode karakterek írási formája
+			
+			/*
+			var str = "Gaben";
+			alert(str.length);
+			alert(str[0]);
+			alert(str[-1]);
+			for (var char of str) {
+				alert(char);
+			}
+			*/
+			//string hossza, adott karakterének lekérése, végigiterálás
+			// sztringen (fontos, hogy itt nem in, hanem of van)
+			
+			/*
+			var str = "Gaben";
+			alert(str.indexOf("be"));
+			alert(str.indexOf("bee"));
+			alert(str.indexOf("be", 4));
+			alert(str.lastIndexOf("be"));
+			alert(str.lastIndexOf("be", 4));
+			*/
+			//visszaadja az első/utolsó előfordulást (adott karaktertől),
+			// -1-et kapunk, ha nincs benne
+			
+			/*
+			var str = "Gaben";
+			alert(str.includes("ben"));
+			alert(str.includes("eben"));
+			alert(str.includes("ben", 3));
+			alert(str.startsWith("Gab"));
+			alert(str.startsWith("B"));
+			alert(str.endsWith("en"));
+			alert(str.endsWith("b"));
+			*/
+			//visszaadja, hogy egy sztring tartalmazza-e a megadott
+			// sztringet, hogy azzal kezdődik-e, illetve hogy azzal
+			// végződik-e (indexOf-fal kifejezhetők)
+			
+			/*
+			var str = "Németh Gaben";
+			alert(str.substring(3));
+			alert(str.substring(3, 6));
+			alert(str.substring(6, 3));
+			alert(str.slice(6, 3));
+			alert(str.slice(-5, -1));
+			*/
+			//részsztring visszaadása
+			//substring - pozitív indextől index-1-ig
+			//substr - egész indextől n darabot
+			//slice - egész indextől index-1-ig
+			
+			/*
+			alert("z".codePointAt(0));
+			alert(String.fromCodePoint(97));
+			*/
+			//karakter ascii-kóddá alakítása, és fordítva
+			
+			/*
+			alert("Ázsia".localeCompare("Afrika"));
+			alert("Ázsia".localeCompare("Európa"));
+			*/
+			//nemunicode-karakterhelyes sztringösszehasonlítás
+			
+			/*
+			alert("S\u0307\u0323 : S\u0323\u0307");
+			alert("S\u0307\u0323" == "S\u0323\u0307");
+			alert("S\u0307\u0323".normalize() ==
+				"S\u0323\u0307".normalize());
+			*/
+			//különböző karaktermegjelenítési módok és egyenlőségük
+			
+			//ARRAYS
+			
+			/*
+			var arr = [];
+			var arr2 = new Array();
+			var arr3 = ["alma", 123];
+			for (var i = 0; i < arr3.length; i++){
+				alert(arr3[i]);
+			}
+			arr3[4]="barack";
+			for (var i = 0; i < arr3.length; i++){
+				alert(arr3[i]);
+			}
+			alert(arr3);
+			*/
+			//tömbök létrehozása, elemeinek kiírása két módon is,
+			// elem beszúrása
+			
+			/*
+			var arr = [12, 5];
+			arr.push(3);
+			alert(arr.shift());
+			alert(arr);
+			arr.unshift(8);
+			alert(arr.pop());
+			alert(arr);
+			for (var key of arr) {
+				alert(key);
+			}
+			*/
+			//rendre elem hozzáadása a tömb végéhez, elem törlése a
+			// tömb elejéről, elem hozzáadása a a tömb elejéhez, elem
+			// törlése a tömb végéről, a hozzáadó műveletek egyszerre
+			// több elemet is hozzá tudnak adni a tömbhöz, megjegyzés,
+			// hogy a tömb elején történő változások esetén a további
+			// elemek indexe is megváltozik; illetve végigiterálás
+			// a tömbelemeken
+			
+			/*
+			var arr = [2, 4, 6, 8, 1, 3, 5, 7, 9];
+			arr.length = 4;
+			alert(arr);
+			*/
+			//a tömb mérete átírható - levágható vele a tömb vége
+			
+			/*
+			var arr = [[1, 2],[3, 4]];
+			alert(arr[1][1]);
+			*/
+			//többdimenziós tömbök használata
+			
+			/*
+			var arr = [1, 2, 3];
+			alert(arr+1);
+			*/
+			//tömb automatikus konverziója sztringgé
+			
+			/*
+			var arr = [1, 2, 3, 4, 5];
+			delete arr[2];
+			alert(arr);
+			var arr2 = [1, 2, 3, 4, 5, 6, 7, 8];
+			arr2.splice(2, 2);
+			alert(arr2);
+			arr2.splice(1, 3, 9, 10, 11);
+			alert(arr2);
+			arr2.splice(0, 0, 0, 0);
+			alert(arr2);
+			*/
+			//a splice művelettel megvalósítható törlés, csere és
+			// beszúrás is, itt rendre ebben a sorrendben történik
+			
+			/*
+			var arr = [1, 2, 3, 4];
+			var str = "Németh Gábor";
+			alert(arr.slice(1, 3));
+			alert(str.slice(7, 11));
+			alert(str.slice(-5));
+			alert(str.slice(5));
+			*/
+			//slice - tömb, illetve sztring egy részének
+			// kiemelése
+			
+			/*
+			var arr = [1, 2, 3];
+			var arr2 = [4, 5];
+			var arr3 = ["6a"];
+			var a4 = "Gaben";
+			alert(arr.concat(arr2, arr3));
+			alert(arr.concat(arr2, a4));
+			*/
+			//concat - tömbök összefűzése
+			
+			/*
+			var arr = [1, 2];
+			var arr2 = {
+				0 : "Something",
+				1 : "else",
+				[Symbol.isConcatSpreadable] : true,
+				length : 2
+			};
+			alert(arr.concat(arr2));
+			*/
+			//concat egy érdekes tulajdonsága
+			
+			/*
+			var arr = [1, 2, 3, 4];
+			arr.forEach(alert);
+			arr.forEach((item, index, array) => {
+				alert(`${item} is at index ${index} in ${array}`)
+			});
+			*/
+			//forEach működése tömbre
+			
+			/*
+			var arr = [1, 3, 5, 7];
+			alert(arr.indexOf(5));
+			alert(arr.indexOf(6));
+			alert(arr.indexOf(5, 3));
+			alert(arr.includes(5, 3));
+			*/
+			//indexOf, includes működése tömbre, az
+			//indexOf szigorú, az includes sima
+			//egyenlőséggel dolgozik
+			
+			/*
+			var arr = [1, 3, 5, 7, 9];
+			var res1 = arr.find(item => item % 3 == 2);
+			var res2 = arr.find(item => item % 2 == 0);
+			alert(res1 +"\n" + res2);
+			var res3 = arr.findIndex(item => item % 3 == 2);
+			var res4 = arr.findIndex(item => item % 2 == 0);
+			alert(res3 +"\n" + res4);
+			*/
+			//find - visszaadja az első, feltételnek megfelelő elemet,
+			// undefined, ha nincs benne ilyen
+			//findIndex - visszaadja az első, feltételnek megfelelő
+			// elem indexét, -1, ha nincs benne ilyen
+			
+			/*
+			var arr = [1, 4, 7, 8, 9, 10, 11];
+			alert(arr.filter(item => item % 2 == 0));
+			alert(arr.filter(item => item % 6 == 0));
+			alert(arr.filter(function(item, index, array) {return item % 2 == 0}));
+			*/
+			//filter - a tömbből a feltételnek megfelelően szűr
+			
+			/*
+			var arr = [1, 3, 4, 6];
+			alert(arr.map(item => item * 2 + 1));
+			var arr = ["Peter", "Paul", "Gaben"];
+			alert(arr.map(item => item[0]));
+			*/
+			//map - tömbelemek transzformálása a paraméternek megadott
+			// függvénynek megfelelően
+			
+			/*
+			var arr = [3, 1, 6, 12, 5];
+			alert(arr.sort());
+			function compareNumeric(a, b) {
+				if (a > b) return 1;
+				if (a == b) return 0;
+				if (a < b) return -1;
+			}
+			alert(arr.sort(compareNumeric));
+			alert(arr.sort(function (a, b) {return (a % 3) - (b % 3)}));
+			alert(arr.sort((a, b) => a - b));
+			*/
+			//sort - tömb rendezése akár függvény alapján is
+			
+			/*
+			var arr = [1, 3, 5, 7, 2];
+			alert(arr.reverse());
+			*/
+			//reverse - megfordítja a tömb sorrendjét
+			
+			/*
+			var str = "1, 3, 5, 7, 9";
+			var arr = str.split(", ", 4);
+			for (var key of arr) {
+				alert(key);
+			}
+			var str2 = "Németh Gábor";
+			alert(str2.split(""));
+			*/
+			//split - felbontja a sztringet a határoló alapján,
+			// ezekből tömböt csinál - opcionálisan megadható a
+			// maximális méret is, a többi elemet ilyenkor eldobja
+			
+			/*
+			var arr = [1, 3, 5, 7, 9];
+			alert(arr.join(", "));
+			*/
+			//join - a split inverze, összekapcsolja a tömbelemeket
+			// a megadott határolóval
+			
+			/*
+			var arr = [1, 2, 3, 4, 5];
+			alert(arr.reduce((sum, current) => sum * current, 1))
+			var arr2 = ["Peter", "Paul", "Gaben"];
+			alert(arr2.reduce((all, plus) => all + plus[0], ""));
+			alert(arr2.reduceRight((all, plus) => all + plus[0], ""));
+			*/
+			//reduce - tömbből egyetlen elemet csinál a megadott
+			// függvénynek megfelelően, reduceRight ugyanezt csinálja
+			// a tömb végéről
+			
+			/*
+			var arr = [];
+			var obj = {};
+			alert(Array.isArray(arr));
+			alert(Array.isArray(obj));
+			alert(typeof arr);
+			*/
+			//Array.isArray - igaz, ha az argumentum tömb - ezt a
+			// typeof nem tudja megkülönböztetni
+			
+			/*
+			var user = {
+				age : 18,
+				younger(otherUser) {
+					return otherUser.age < this.age;
+				}
+			};
+			var users = [
+				{age : 12},
+				{age : 16},
+				{age : 32}
+			];
+			var youngerUsers = users.filter(user.younger, user);
+			alert(youngerUsers.length);
+			*/
+			//ilyen esetekre van a filter, find, map függvényeknek
+			// egy thisArg paramétere, amellyel ezek a fajta
+			// kifejezések helyesen értékelődnek ki
+			
+			/*
+			var arr = [1, 3, 5, 7, 9];
+			alert(arr.some(item => item % 3 == 2));
+			alert(arr.every(item => item % 3 == 2));
+			*/
+			//some és every - igazak, ha legalább az egyik, illetve
+			// minden elem megfelel a megadott feltételnek
+			
+			//ITERABLES
+			
+			/*
+			let range = {
+				from : 2,
+				to : 3,
+				[Symbol.iterator]() { //"az iterátor konstruktora"
+					this.current = this.from;
+					return this;
+				},
+				next() { //a léptetés metódusa
+					if (this.current <= this.to) {
+						return { done : false, value : this.current++ };
+					} else {
+						return { done : true };
+					}
+				}
+			}
+			for (var num of range) {
+				alert(num);
+			}
+			*/
+			//iterátor készítése explicit módon range-re
+			
+			/*
+			var str = "alma";
+			for (var key of str){
+				alert(key);
+			}
+			*/
+			//a sztring is iterálható
+			
+			/*
+			var arrLike = {
+				0 : "Hello",
+				1 : "World",
+				length : 2
+			};
+			var arr = Array.from(arrLike);
+			alert(arr);
+			*/
+			//Array.from - tömbszerű objektumok konvertálása tömbbé
+			
+			/*
+			alert(Array.from(range));
+			*/
+			//a feljebb lévő range átkonvertálása tömbbé
+			
+			//MAP ÉS SET
+			
+			/*
+			var map = new Map();
+			map.set("alma", 300);
+			map.set("banán", 400).set("dinnye", 150);
+			alert(map.has("körte"));
+			alert(map.has("dinnye"));
+			map.delete("alma");
+			alert(map.size);
+			map.clear();
+			alert(map.size);
+			*/
+			//map létrehozása, elemek beszúrása, kulcs létezésének
+			// lekérdezése, elem törlése, elemszám lekérdezése és
+			// a map kiürítése, beszúrások láncolhatók
+			
+			/*
+			var arr = [	["alma", 300],
+						["banán", 400],
+						["dinnye", 150]];
+			var map = new Map(arr);
+			alert(map.size);
+			*/
+			//tömb konvertálása map-pé
+			
+			/*
+			var obj = {
+				name : "Gaben",
+				age : 21
+			};
+			var map = new Map(Object.entries(obj));
+			alert(map.size);
+			*/
+			//object konvertálása map-pé (Object.entries)
+			
+			/*
+			var arr = [	["alma", 300],
+						["banán", 400]];
+			var map = new Map(arr);
+			for (var key of map.keys()) {
+				alert(key);
+			}
+			alert("-");
+			for (var value of map.values()) {
+				alert(value);
+			}
+			alert("-");
+			for (var pair of map) {
+				alert(pair);
+			}
+			*/
+			//végigiterálás a kulcsokon, az értékeken, a párokon
+			
+			/*
+			var set = new Set();
+			set.add(1);
+			set.add(2);
+			set.add(1);
+			alert(set.has(3));
+			alert(set.has(2));
+			alert(set.size);
+			set.delete(2);
+			alert(set.size);
+			set.clear();
+			alert(set.size);
+			*/
+			//halmaz létrehozása, elemek beszúrása, elem létezésének
+			// lekérdezése, elemszám lekérdezése, elem törlése, halmaz
+			// kiürítése
+			
+			/*
+			var set = new Set();
+			for (var i = 0; i <= 3; i++) set.add(i);
+			for (var i = 2; i >= 0; i--) set.add(i);
+			for (var value of set) {
+				alert(value);
+			}
+			set.forEach((value, valueAgain, set) => {
+				alert(value);
+			});
+			*/
+			//végigiterálás az elemeken
+			
+			//WEAKMAP ÉS WEAKSET
+			
+			/*
+			Erre külön nem dolgozunk fel példát. Az alap működés az,
+			hogy csak objectek lehetnek kulcsok, és amikor az object
+			törlődik a memóriából az automatikusan lefutó szemétgyűj-
+			tő miatt, akkor az őt tartalmazó weakmapben, illetve
+			weaksetben is törlődnek. Ez kifejezetten fontos akkor,
+			amikor külső forrásból tárolunk valamit a memóriában,
+			mert így bizonyos esetekben a program számottevően keve-
+			sebb memóriát használ.
+			Nem támogatják az elemeik bejárását, és a szemétgyűjtő
+			működése miatt az elemszám lekérdezését.
+			*/
+			
+			//OBJECT.KEYS, VALUES, ENTRIES
+			
+			/*
+			var user = {
+				name : "Gaben",
+				age : 21
+			}
+			var arr = Object.keys(user);
+			var arr2 = Object.values(user);
+			var arr3 = Object.entries(user);
+			alert(arr);
+			alert(arr2);
+			alert(arr3);
+			*/
+			//Object kulcsainak, értékeinek, kulcs-érték párjainak
+			//kivétele tömbbe - nem veszi figyelembe az objectek
+			//szimbólum típusú adattagjait
+			
+			/*
+			var arr = [["name", "Gaben"],["age", 21]];
+			var obj = Object.fromEntries(arr);
+			alert(obj.name);
+			var arr2 = [	["alma", 300],
+						["banán", 400],
+						["dinnye", 150]];
+			var map = new Map(arr2);
+			var obj2 = Object.fromEntries(map);
+			alert(obj2.alma);
+			*/
+			//Object.fromEntries - az argumentumból objectet készít
+			
+			//DESTRUCTURING ASSIGNMENT
+			
+			/*
+			var arr = ["Gaben", "Németh", 21];
+			var [name, , age] = arr;
+			alert(name + " " + age);
+			*/
+			//tömb destrukturálása változókba, esetleges helykiha-
+			// gyással
+			
+			/*
+			var str = "Gaben";
+			var [a, , , b, c] = str;
+			alert(a + b + c);
+			*/
+			//iterálható elem destrukturálása
+			
+			/*
+			var arr = [1, 2, 3, 4];
+			[arr[1], , , arr[2]] = arr;
+			alert(arr);
+			*/
+			//destrukturálás saját magán
+			
+			/*
+			var arr = [1, 2, 3, 4, 5];
+			var [f, , s, ...arr2] = arr;
+			alert(f);
+			alert(s);
+			alert(arr2);
+			*/
+			//destrukturálás a többi elem átvitelével
+			
+			/*
+			var arr = [1, 2, 3];
+			var [a, , , b = 0] = arr;
+			alert(a + " " + b);
+			*/
+			//default érték destrukturálásnál, prompt is megadható
+			
+			/*
+			var user = {
+				name : "Gaben",
+				age : 21
+			};
+			var {name : n, age} = user;
+			alert(n + " -- " + age);
+			*/
+			//a destrukturálás objectekkel is működik - itt a megfelelő
+			// neveknek azonosaknak kell lenniük, kivéve átnevezéskor,
+			// amit az első adattagnál használunk
+			
+			/*
+			var user = {
+				name : "Gaben",
+				age : 21
+			};
+			function show({name : n = "Anonymous", age = NaN,
+				isAdmin : a = false} = {}) {
+				alert("name: " + n + "\nage: " + age + "\nisAdmin: "
+				+ a);
+			}
+			show(user);
+			show();
+			*/
+			//a destrukturálás egy érdekes tulajdonsága
+			
+			//DATE AND TIME
+			
+			/*
+			var now = new Date();
+			alert(now);
+			var Jan01_1970 = new Date(0);
+			alert(Jan01_1970);
+			var d = new Date("2019-07-10");
+			alert(d);
+			let date = new Date(2011, 0, 1, 12, 30, 0, 0);
+			alert(date);
+			*/
+			//dátum típus létrehozása
+			
+			/*
+			var date = new Date();
+			alert(date.getHours());
+			alert(date.getMonth());
+			alert(date.getUTCHours());
+			alert(date.getTimezoneOffset());
+			date.setMonth(5);
+			date.setDate(12);
+			alert(date);
+			*/
+			//dátumkomponensek lekérdezése és beállítása
+			
+			/*
+			var date = new Date(2013, 0, 32, 12);
+			alert(date);
+			date.setDate(date.getDate() + 2);
+			alert(date);
+			date.setHours(date.getHours() - 14);
+			alert(date);
+			*/
+			//dátumok módosítása
+			
+			/*
+			var start = new Date();
+			for (var i = 0; i < 1000000; i++){
+				var j = i * i;
+			}
+			var end = new Date();
+			alert(end-start);
+			*/
+			//ciklus futásideje ezredmásodpercben, megjegyzés, hogy
+			// két dátum kivonása lassabb, mintha meghívnánk rájuk a
+			// getTime() metódust és ezeknek vesszük a különbségét,
+			// ugyanis előbbinél típuskonverzió van
+			
+			/*
+			var date = new Date(Date.parse(
+				"2016-06-12T12:30:00.000"));
+			alert(date);
+			*/
+			//Sztring dátummá konvertálása
+			
+			//JSON METHODS, TOJSON
+			
+			/*
+			var user = {
+				name : "Gaben",
+				age : 21,
+				place : {
+					floor : 3,
+					room : 11
+				},
+				country : "Hungary",
+				isAdmin : false
+			};
+			var json = JSON.stringify(user, ["name", "age", "country", "room"], 4);
+			alert(json);
+			var value = JSON.parse(json);
+			alert(value.name);
+			*/
+			//json formátumra alakítás korlátozással, igazítással,
+			// illetve visszaalakítás
+			
+			/*
+			var str = '{"name":"Gaben","birth":"1998-06-12T08:00:00.000Z"}';
+			var user = JSON.parse(str, function(key, value) {
+				if (key=="birth") return new Date(value);
+				return value;
+			});
+			alert(user.birth.getDate());
+			*/
+			//json-ből dátum kiszedése
+		</script>
+	</body>
+</html>

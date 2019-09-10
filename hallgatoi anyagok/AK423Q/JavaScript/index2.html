@@ -1,0 +1,1005 @@
+<html>
+	<body>
+		<script>
+			
+			"use strict"
+			
+			//KEZDÉS: ADVANCED WORKING WITH FUNCTIONS
+			//VÉGE: CUSTOM ERRORS, EXTENDING ERROR
+			
+			//RECURSION AND STACK
+			
+			/*
+			function a(n){
+				if (n == 0) {
+					return 0;
+				} else {
+					return a(n - 1) + n;
+				}
+			}
+			alert(a(6));
+			alert(a(100000)); //stack overflow
+			*/
+			//példa egyszerű rekurzióra
+			
+			//REST PARAMETERS AND SPREAD OPERATOR
+			
+			/*
+			function a(...args) {
+				var sum = 0;
+				for (var arg of args) {
+					sum += arg;
+				}
+				return sum;
+			}
+			alert(a(1, 3, 5, 7));
+			alert(a(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6));
+			*/
+			//ilyen esetekben akárhány paraméter megadható
+			
+			/*
+			function a(){
+				alert(arguments.length);
+			}
+			a(1);
+			a(2, 3);
+			*/
+			//paraméterek számának lekérdezése
+			
+			/*
+			var arr = [1, 7, 3, 5];
+			alert(Math.max(-9, ...arr, 8));
+			*/
+			//tömb átadása elemeket váró függvénynek, a tömböt három
+			// pont nélkül átadva errort kapunk
+			
+			/*
+			var arr1 = [1, 2, 3];
+			var arr2 = [5, 6, 7];
+			var arr = [0, ...arr1, 4, ...arr2, 8];
+			alert(arr);
+			*/
+			//tömbök összefésülése
+			
+			/*
+			var str = "Gaben";
+			alert([...str]);
+			*/
+			//egyfajta sztringkonverzió tömbbé
+			
+			//CLOSURE
+			
+			/*
+			var name = "Gaben";
+			function a() {
+				var name = "Paul";
+				alert(name);
+			}
+			a();
+			*/
+			//példa a változók láthatóságára
+			
+			/*
+			function a() {
+				alert("Hello");
+				function b() {
+					alert("Gaben");
+				}
+				b();
+			}
+			function b() {
+				alert("Gábor");
+			}
+			a();
+			b();
+			*/
+			//másik példa a láthatóságra
+			
+			/*
+			function a() {
+				this.b = function() {
+					alert("Gaben");
+				};
+				this.b()
+			}
+			var as = new a();
+			as.b();
+			*/
+			//láthatóság, függvénybeágyazás
+			
+			/*
+			function a() {
+				var count = 0;
+				return function() {
+					return count++;
+				};
+			}
+			var b = a();
+			for (var i = 0; i < 5; i++) {
+				alert(b());
+			}
+			*/
+			//számláló függvény
+			
+			/*
+			(function() {
+				alert("Hello");
+			}());
+			*/
+			//IIFE, ma nem használatos, de érdemes ismerni
+			
+			//THE OLD VAR
+			
+			/*
+			if (true) {
+				var name = "Gaben";
+			}
+			alert(name);
+			*/
+			//a var független az egyes blokkoktól, ott is látható a
+			// változó, ahol nem kellene láthatónak lennie
+			
+			/*
+			if (true) {
+				let test2 = true;
+			}
+			alert(test2);
+			*/
+			//a let láthatósága a blokk belseje
+			
+			/*
+			function a() {
+				name = "Gábor";
+				alert(name);
+				var name = "Gaben";
+			}
+			a();
+			*/
+			//a var egy érdekes tulajdonsága
+			
+			//GLOBAL OBJECT
+			
+			/*
+			var a = 1;
+			let b = 2;
+			alert(window.a);
+			alert(window.b);
+			*/
+			//var esetén a változó a window property-je is lesz
+			
+			//FUNCTION OBJECT, NFE
+			
+			/*
+			function a() {
+				alert("Hello");
+			}
+			alert(a.name);
+			let arr = [function() {}];
+			alert("'" + arr[0].name + "'");
+			*/
+			//lekérdezhető a függvény neve
+			
+			/*
+			function a(b, c) {};
+			function b(a, c, d, ...e) {};
+			alert(a.length);
+			alert(b.length);
+			*/
+			//lekérdezhető a függvény paramétereinek a száma, a rest of
+			// típusú operátorhoz tartozó paraméter(lista) nem számít
+			// ebbe bele
+			
+			/*
+			function a() {
+				alert("Gaben");
+				a.counter++;
+			}
+			a.counter = 0;
+			a();
+			a();
+			alert(a.counter);
+			*/
+			//így számolható a függvényhívások száma
+			
+			/*
+			let b = function a(n) {
+				if (n > 0) {
+					alert(n);
+					a(n-1);
+				}
+			}
+			b(3);
+			*/
+			//a b-nek egy a nevű függvényt adunk értékül - ez elméletben
+			// ugyanazt jelenti, mintha egy név nélküli függvényt
+			// adtunk volna értékül b-nek, gyakorlatban ez annyival
+			// jelent többet, hogy az a függvény törzsén belül így
+			// tudunk önmagára referálni
+			
+			//THE "NEW FUNCTION" SYNTAX
+			
+			/*
+			let a = new Function("a", "b", "return a * b");
+			alert(a(2, 3));
+			*/
+			//new Function szintaxisa, így lehet egy alkalmas sztring-
+			// ből függvényt csinálni
+			
+			//SCHEDULING: SETTIMEOUT AND SETINTERVAL
+			
+			/*
+			function a(b) {
+				alert(b);
+			}
+			let b = setTimeout(a, 1000, "Gaben");
+			alert("Hello");
+			alert("róka");
+			clearTimeout(b);
+			*/
+			//függvény késleltetett végrehajtása, az utána következő
+			//utasítások végrehajtódnak ebben az időben, illetve a
+			//késleltetés (és maga a végrehajtás) törlése
+			
+			/*
+			let c = setInterval((b) => alert(b), 1000, "Gaben");
+			setTimeout(() => {
+				clearInterval(c);
+				alert("Stopping iteration");
+				}, 5000);
+			*/
+			//minden alkalommal lefutó utasítássorozat késleltetéssel
+			// és az egész leállításával
+			
+			/*
+			let i = 1;
+			function a() {
+				document.write('x');
+				if (i % 80 == 0){
+					//document.write("<br>"); //új sor kiírása a lapon
+					document.body.innerHTML = ''; //minden szöveg
+						// törlése a lapon
+				}
+			}
+			setInterval(() => {
+					a();
+					i++;
+				}, 31.25);
+			*/
+			//hogy csináljunk használhatatlanul felesleges, de nagyon
+			// vicces dolgokat js-ben
+			
+			/*
+			let i = 0;
+			function a() {
+				document.body.innerHTML = '';
+				if (i / 3600000 < 10) {
+					document.write('0');
+				}
+				document.write(Math.floor(i / 3600000) + ":");
+				if (i % 360000 < 60000) {
+					document.write('0');
+				}
+				document.write(Math.floor(Math.floor(i % 360000)/6000) + ":");
+				if (i % 6000 < 1000) {
+					document.write('0');
+				}
+				document.write(Math.floor(Math.floor(i % 6000)/100) + ".");
+				if (i % 100 < 10) {
+					document.write('0');
+				}
+				document.write(i % 100);
+			}
+			setInterval(() => {
+					a();
+					i++;
+				}, 10);
+			*/
+			//egy nagyon rossz timer
+			
+			//DECORATORS AND FORWARDING, CALL/APPLY
+			
+			/*
+			function a() {
+				alert(this.name);
+			}
+			let user = { name : "Gaben" };
+			let user2 = { name : "Paul" };
+			a.call(user);
+			a.call(user2);
+			*/
+			//call meghívása függvényre
+			
+			/*
+			function a() {
+				alert([].join.call(arguments));
+			}
+			a(1, 3, 5, 7);
+			*/
+			//"metóduskölcsönzés"
+			
+			//FUNCTION BINDING
+			
+			/*
+			let user = {
+				name : "Gaben",
+				a() {
+					alert(`Hello ${this.name}`);
+				}
+			};
+			user.a();
+			setTimeout(user.a, 1000);
+			setTimeout(() => user.a(), 1000); //(*)
+			user = { a() {alert("Wrong user!");}}; //(**)
+			*/
+			//a this elvesztése, és erre egy wrapper (*), mint prob-
+			// lémaelhárító írása, ez csak félmegoldás (**) miatt
+			
+			/*
+			let user = {
+				name : "Gaben",
+				a() {
+					alert(this.name);
+				}
+			};
+			setTimeout(user.a.bind(user), 1000);
+			*/
+			//a másik megoldás, egy "binder" írása
+			
+			/*
+			function a(a, b) { return a * b; }
+			let b = a.bind(null, 2);
+			alert(b(3) + " " + b(5));
+			*/
+			//"részleges függvény", paraméter-helyreigazítással
+			
+			/*
+			function a(func, ...argsBound) {
+				return function(...args) {
+					return func.call(this, ...argsBound, ...args);
+				}
+			}
+			let user = {
+				name : "Gaben",
+				say(time, x) {
+					alert(`[${time}] ${this.name} ${x}`);
+				}
+			};
+			let b = new Date();
+			user.sayNow = a(user.say, b.getHours() + ":" + b.getMinutes());
+			user.sayNow("!");
+			*/
+			//paraméter-helyreállítás this kontextus nélkül
+			
+			/*
+			function a() {
+				alert(this);
+			}
+			let user = {
+				g : a.bind("róka")
+			};
+			user.g();
+			*/
+			//példa
+			
+			//ARROW FUNCTIONS REVISITED
+			
+			//csak ismétlés, a () => {} típusú függvények nem rendel-
+			// keznek this-szel, arguments-szel, nem hívhatók meg
+			// new-val, olyan helyeken használhatók, ahol függvényt,
+			// vagy függvényreferenciát kell átadni
+			
+			//PROPERTY FLAGS AND DESCRIPTORS
+			
+			/*
+			let user = {
+				name : "Gaben"
+			};
+			let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
+			alert(JSON.stringify(descriptor, null, 3));
+			Object.defineProperty(user, "name", {
+				value : "Paul"
+			});
+			descriptor = Object.getOwnPropertyDescriptor(user, 'name');
+			alert(JSON.stringify(descriptor, null, 3));
+			let user2 = {};
+			Object.defineProperty(user2, "name", {
+				value : "Peter",
+			});
+			let descriptor2 = Object.getOwnPropertyDescriptor(user2, 'name');
+			alert(JSON.stringify(descriptor2, null, 3));
+			let user3 = {
+				name : "Gaben",
+				toString() {
+					return this.name;
+				}
+			};
+			Object.defineProperty(user3, "name", {
+				writable : false
+			});
+			Object.defineProperty(user3, "toString", {
+				enumerable : false
+			});
+			//user3.name = "Paul"; //hiba, nem írható
+			for (let key in user) alert(key);
+			*/
+			//objectek tulajdonságai, azok lekérdezése és módosítása,
+			// a writable tulajdonság az adott objektum adott adattag-
+			// jának az írhatóságát jelzi, az enumerable a függvények
+			// felsorolhatóságát jelzi, a configurable pedig azt jelen-
+			// ti, hogy a változó struktórája a defineProperty-val
+			// módosítható-e
+			
+			//Object.defineProperties és Object.getOwnPropertyDescriptors
+			// hasonlóan használható, mint a fentiek, de egyszerre
+			// több tulajdonságot képesek módosítani
+			
+			/*
+			let user = {
+				name : "Gaben"
+			};
+			alert(Object.isExtensible(user));
+			Object.preventExtensions(user);
+			//user.age = 21; //hiba, nem adható hozzá új adattag
+			alert(Object.isExtensible(user));
+			alert(Object.isFrozen(user));
+			Object.freeze(user);
+			//user.name = "Paul"; //hiba, az adattagok nem írhatók
+			alert(Object.isFrozen(user));
+			*/
+			//Object.preventExtensions - megtiltja adattagok hozzáadá-
+			// sát az objecthez; Object.seal - megtiltja adattagok
+			// hozzáadását és eltávolítását az objectből;
+			// Object.freeze - megtiltja az object adattagjainak
+			// a módosítását, újak hozzáadását és meglévők törlését,
+			// illetve rendelkezésünkre állnak az ezeket lekérdező
+			// műveletek is; a függvények kifejezhetők
+			// defineProperty-kkal és getOwnPropertyDescriptor-okkal,
+			// de bizonyos esetekben ezeket egyszerűbb használni
+			
+			//PROPERTY GETTERS AND SETTERS
+			
+			/*
+			let user = {
+				first_name : "Gábor",
+				last_name : "Németh",
+				get fullName() {
+					return (this.first_name + " " + this.last_name);
+				},
+				set fullName(value) {
+					[this.first_name, this.last_name] = value.split(" ");
+				}
+			};
+			alert(user.fullName);
+			user.fullName = "Paul Richards";
+			alert(user.fullName);
+			*/
+			//property-k olvasása és írása - nem azonos az adattaggal
+			
+			/*
+			let user = {
+				first_name : "Gábor",
+				last_name : "Németh"
+			};
+			Object.defineProperty(user, "fullName", {
+				get() {
+					return (this.first_name + " " + this.last_name);
+				},
+				set (value) {
+					if (value.split(" ").length != 2) {
+						alert("This is not a suitable name.")
+					} else {
+						[this.first_name, this.last_name] = value.split(" ");
+					}
+				}
+			});
+			alert(user.fullName);
+			user.fullName = "Paul Richards";
+			alert(user.fullName);
+			user.fullName = "Peter";
+			*/
+			//property készítése máshogy
+			
+			//PROTOTYPAL INHERITANCE
+			
+			/*
+			let animal = {
+				eats : true,
+				walk() {
+					alert("Walking");
+				}
+			};
+			let rabbit = {
+				jumps : true
+			};
+			rabbit.__proto__ = animal;
+			alert(rabbit.eats);
+			rabbit.walk = function() {
+				alert("Rabbit walking");
+			}
+			rabbit.walk();
+			*/
+			//prototipikus öröklődés, a __proto__ rejtett property
+			// használatával, fontos, hogy jelen példában az eats
+			// nem a rabbit része, csak egy referencián keresztül
+			// érődik el a rabbit-ben; ezen öröklődés láncolható;
+			// a láncolások nem adhatnak kört, és a __proto__
+			// property értéke vagy egy másik object, vagy null;
+			// csak egy értéke lehet ennek a property-nek, csak
+			// olvasásra használható, ha valamit felül akarunk írni,
+			// akkor csak az adott objectben íródik felül, az
+			// örököltben nem (elfedésből mondhatni adódik)
+			
+			/*
+			let user = {
+				first_name : "Gábor",
+				last_name : "Németh",
+				set fullName(value) {
+					[this.first_name, this.last_name] = value.split(' ');
+				},
+				get fullName() {
+					return (this.first_name + " " + this.last_name);
+				}
+			};
+			let admin = {
+				__proto__ : user,
+				isAdmin : true
+			};
+			alert(admin.fullName);
+			admin.fullName = "Paul Richards";
+			alert(user.fullName);
+			alert(admin.first_name);
+			*/
+			//itt is csak az admin teljes neve változik
+			
+			/*
+			let animal = {
+				age : 10,
+				eats : true
+			};
+			let rabbit = {
+				jumps : true,
+				__proto__ : animal
+			};
+			for (let key in rabbit) {
+				alert(key);
+			}
+			for (let key in rabbit) {
+				if (rabbit.hasOwnProperty(key)) {
+					alert(key + " : " + rabbit[key]);
+				}
+			}
+			*/
+			//a for..in ciklus az örökölt adattagokon is végigmegy,
+			// a hasOwnProperty pedig true-t ad vissza, ha a para-
+			// méterként kapott kulcs a rabbit saját kulcsa
+			
+			//F.PROTOTYPE
+			
+			/*
+			let animal = {
+				eats : true
+			};
+			function Rabbit(name) {
+				this.name = name;
+			}
+			Rabbit.prototype = animal;
+			let rabbit = new Rabbit("White");
+			alert(rabbit.eats);
+			*/
+			//prototipikus öröklődés konstruktorban
+			
+			/*
+			function Rabbit(name) {
+				this.name = name;
+				alert(name);
+			}
+			let rabbit = new Rabbit("White");
+			let rabbit2 = new rabbit.constructor("Black");
+			*/
+			//constructor szó használata
+			
+			//NATIVE PROTOTYPES
+			
+			//az összetett adattípusok (pl map, array) az objectből
+			// öröklődnek prototipikusan, a primitív típusok gyakor-
+			// latilag "önmagukból" öröklődnek, a null és az
+			// undefined nem öröklődik semmiből
+			
+			//PROTOTYPE METHODS, OBJECTS WITHOUT __PROTO__
+			
+			/*
+			let animal = {
+				eats : true
+			};
+			let rabbit = Object.create(animal, {
+				jumps : {
+					value : true
+				}
+			});
+			alert(rabbit.eats);
+			alert(Object.getPrototypeOf(rabbit) === animal);
+			Object.setPrototypeOf(rabbit, {});
+			alert(Object.getPrototypeOf(rabbit) === animal);
+			alert(rabbit.jumps);
+			let clone = Object.create(Object.getPrototypeOf(rabbit),
+			Object.getOwnPropertyDescriptors(rabbit));
+			alert(clone.jumps);
+			*/
+			//mivel a __proto__ adattag használata elavultnak minősül,
+			// ezért ennek használatára létre vannak hozva az
+			// Object.create, az Object.getPrototypeOf és az
+			// Object.setPrototypeOf függvények, továbbá öröklést
+			// használó objectet klónozni is az Object.create megfele-
+			// lő használatával lehet
+			
+			/*
+			let obj = {};
+			let key = "__proto__";
+			obj[key] = "some value";
+			alert(obj[key]); //"[object Object]" -- hiba!
+			obj = Object.create(null);
+			obj[key] = "some value";
+			alert(obj[key]); //"some value" -- így már jó
+			*/
+			//példa arra, hogy miért érdemes az objecteket az
+			// Object.create metódussal létrehozni
+			
+			//CLASS BASIC SYNTAX
+			
+			/*
+			class User {
+				constructor(name) {
+					this.name = name;
+				}
+				a() {
+					alert(this.name);
+				}
+			}
+			let user = new User("Gaben");
+			user.a();
+			alert(user.name);
+			alert(typeof User);
+			*/
+			//osztály definiálása, itt még külsőleg hozzá lehet férni
+			// az adattagokhoz; az osztály egy egyfajta függvény
+			
+			/*
+			let User = class {
+				a() {
+					alert("Hello");
+				}
+			};
+			new User().a();
+			*/
+			//így is létre lehet hozni egy osztályt
+			
+			/*
+			class User {
+				dfn = "alpha";
+				constructor(name) {
+					[this.first_name, this.last_name] =
+						name.split(" ");
+				}
+				get full_name() {
+					return this.first_name + " " +
+						this.last_name;
+				}
+				set full_name(value) {
+					[this.first_name, this.last_name] =
+						value.split(" ");
+				}
+			}
+			let user = new User("Gábor Németh");
+			alert(user.first_name);
+			alert(user.dfn);
+			*/
+			//az osztálydeklarációk is tartalmazhatnak getter és
+			// setter műveleteket, és hasonlóan definiálhatjuk a
+			// property-jeit, mint az objecteknek
+			
+			// CLASS INHERITANCE
+			
+			/*
+			class User {
+				constructor(name, age) {
+					this.name = name;
+					this.age = age;
+				}
+				older(year) {
+					this.age += year;
+				}
+				isAdmin() {
+					return false;
+				}
+			}
+			class Admin extends User {
+				constructor(name, age, privilege) {
+					super(name, age);
+					this.privilege = privilege;
+				}
+				isAdmin() {
+					return !super.isAdmin();
+				}
+			}
+			let user = new User("Gaben", 21);
+			let user2 = new Admin("Paul", 30, "all");
+			user2.older(3);
+			alert(user2.age);
+			alert(user.isAdmin());
+			alert(user2.isAdmin());
+			alert(user2.privilege);
+			*/
+			//öröklődés, konstruktorhasználattal
+			
+			//STATIC PROPERTIES AND METHODS
+			
+			/*
+			class User {
+				static a() {
+					alert(this === User);
+				}
+			}
+			User.a();
+			*/
+			//osztály statikus függvénye - a konkrét osztályra kell
+			// meghívni, nem az egyes példányaira
+			
+			/*
+			class User {
+				constructor(name, age) {
+					this.name = name;
+					this.age = age;
+				}
+				static compare(userA, userB) {
+					return userA.age - userB.age;
+				}
+			}
+			let users = [
+				new User("Gaben", 21),
+				new User("Paul", 30),
+				new User("Peter", 14)
+			];
+			users.sort(User.compare);
+			alert(users[0].name);
+			*/
+			//osztály példányaiból álló tömb rendezése
+			
+			/*
+			class User {
+				constructor(name, age) {
+					this.name = name;
+					this.age = age;
+				}
+				static createDefault() {
+					return new this("Gaben", 21);
+				}
+			}
+			let user = User.createDefault();
+			alert(user.age);
+			*/
+			//statikus függvény használata példány létrehozásához
+			
+			//PRIVATE AND PROTECTED PROPERTIES AND METHODS
+			
+			/*
+			class CoffeeMachine {
+				#waterAmount = 0;
+				constructor(power) {
+					this.power = power;
+					alert("Power of coffee machine: " + power);
+				}
+				a() {
+					alert(this.#waterAmount);
+				}
+			}
+			let coffeeMachine = new CoffeeMachine(100);
+			coffeeMachine.a();
+			coffeeMachine.#waterAmount = 200; //hiba
+			*/
+			//hiba, a #-tel kezdődő változók privátak, a _-sal kezdődők
+			// pedig konvenció szerint védettek
+			
+			//EXTENDING BUILT-IN CLASSES
+			
+			/*
+			class PowerArray extends Array {
+				isEmpty() {
+					return this.length === 0;
+				}
+			}
+			let arr = new PowerArray();
+			alert(arr.isEmpty());
+			arr.push(1, 2, 5, 10, 50);
+			let filteredArr = arr.filter(item => item % 5 == 0);
+			alert(filteredArr);
+			*/
+			//öröklés beépített osztályokból
+			
+			/*
+			class User {
+				constructor(name, age) {
+					this.name = name;
+					this.age = age;
+				}
+				isAdmin() {
+					return false;
+				}
+			}
+			class Admin extends User {
+				isAdmin() {
+					return true;
+				}
+				isExecutive() {
+					return false;
+				}
+			}
+			class AdminOfAdmins extends Admin {
+				isAdmin() {
+					return true;
+				}
+				isExecutive() {
+					return true;
+				}
+			}
+			let user1 = new User("Gaben", 21);
+			let user2 = new Admin("Paul", 30);
+			let user3 = new AdminOfAdmins("Peter", 14);
+			alert(user1 instanceof User);
+			alert(user2 instanceof User);
+			alert(user3 instanceof User);
+			*/
+			//instanceof operátor használata, minden olyan típusra is
+			// igazat ad, amelyből közvetve vagy közvetlenül örököl
+			
+			//MIXINS
+			
+			/*
+			let aMixin = {
+				a() {
+					alert(this.name);
+				}
+			};
+			class User {
+				constructor(name) {
+					this.name = name;
+				}
+			}
+			Object.assign(User.prototype, aMixin);
+			let b = new User("Gaben");
+			b.a();
+			*/
+			//egy objektum (metódusainak) beágyazása egy osztályba,
+			// ami nem öröklődés, csak metódusmásolás
+			
+			//ERROR HANDLING, "TRY..CATCH"
+			
+			/*
+			try {
+				a();
+				alert("No errors");
+			} catch(err) {
+				alert("Error occured");
+			}
+			*/
+			//try-catch blokk használata
+			
+			/*
+			try {
+				setTimeout(() => alert(a()), 1000);
+			} catch (err) {
+				alert("Error occured");
+			}
+			function a() {
+				try {
+					b();
+				} catch (err) {
+					alert("Error occured");
+				}
+			}
+			setTimeout(() => a(), 1000);
+			*/
+			//a try-catch blokk nem működik együtt a setTimeout-tal,
+			// ennek példája és egyfajta "javítása"
+			
+			/*
+			try {
+				a();
+			} catch (err) {
+				alert(err.name);
+				alert(err.message);
+				alert(err.stack);
+				alert(err);
+			}
+			*/
+			//a kivétel tulajdonságai
+			
+			/*
+			let json1 = '{"name":"Gaben", "age":"21"}';
+			let json2 = '{"name":Gaben, "age":"21"}';
+			let obj_json;
+			try {
+				obj_json = JSON.parse(json2);
+				alert(obj_json.name);
+			} catch (e) {
+				alert("Error occured");
+			}
+			*/
+			//json parszolás és a közben felmerülő hiba
+			
+			/*
+			try {
+				let a = 5;
+				let b = 0;
+				if (b == 0) {
+					throw new Error("division by zero");
+				}
+				alert(a);
+				let c = a / b;
+				alert(c);
+			} catch (err) {
+				if (err.message == "division by zero") {
+					alert("Error occured");
+				}
+			} finally {
+				alert("Is an error occured?");
+			}
+			*/
+			//kivétel dobása, finally ág
+			
+			/*
+			window.onerror = function(message, url, line, col, error) {
+				alert(message + " at line " + line + " column " +
+					col + " of\n" + url);
+			}
+			function a() {
+				b();
+			}
+			a();
+			*/
+			//hiba kiszűrése try nélküli szkriptben
+			
+			//CUSTOM ERRORS, EXTENDING ERROR
+			
+			/*
+			class ValidationError extends Error {
+				constructor(message) {
+					super(message);
+					this.name = "ValidationError";
+				}
+			}
+			class PropertyRequiredError extends ValidationError {
+				constructor(property) {
+					super("No property: " + property);
+					this.name = "propertyRequiredError";
+					this.property = property;
+				}
+			}
+			function a(json) {
+				let user = JSON.parse(json);
+				if (!user.name) {
+					throw new PropertyRequiredError("name");
+				}
+				if (!user.age) {
+					throw new PropertyRequiredError("age");
+				}
+				return user;
+			}
+			try {
+				let user = a('{"age": 25}');
+			} catch (err) {
+				if (err instanceof ValidationError) {
+					alert("Invalid data: " + err.message);
+				}
+				else if (err instanceof SyntaxError) {
+					alert("JSON syntax error: " + err.message);
+				}
+				else {
+					throw err;
+				}
+			}
+			*/
+			//saját error készítése és kiszűrése, öröklés saját
+			//definiálású kivételből
+		</script>
+	</body>
+</html>

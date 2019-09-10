@@ -1,0 +1,524 @@
+<html>
+	<body>
+		<script>
+			"use script"
+			
+			//KEZDÉS: INTRODUCTION: CALLBACKS
+			//VÉGE:
+			
+			//INTRODUCTION: CALLBACKS
+			
+			/*
+			function loadScript(src, callback) {
+				let script = document.createElement("script");
+				script.src = src;
+				script.onload = () => callback(null, script);
+				script.onerror = () => callback(new Error(
+					"Could not open script " + src));
+				document.head.append(script);
+			}
+			loadScript("./script1.js", function(error, script) {
+				if (!error) {
+					alert("Script loaded.");
+				} else {
+					alert(error.message);
+				}
+			});
+			//f1(); //hiba
+			*/
+			//Úgynevezett callback létrehozása - az a lényeg, hogy pl.
+			// egy külső szkript betöltése aszinkron művelet, és ha a
+			// szkriptbetöltő függvényünk után helyezzük el az egyik
+			// benne definiált függvényt, akkor valószínűleg nem fogja
+			// megtalálni, mert még nem töltött be. Erre hozzuk létre a
+			// callback-et, amivel azt érjük el, hogy a szkriptbetöltő
+			// függvényünkben futtatjuk a szkriptet, így láthatóak a
+			// benne lévő dolgok (pl függvények). Továbbfejlesztve
+			// hibakezeléssel.
+			
+			//PROMISE
+			
+			/*
+			let p1 = new Promise(function(resolve, reject) {
+				setTimeout(() => resolve("done"), 1000);
+			});
+			p1.then(
+				result => alert(result),
+				error => alert(error)
+			);
+			let p2 = new Promise(function(resolve, reject) {
+				setTimeout(() => reject(new Error("Hoppá")), 1000);
+			});
+			p2.then(
+				result => alert(result),
+				error => alert(error)
+			);
+			p2.catch(alert);
+			p1.finally(() => alert("End"));
+			*/
+			//Promise használata, hasonlít a callbackhez, de van néhány
+			// különbség. A then-nel tudjuk kezelni a sikeres és a
+			// sikertelen eredményt, a catch-csel csak a sikertelent,
+			// a finally pedig az eredménytől függően lefut
+			
+			//PROMISES CHAINING
+			
+			/*
+			new Promise(function(resolve, reject) {
+				setTimeout(() => resolve(1), 1000);
+			}).then(function(result) {
+				alert(result);
+				return result * 3;
+			}).then(function(result) {
+				alert(result);
+				return result * 3;
+			}).then(function(result) {
+				alert(result);
+				return result * 3;
+			});
+			*/
+			//alap példa promise-ok láncolására
+			
+			/*
+			new Promise(function(resolve, reject) {
+				setTimeout(() => resolve(1), 1000);
+			}).then(function(result) {
+				alert(result);
+				return new Promise((resolve, reject) => {
+					setTimeout(() => resolve(result * 2), 1000);
+				});
+			}).then(function(result) {
+				alert(result);
+				return new Promise((resolve, reject) => {
+					setTimeout(() => resolve(result * 2), 1000);
+				});
+			}).then(function(result) {
+				alert(result);
+			});
+			*/
+			//példa promise láncolására, ezzel elértük, hogy a felugró
+			// ablak leütése után valóban egy másodperccel jelenik meg
+			// a következő felugró ablak
+			
+			/*
+			function loadScript(src) {
+				return new Promise(function(resolve, reject) {
+					let script = document.createElement("script");
+					script.src = src;
+					script.onload = () => resolve(script);
+					script.onerror = () => reject(new Error(
+						"Script " + src + " not loaded."));
+					document.head.append(script);
+				});
+			}
+			loadScript("./script1.js")
+			.then(function(script) {
+					return loadScript("./script2.js");
+			}).then(function (script) {
+				f1();
+			});
+			*/
+			//szkript betöltése promise használatával
+			
+			//ERROR HANDLING WITH PROMISES
+			
+			/*
+			new Promise((resolve, reject) => {
+				throw new Error("Hoppá");
+			}).catch(alert);
+			new Promise((resolve, reject) => {
+				reject(new Error("Hoppá"));
+			}).catch(alert);
+			new Promise((resolve, reject) => {
+				resolve("ok");
+			}).then((result) => {
+				a();
+				throw new Error("Hoppá");
+			}).catch(alert);
+			*/
+			//hibakezelés promise használatával, a promise tartalmaz
+			// egy implicit try-catch blokkot
+			
+			/*
+			new Promise((resolve, reject) => {
+				throw new Error("Hoppá");
+			}).catch(function(error) {
+				if (error instanceof SyntaxError) {
+					alert("Only a syntax error");
+				}
+				else {
+					throw error;
+				}
+			}).then(function() {
+				alert("Ezt nem kellene látni");
+			}).catch(error => {
+				alert("Ismeretlen hiba: " + error);
+			});
+			*/
+			//kivétel továbbdobása promise használatával
+			
+			//PROMISE API
+			
+			/*
+			Promise.all([
+				new Promise(resolve => setTimeout(
+					() => resolve(1), 1000)),
+				new Promise(resolve => setTimeout(
+					() => resolve(4), 2000)),
+				new Promise(resolve => setTimeout(
+					() => resolve(2), 1000))
+			]).then(alert);
+			*/
+			//Promise.all - a then akkor fut le, amikor az argumentum-
+			// ban megadott tömb minden eleme végzett. Ha csak az egyik
+			// elem sikertelen eredményt ad, akkor az egész Promise.all
+			// sikertelen eredménnyel zárul
+			
+			/*
+			let arr = [
+				{num : 1, time : 1000},
+				{num : 3, time : 1500},
+				{num : 6, time : 1200}
+			];
+			let arr2 = arr.map(item => 
+				new Promise(resolve => setTimeout(
+				() => resolve(item.num), item.time))
+			);
+			Promise.all(
+				arr2
+			).then(alert);
+			*/
+			//ugyanaz, mint az előző, csak máshogy
+			
+			/*
+			Promise.allSettled([
+				new Promise(resolve => setTimeout(
+					() => resolve(1), 1000)),
+				new Promise((resolve, reject) => setTimeout(
+					() => reject(new Error("Hoppá")), 1000)),
+				new Promise(resolve => setTimeout(
+					() => resolve(4), 2000)),
+				new Promise(resolve => setTimeout(
+					() => resolve(2), 1000))
+			]).then(alert)
+			.catch(function(error) {
+				alert(error.message);
+			});
+			*/
+			//Promise.allSettled - minden promise-t futtat az argumen-
+			// tumban eredménytől függetlenül
+			
+			/*
+			let arr = [
+				{num : 1, time : 1201},
+				{num : 3, time : 1500},
+				{num : 6, time : 1200}
+			];
+			let arr2 = arr.map(item => 
+				new Promise(resolve => setTimeout(
+				() => resolve(item.num), item.time))
+			);
+			Promise.race(
+				arr2
+			).then(alert);
+			*/
+			//Promise.race - csak a leggyorsabban lefutó promise-szal
+			// foglalkozik, a többivel nem
+			
+			//PROMISIFICATION
+			
+			/*
+			function loadScript(src, callback) {
+				let script = document.createElement("script");
+				script.src = src;
+				script.onload = () => callback(null, script);
+				script.onerror = () => callback(new Error(
+					"Could not open script " + src));
+				document.head.append(script);
+			}
+			let loadScriptPromise = function(src) {
+				return new Promise((resolve, reject) => {
+					loadScript(src, (err, script) => {
+						if (err) reject(err)
+						else resolve(script);
+					});
+				})
+			}
+			loadScriptPromise("./script1.js")
+			.then(() => f1());
+			*/
+			//szkript betöltése promise használatával
+			
+			/*
+			function loadScript(src, callback) {
+				let script = document.createElement("script");
+				script.src = src;
+				script.onload = () => callback(null, script);
+				script.onerror = () => callback(new Error(
+					"Could not open script " + src));
+				document.head.append(script);
+			}
+			function promisify(f) {
+				return function(...args) {
+					return new Promise((resolve, reject) => {
+						function callback(err, result) {
+							if (err) {
+								return reject(err);
+							}
+							else {
+								resolve(result);
+							}
+						}
+						args.push(callback);
+						f.call(this, ...args);
+					});
+				};
+			}
+			let loadScriptPromise = promisify(loadScript);
+			loadScriptPromise("./script1.js").then(() => f1());
+			*/
+			//ez egy olyan függvény, ami a paraméterként megadott függ-
+			// vényt promise-szám alakítja
+			
+			//MICROTASKS
+			
+			/*
+			let promise = Promise.resolve();
+			promise.then(() => alert("promise done"));
+			alert("code finished");
+			*/
+			//a második alert előbb fut le - ha eredeti sorrenden akar-
+			// juk futtatni, akkor then-be kell rakni
+			
+			//ASYNC/AWAIT
+			
+			/*
+			async function a() {
+				return 1;
+			}
+			a().then(alert);
+			async function b() {
+				return Promise.resolve(1);
+			}
+			b().then(alert);
+			*/
+			//async használata - azt jelenti, hogy a függvény egy
+			// promise-t ad vissza a return eredményével
+			
+			/*
+			async function a() {
+				let promise = new Promise((resolve, reject) => {
+					setTimeout(() => resolve(1), 1000)
+				});
+				let result = await promise;
+				alert(result);
+			}
+			a();
+			*/
+			//await használata - azt jelenti, hogy megvárja, amíg a
+			// kapott promise kiértékelődik, és csak utána folytatódik
+			// az utasítások végrehajtása, csak async-kal együtt
+			// használható
+			
+			/*
+			class Waiter {
+				async wait() {
+					return await Promise.resolve(1);
+				}
+			}
+			new Waiter().wait().then(alert);
+			*/
+			//az async osztályban is használható
+			
+			/*
+			async function a() {
+				try {
+					let user = await JSON.parse('{"name": Gaben}');
+				} catch(err) {
+					alert(err);
+				}
+			}
+			a();
+			async function b() {
+				let user = await JSON.parse('{"name": Gaben}');
+			}
+			b().catch(alert);
+			*/
+			//két módja annak, hogy hogyan kezeljük a hibát async
+			// típusú függvényben
+			
+			//GENERATORS
+			
+			/*
+			function* generateSequence() {
+				yield 1;
+				yield 2;
+				return 3;
+			}
+			let generator = generateSequence();
+			let one = generator.next();
+			alert(JSON.stringify(one));
+			*/
+			//generátor készítése - több értéket is vissza tud adni
+			// szekvenciálisan
+			
+			/*
+			function* generateSequence() {
+				yield 1;
+				yield 2;
+				return 3;
+			}
+			let generator = generateSequence();
+			for (let value of generator) {
+				alert(value);
+			}
+			*/
+			//a generátor iterálható, de az utolsó értéket figyelmen
+			// kívül hagyja, mert return szó van előtte, és nem yield
+			
+			/*
+			function* generateSequence() {
+				yield 1;
+				yield 2;
+				return 3;
+			}
+			let sequence = [0, ...generateSequence()];
+			alert(sequence);
+			*/
+			//a generátor használható a maradék operátornál is
+			
+			/*
+			let range = {
+				from: 1,
+				to: 5,
+				*[Symbol.iterator]() {
+					for (let value = this.from; value <= this.to;
+						value++) {
+						yield value;	
+					}
+				}
+			};
+			alert([...range]);
+			*/
+			//saját intervallum létrehozása generátorral (sokkal egy-
+			// szerűbb a kód, mint korábban
+			
+			/*
+			function* generateSequence(start, end) {
+				for (let i = start; i <= end; i++) yield i;
+			}
+			function* generatePasswordCodes() {
+				yield* generateSequence(48, 57);
+				yield* generateSequence(65, 90);
+				yield* generateSequence(97, 122);
+			}
+			let str = "";
+			for (let code of generatePasswordCodes()) {
+				str += String.fromCharCode(code);
+			}
+			alert(str);
+			*/
+			//generátorba ágyazott generátor
+			
+			/*
+			function* gen() {
+				let result = yield "2 + 2 = ?";
+				alert(result);
+			}
+			let generator = gen();
+			let question = generator.next().value;
+			setTimeout(() => generator.next(4), 1000);
+			*/
+			//ha a nextnek van argumentuma, akkor a yield eredménye
+			// az argumentum lesz
+			
+			/*
+			function* gen() {
+				try {
+					let result = yield "2 + 2 = ?";
+					alert(result);
+				} catch(e) {
+					alert(e);
+				}
+			}
+			let generator = gen();
+			let question = generator.next().value;
+			generator.throw(new Error("Hoppá"));
+			*/
+			//hibakaezelés generátorban
+			
+			//ASYNC ITERATORS AND GENERATORS
+			
+			/*
+			let range = {
+				from : 1,
+				to : 5,
+				[Symbol.asyncIterator]() {
+					return {
+						current : this.from,
+						last : this.to,
+						async next() {
+							await new Promise(resolve => setTimeout(
+								resolve, 1000));
+							if (this.current <= this.last) {
+								return {done : false, value :
+									this.current++};
+							}
+							else {
+								return {done : true};
+							}
+						}
+					};
+				}
+			};
+			(async () => {
+				for await (let value of range) {
+					alert(value);
+				}
+			})();
+			*/
+			//aszinkron iterátor létrehozása
+			
+			/*
+			async function* generateSequence(start, end) {
+				for (let i = start; i <= end; i++) {
+					await new Promise(resolve => setTimeout(
+						resolve, 1000));
+					yield i;
+				}
+			}
+			(async () => {
+				let generator = generateSequence(1, 5);
+				let result1 = await generator.next();
+				alert(result1.value);
+				for await (let value of generator) {
+					alert(value);
+				}
+			})();
+			*/
+			//aszinkron generátor létrehozása, illetve egy eredmény,
+			// majd a többi lekérése (itt await használandó)
+			
+			/*
+			let range = {
+				from : 1,
+				to : 5,
+				async *[Symbol.asyncIterator]() {
+					for (let value = this.from; value <= this.to;
+						value++) {
+						await new Promise(resolve => setTimeout(
+							resolve, 1000));
+						yield value;	
+					}
+				}
+			};
+			(async () => {
+				for await (let value of range) {
+					alert(value);
+				}
+			})();
+			*/
+			//aszinkron iterátor létrehozása generátorral
+		</script>
+	</body>
+</html>

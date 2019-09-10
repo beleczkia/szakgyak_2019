@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
+		<title>Sensors</title>
+		<!-- 1.) Load SAPUI5 (from a remote server), select theme and control library -->
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			id="sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.ui.core"
+			data-sap-ui-theme="sap_bluecrystal">
+		</script>
+	</head>
+	<body class="sapUiBody">
+		<script>
+			//szenzor ID címke elhelyezése a szövegdoboz fölé
+			var labelSensorID = new sap.m.Label("lab1");
+			labelSensorID.setText("Sensor ID:");
+			labelSensorID.placeAt("pl1");
+			
+			//a szenzor kiválasztása
+			
+			//a szenzorok azonosítójának lekérése OData-ból
+			var xmlhttpSensorQuery = new XMLHttpRequest();
+			var urlSensor = "https://oktnb132.inf.elte.hu:51078/sensor.xsodata/SensorData";
+			var jsonStringSensorQuery;
+			xmlhttpSensorQuery.onreadystatechange = function() {
+			    jsonStringSensorQuery = this.responseText;
+			}
+			xmlhttpSensorQuery.open("GET", urlSensor, false);
+			xmlhttpSensorQuery.send();
+			
+			//a lekért adatok parszolása, a darabolást kézzel kell végrehajtani
+			jsonStringSensorQuery = jsonStringSensorQuery.substring(18, jsonStringSensorQuery.length - 4);
+			var arraySensorQuery = jsonStringSensorQuery.split('},{');
+			var startOfStringObject;
+			var arrayOfSensors = [];
+			for (var item of arraySensorQuery) {
+				startOfStringObject = -1;
+				for (var i = 0; (i < (item.length - 2)) && (startOfStringObject == -1); i++) {
+					if (item.substring(i, i + 2) == 'id'){
+						startOfStringObject = i;
+					}
+				}
+				var itemInGoodJson = '{"' + item.substring(startOfStringObject) + '}';
+				arrayOfSensors.push(JSON.parse(itemInGoodJson));
+			}
+			
+			//szenzor ID kiválasztása a combobox-ból
+			var comboBoxSensorID = new sap.m.ComboBox("com1");
+			comboBoxSensorID.placeAt("pl2");
+			var itemToSensors;
+			for (var sensor in arrayOfSensors) {
+				itemToSensors = new sap.ui.core.Item("it" + sensor)
+				itemToSensors.setKey(sensor);
+				itemToSensors.setText(arrayOfSensors[sensor].id);
+				comboBoxSensorID.addItem(itemToSensors);
+			}
+			comboBoxSensorID.setSelectedItem(itemToSensors);
+			var valueOfComboBoxSensorID = comboBoxSensorID.getValue();
+			//függvény, amely a ComboBox értékének változásakor lefut
+			function changeValueOfSensorComboBox() {
+				var value = comboBoxSensorID.getValue();
+				valueOfComboBoxSensorID = -1
+				for (var sensor in arrayOfSensors) {
+					if (arrayOfSensors[sensor].id == value) {
+						valueOfComboBoxSensorID = value;
+					}
+				}
+				setQuery(valueOfComboBoxSensorID, valueOfComboBoxDataType);
+			}
+			comboBoxSensorID.attachSelectionChange(changeValueOfSensorComboBox);
+			
+			//tulajdonságválasztó listbox fölé helyezett címke
+			var labelDataType = new sap.m.Label("lab2");
+			labelDataType.setText("Data type:");
+			labelDataType.placeAt("pl3");
+			
+			//a tulajdonságnevek kiválasztása
+			
+			//a tulajdonságnevek lekérése OData-ból
+			var xmlhttpDataTypeQuery = new XMLHttpRequest();
+			var urlDataTypeDuery = "https://oktnb132.inf.elte.hu:51078/sensor.xsodata/WeatherData?$top=1";
+			var jsonStringDataTypeQuery;
+			xmlhttpDataTypeQuery.onreadystatechange = function() {
+			    jsonStringDataTypeQuery = this.responseText;
+			}
+			xmlhttpDataTypeQuery.open("GET", urlDataTypeDuery, false);
+			xmlhttpDataTypeQuery.send();
+			
+			//a lekért adatok parszolása
+			jsonStringDataTypeQuery = jsonStringDataTypeQuery.substring(18, jsonStringDataTypeQuery.length - 4);
+			startOfDataTypes = -1;
+			for (var i = 0; (i < (jsonStringDataTypeQuery.length - 2)) && (startOfDataTypes == -1); i++) {
+				if (jsonStringDataTypeQuery.substring(i, i + 11) == '"date_time"'){
+					startOfDataTypes = i;
+				}
+			}
+			var dataTypesInGoodJson = '{' + jsonStringDataTypeQuery.substring(startOfDataTypes) + '}';
+			var columns = JSON.parse(dataTypesInGoodJson);
+			
+			//a tulajdonság kiválasztása a combobox-ból
+			var comboBoxDataType = new sap.m.ComboBox("com2");
+			var itemToDataType;
+			for (let dataType in columns) {
+				if (dataType != 'date_time' && dataType != 'sensor_id') {
+					var itemToDataType = new sap.ui.core.Item("it" + dataType)
+					itemToDataType.setKey(dataType);
+					itemToDataType.setText(dataType);
+					comboBoxDataType.addItem(itemToDataType);
+				}
+			}
+			comboBoxDataType.setSelectedItem(itemToDataType);
+			comboBoxDataType.placeAt("pl4");
+			var valueOfComboBoxDataType = comboBoxDataType.getValue()
+			function changeValueOfDataTypeComboBox() {
+				var value = comboBoxDataType.getValue();
+				valueOfComboBoxDataType = '';
+				for (var dataType in columns) {
+					if (dataType == value) {
+						valueOfComboBoxDataType = value;
+					}
+				}
+				setQuery(valueOfComboBoxSensorID, valueOfComboBoxDataType);
+			}
+			comboBoxDataType.attachSelectionChange(changeValueOfDataTypeComboBox);
+			
+			//címke a táblázat fölé a kiválaszott szenzor sorszámával
+			var labelSelectedSensorID = new sap.m.Label("lab3");
+			labelSelectedSensorID.setText("");
+			labelSelectedSensorID.placeAt("pl5");
+			
+			//táblázat a kijövő adatoknak
+			
+			//a megfelelő lekérdezés elkészítése
+			var arrayOfData = [];
+			function setQuery(sensor_id, data_type) {
+				if (data_type == '' || sensor_id == -1) {
+					labelSelectedSensorID.setText("");
+					clearTable();
+					return;
+				}
+				var xmlhttpMainQuery = new XMLHttpRequest();
+				var urlMainQuery = "https://oktnb132.inf.elte.hu:51078/sensor.xsodata/WeatherData?$select=date_time," + data_type +
+					"&$filter=" + data_type + "%20gt%20-273%20and%20sensor_id%20eq%20" + sensor_id + "&$top=500";
+				var jsonStringMainQuery
+				xmlhttpMainQuery.onreadystatechange = function() {
+				    jsonStringMainQuery = this.responseText;
+				}
+				xmlhttpMainQuery.open("GET", urlMainQuery, false);
+				xmlhttpMainQuery.send();
+				
+				jsonStringMainQuery = jsonStringMainQuery.substring(18, jsonStringMainQuery.length - 4);
+				var arrayJsonMainQuery = jsonStringMainQuery.split('},{');
+				var startOfData;
+				arrayOfData = [];
+				for (var item of arrayJsonMainQuery) {
+					arrayJsonMainQuery = -1;
+					for (var i = 0; (i < (item.length - 2)) && (arrayJsonMainQuery == -1); i++) {
+						if (item.substring(i, i + 11) == "\"date_time\""){
+							startOfData = i;
+						}
+					}
+					var stringOfData = '{' + item.substring(startOfData) + '}';
+					arrayOfData.push(JSON.parse(stringOfData));
+				}
+				labelSelectedSensorID.setText("Sensor ID: " + sensor_id);
+				createTable(arrayOfData, data_type);
+			}
+		
+		//a táblázatot dinamikusan JS-ben hozzuk létre, az ezt kiszolgáló függvények:
+		function addCell(tr, val) {
+			var td = document.createElement('td');
+			td.innerHTML = val;
+			tr.appendChild(td);
+		}
+		
+		function addRow(tb, val1, val2) {
+			var tr = document.createElement('tr');
+			addCell(tr, val1);
+		    addCell(tr, val2);
+		    tb.appendChild(tr)
+		}
+		
+		function createTable(dataSource, data_type) {
+		    tbl = document.getElementById('tbl');
+		    clearTable();
+		    addRow(tb1, 'time', data_type);
+		    for (let key of dataSource) {
+		    	addRow(tb1, key["date_time"], key[data_type]);
+		    }
+		}
+		
+		function clearTable() {
+			tb1.innerHTML = "";
+		}
+			
+		</script>
+		<div id="pl1">
+			
+		</div>
+		<div id="pl2">
+			
+		</div>
+		<div id="pl3">
+			
+		</div>
+		<div id="pl4">
+			
+		</div>
+		<div id="pl5">
+			
+		</div>
+		<div id="pl6">
+			<table id="tb1" border = 2>
+				
+			</table>
+		</div>
+	</body>
+</html>

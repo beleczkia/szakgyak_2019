@@ -1,0 +1,38 @@
+namespace tinyworld.tinydb;
+
+context example {
+
+    /*@@layout{"layoutInfo":{"x":142,"y":86.5}}*/
+    entity countries {
+    	key country_id : Integer;
+    	country : String(100);
+    	continent_id : Integer;
+    };
+
+    /*@@layout{"layoutInfo":{"x":427,"y":118.5}}*/
+    entity continents {
+    	key continent_id : Integer;
+    	continent : String(100);
+    };
+
+    /*@@layout{"layoutInfo":{"x":107,"y":185.5}}*/
+    entity companies {
+    	key company_id : Integer;
+    	company : String(100);
+    };
+
+    /*@@layout{"layoutInfo":{"x":92,"y":339.5}}*/
+    entity products {
+    	key country_id : Integer;
+    	key company_id : Integer;
+    	product : Integer;
+    };
+
+    /*@@layout{"layoutInfo":{"x":377,"y":308.5}}*/
+    entity full_table {
+    	continent : String(100);
+    	country : String(100);
+    	company : String(100);
+    	product : Integer;
+    };
+};

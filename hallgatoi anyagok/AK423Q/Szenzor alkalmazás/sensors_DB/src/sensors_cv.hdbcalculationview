@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="sensors_cv" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="sensors_cv"/>
+<localVariables>
+  <variable id="ID">
+    <descriptions defaultDescription="ID"/>
+    <variableProperties datatype="INTEGER" length="10" scale="0" mandatory="true" defaultValue="">
+      <valueDomain type="AttributeValue">
+        <attribute name="sensor_id"/>
+      </valueDomain>
+      <selection type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="sensors.sensor_data_2">
+    <resourceUri>sensors.sensor_data_2</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="date_time"/>
+      <viewAttribute id="sensor_id"/>
+      <viewAttribute id="temperature"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="sensors.sensor_data_2"/></calculationView>
+</calculationViews>
+<logicalModel id="Projection_1" filterExpressionLanguage="SQL">
+  <attributes>
+    <attribute id="sensor_id" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="sensor_id"/>
+      <keyMapping columnObjectName="Projection_1" columnName="sensor_id"/>
+    </attribute>
+    <attribute id="date_time" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="date_time"/>
+      <keyMapping columnObjectName="Projection_1" columnName="date_time"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="DATE_TIME_CALCD" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="VARCHAR" expressionLanguage="SQL" length="7">
+        <formula>LEFT(&quot;date_time&quot;, 7)</formula>
+      </keyCalculation>
+    </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures>
+    <measure id="temperature" order="2" aggregationType="avg" measureType="simple">
+      <descriptions defaultDescription="temperature"/>
+      <measureMapping columnObjectName="Projection_1" columnName="temperature"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="72" y="192"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

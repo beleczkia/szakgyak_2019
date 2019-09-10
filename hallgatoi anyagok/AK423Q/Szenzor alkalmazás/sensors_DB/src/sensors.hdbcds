@@ -1,0 +1,26 @@
+@OData.publish : true
+context sensors {
+	entity sensor {
+		key id : Integer;
+		lat : Double;
+		lon : Double;
+	};
+	
+	entity sensor_data {
+		key date_time : String(100);
+		key sensor_id : Integer;
+		key data_type : String(100);
+		data : Integer;
+	}
+	
+	entity sensor_data_2 {
+		key date_time : String(100);
+		key sensor_id : Integer;
+		temperature : Integer;
+		humidity : Integer;
+		pm1 : Integer;
+		pm10 : Integer;
+		pm25 : Integer;
+		pressure : Integer;
+	}
+};

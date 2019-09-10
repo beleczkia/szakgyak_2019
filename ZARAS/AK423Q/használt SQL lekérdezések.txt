@@ -1,0 +1,483 @@
+SQL a társaságok alkalmazáshoz:
+
+select "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV", count(*) from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV";
+
+select "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV", count(*) from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV" having count(*)>1
+order by 1, 2, 3;
+
+select "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV", "CIM_EGYBEN", "NEMGAZD_AG_KOD", "NEMGAZD_AGAZAT_KOD", "NEMGAZD_SZAKAGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" where
+"ADOSZAM" in (select "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE" having count(distinct "TARS_ROV_NEV")>1) and
+"ASZ_EVE" in (select "ASZ_EVE" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE" having count(distinct "TARS_ROV_NEV")>1)
+order by "ADOSZAM", "ASZ_EVE";
+
+select "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV", "CIM_EGYBEN", "NEMGAZD_AG_KOD", "NEMGAZD_AGAZAT_KOD", "NEMGAZD_SZAKAGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" where
+"ADOSZAM" in (select "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV" having count(*)>1) and
+"ASZ_EVE" in (select "ASZ_EVE" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV" having count(*)>1) and
+"TARS_ROV_NEV" in (select "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "TARS_ROV_NEV" having count(*)>1)
+order by "ADOSZAM", "ASZ_EVE";
+
+select "ADOSZAM", count(distinct "NEMGAZD_AG_KOD") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM";
+select "ADOSZAM", count(distinct "NEMGAZD_AG_KOD") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM" having count(distinct "NEMGAZD_AG_KOD")>1;
+
+select "NEMGAZD_AGAZAT_KOD", count(distinct "NEMGAZD_AG_KOD") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "NEMGAZD_AGAZAT_KOD";
+select "NEMGAZD_AGAZAT_KOD", count(distinct "NEMGAZD_AG_KOD") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "NEMGAZD_AGAZAT_KOD"
+having count(distinct "NEMGAZD_AG_KOD")>1;
+
+select "ADOSZAM", count(distinct "NEMGAZD_AG_KOD") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM" having count(distinct "NEMGAZD_AG_KOD")>1;
+
+select "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD", count(*) from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new"
+group by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD" having count(*)>1;
+select "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_ROV_NEV", "CIM_EGYBEN", "NEMGAZD_AG_KOD", "NEMGAZD_AGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" where
+"ADOSZAM" in (select "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD" having count(*)>1) and
+"ASZ_EVE" in (select "ASZ_EVE" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD" having count(*)>1) and
+"NEMGAZD_SZAKAGAZAT_KOD" in (select "NEMGAZD_SZAKAGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD" having count(*)>1)
+order by 1, 2, 3;
+select * from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" where
+"ADOSZAM" in (select "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD" having count(*)>1) and
+"ASZ_EVE" in (select "ASZ_EVE" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD" having count(*)>1) and
+"NEMGAZD_SZAKAGAZAT_KOD" in (select "NEMGAZD_SZAKAGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD" having count(*)>1)
+order by "ADOSZAM", "ASZ_EVE", "NEMGAZD_SZAKAGAZAT_KOD";
+
+select "TARS_ROV_NEV", "ADOSZAM", "CIM_EGYBEN", "NEMGAZD_AG_KOD", "NEMGAZD_AGAZAT_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "ASZ_EVE", "JEGYZ_TOKE_ERT_HUF"
+from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" where
+"ADOSZAM" in (select "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE" having count(distinct "JEGYZ_TOKE_ERT_HUF")>1) and
+"ASZ_EVE" in (select "ASZ_EVE" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" group by "ADOSZAM", "ASZ_EVE" having count(distinct "JEGYZ_TOKE_ERT_HUF")>1)
+order by "ADOSZAM", "ASZ_EVE";
+
+select count(*) from (select distinct * from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new");
+
+select count(*) from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new";
+
+select count(distinct "CEGALL_KOD", "TELEPULES_KOD", "MEGYE_KOD", "ASZ_EVE", "REGIO_KOD", "ORSZAG_KOD", "TARS_TIPUS_KOD",
+	"NEMGAZD_AG_KOD", "NEMGAZD_AGAZAT_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "GAZD_FORM_KOD", "TARS_ROV_NEV") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new";
+
+select distinct "REGIO_KOD", "ORSZAG" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re";
+
+select "MEGYE_KOD", count(distinct "REGIO_KOD") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "MEGYE_KOD" having count(distinct "REGIO_KOD")>1;
+
+select "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "TELEPULES_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD", count(*)
+from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "TELEPULES_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+having count(*)>1;
+
+select * from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re";
+
+
+select "TARS_ROV_NEV", "ADOSZAM", max("TARS_HOSZ_NEV") as d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "TARS_ROV_NEV" in
+(select distinct "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "TARS_ROV_NEV" having count(distinct "TARS_HOSZ_NEV")>1)
+group by "TARS_ROV_NEV", "ADOSZAM";
+
+/*update "GABENS_SCHEMA"."test3_cdsa.tarsasagok" x set x."TARS_HOSZ_NEV"=(
+select d from
+(
+	select "TARS_ROV_NEV", "ADOSZAM", max("TARS_HOSZ_NEV") as d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "TARS_ROV_NEV" in
+	(select distinct "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" group by "TARS_ROV_NEV" having count(distinct "TARS_HOSZ_NEV")>1)
+	group by "TARS_ROV_NEV", "ADOSZAM" order by 1
+) y where x."TARS_ROV_NEV"=y."TARS_ROV_NEV" and x."ADOSZAM"=y."ADOSZAM")
+where x."TARS_ROV_NEV" in (
+	select "TARS_ROV_NEV" as d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "TARS_ROV_NEV" in
+	(select distinct "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" group by "TARS_ROV_NEV" having count(distinct "TARS_HOSZ_NEV")>1)
+	group by "TARS_ROV_NEV"
+);*/
+
+--delete from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re";
+
+select "TARS_HOSZ_NEV", "ADOSZAM", max("TARS_ROV_NEV") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "TARS_HOSZ_NEV" in
+(select "TARS_HOSZ_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "TARS_HOSZ_NEV" having count(distinct "TARS_ROV_NEV")>1)
+group by "TARS_HOSZ_NEV", "ADOSZAM" order by 1;
+
+select "TARS_HOSZ_NEV", "ADOSZAM", "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "TARS_HOSZ_NEV" in
+(select "TARS_HOSZ_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "TARS_HOSZ_NEV" having count(distinct "TARS_ROV_NEV")>1);
+
+/*update "GABENS_SCHEMA"."test3_cdsa.tarsasagok" x set x."TARS_ROV_NEV"=(
+select d from (
+	select "TARS_HOSZ_NEV", "ADOSZAM", max("TARS_ROV_NEV") as d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "TARS_HOSZ_NEV" in
+	(select "TARS_HOSZ_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" group by "TARS_HOSZ_NEV" having count(distinct "TARS_ROV_NEV")>1)
+	group by "TARS_HOSZ_NEV", "ADOSZAM"
+) y where x."TARS_HOSZ_NEV"=y."TARS_HOSZ_NEV" and x."ADOSZAM"=y."ADOSZAM")
+where x."TARS_HOSZ_NEV" in
+(
+	select "TARS_HOSZ_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "TARS_HOSZ_NEV" in
+	(select "TARS_HOSZ_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" group by "TARS_HOSZ_NEV" having count(distinct "TARS_ROV_NEV")>1)
+	group by "TARS_HOSZ_NEV"
+);*/
+
+select "TARS_ROV_NEV", "TARS_HOSZ_NEV", "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "TARS_ROV_NEV" in
+(select "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "TARS_ROV_NEV" having count(distinct "ADOSZAM")>1);
+
+
+select distinct y."TARS_ROV_NEV", x."TARS_ROV_NEV", x."ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" x, "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" y
+where x."TARS_ROV_NEV" like ('%'||y."TARS_ROV_NEV"||'%') and x."TARS_ROV_NEV"!=y."TARS_ROV_NEV" and x."ADOSZAM"=y."ADOSZAM" order by 2, 1;
+
+
+select distinct "TARS_ROV_NEV", "TARS_HOSZ_NEV", "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" order by 1, 2;
+
+select distinct "TELEPULES_KOD", count(distinct "TELEPULES") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "TELEPULES_KOD" order by 1;
+
+select distinct "TARS_ROV_NEV", count(distinct "CIM_EGYBEN") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "CIM_EGYBEN" like ('%'||"TELEPULES"||'%')
+group by "TARS_ROV_NEV" having count(distinct "CIM_EGYBEN")>1;
+
+select distinct "TARS_ROV_NEV", "ADOSZAM", "CIM_EGYBEN" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "TARS_ROV_NEV" in
+(
+	select distinct "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "CIM_EGYBEN" like ('%'||"TELEPULES"||'%')
+	group by "TARS_ROV_NEV" having count(distinct "CIM_EGYBEN")>1
+);
+
+select "TARS_ROV_NEV", "ADOSZAM", count(distinct "ASZ_EVE") d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "TARS_ROV_NEV", "ADOSZAM";
+
+select sum(d) from (select "TARS_ROV_NEV", "ADOSZAM", count(distinct "ASZ_EVE") d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" group by "TARS_ROV_NEV", "ADOSZAM");
+
+select "TARS_ROV_NEV", "ADOSZAM", min("CIM_EGYBEN") as d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "TARS_ROV_NEV" in
+(select distinct "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "CIM_EGYBEN" like ('%'||"TELEPULES"||'%')
+	group by "TARS_ROV_NEV" having count(distinct "CIM_EGYBEN")>1
+) group by "TARS_ROV_NEV", "ADOSZAM";
+
+/*update "GABENS_SCHEMA"."test3_cdsa.tarsasagok" x set x."CIM_EGYBEN"=(
+	select d from (
+		select "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", min("CIM_EGYBEN") as d from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "TARS_ROV_NEV" in
+		(select distinct "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "CIM_EGYBEN" like ('%'||"TELEPULES"||'%')
+			group by "TARS_ROV_NEV" having count(distinct "CIM_EGYBEN")>1
+		) group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE"
+	) y where x."TARS_ROV_NEV"=y."TARS_ROV_NEV" and x."ADOSZAM"=y."ADOSZAM" and x."ASZ_EVE"=y."ASZ_EVE")
+where x."TARS_ROV_NEV" in (
+	select "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "TARS_ROV_NEV" in
+	(select distinct "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok" where "CIM_EGYBEN" like ('%'||"TELEPULES"||'%')
+	group by "TARS_ROV_NEV" having count(distinct "CIM_EGYBEN")>1)
+);*/ -- figyelembe kellett volna venni az asz_eve oszlopot is, így kb 1% adat elveszett
+
+
+/*insert into "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek"("TARS_ROV_NEV", "TARS_HOSZ_NEV", "CIM", "ADOSZAM")
+select distinct "TARS_ROV_NEV", "TARS_HOSZ_NEV", "CIM_EGYBEN", "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" order by 1, 2, 3, 4;*/
+
+/*insert into "GABENS_SCHEMA"."test3_cdsa.teljes_tabla"("NEMGAZD_AG_KOD", "GAZD_FORM_KOD", "TARS_TIPUS_KOD", "TARS_ROV_NEV",
+		"ADOSZAM", "NEMGAZD_SZAKAGAZAT_KOD", "NEMGAZD_AGAZAT_KOD", "ORSZAG_KOD", "TELEPULES_KOD", "REGION_KOD", "MEGYE_KOD", "ASZ_EVE", "JEGYZ_TOKE_ERT_HUF"
+	, "CEGALL_KOD"
+)
+select distinct "NEMGAZD_AG_KOD", "GAZD_FORM_KOD", "TARS_TIPUS_KOD", "TARS_ROV_NEV",
+		"ADOSZAM", "NEMGAZD_SZAKAGAZAT_KOD", "NEMGAZD_AGAZAT_KOD", "ORSZAG_KOD", "TELEPULES_KOD", "REGIO_KOD", "MEGYE_KOD", "ASZ_EVE", "JEGYZ_TOKE_ERT_HUF"
+		, "CEGALL_KOD"
+from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re";
+
+delete from "GABENS_SCHEMA"."test3_cdsa.teljes_tabla";*/
+
+
+select count(distinct "NEMGAZD_SZAKAGAZAT_MEGNEV"), "NEMGAZD_SZAKAGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+group by "NEMGAZD_SZAKAGAZAT_KOD" having count(distinct "NEMGAZD_SZAKAGAZAT_MEGNEV")>1;
+
+select distinct "NEMGAZD_SZAKAGAZAT_MEGNEV", "NEMGAZD_SZAKAGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" order by 2, 1;
+
+select * from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re";
+
+select * from "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek" where "ADOSZAM" in
+(select "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek"
+group by "ADOSZAM" having count("TARS_ROV_NEV")>1) order by 3;
+
+select distinct * from (select "TARS_ROV_NEV", "ADOSZAM", "TARS_HOSZ_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek" where "TARS_ROV_NEV" in
+(select "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek"
+group by "TARS_ROV_NEV", "ADOSZAM" having count("TARS_HOSZ_NEV")>1));
+
+select * from "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek" where "TARS_ROV_NEV" in
+(select "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek"
+group by "TARS_ROV_NEV", "ADOSZAM" having count("TARS_HOSZ_NEV")>1);
+
+create table tarsasagok_joinolva as
+	(select j."TARS_ROV_NEV", j."TARS_HOSZ_NEV", j."CIM", k."TARS_TIPUS_MEGNEV", k."TARS_TIPUS_KOD", j."ADOSZAM", c."GAZD_FORM", c."GAZD_FORM_KOD",
+		b."CEGALL", b."CEGALL_KOD", e."NEMGAZD_AG_MEGNEV", e."NEMGAZD_AG_KOD", f."NEMGAZD_AGAZAT_MEGNEV", f."NEMGAZD_AGAZAT_KOD",
+		g."NEMGAZD_SZAKAGAZAT_MEGNEV", g."NEMGAZD_SZAKAGAZAT_KOD", a."JEGYZ_TOKE_ERT_HUF",
+		h."ORSZAG", h."ORSZAG_KOD", i."REGIO", i."REGION_KOD", d."MEGYE", d."MEGYE_KOD", l."TELEPULES", l."TELEPULES_KOD", a."ASZ_EVE" from
+	"GABENS_SCHEMA"."test3_cdsa.teljes_tabla" a,
+	"GABENS_SCHEMA"."test3_cdsa.ceg_allok" b,
+	"GABENS_SCHEMA"."test3_cdsa.gazd_formok" c,
+	"GABENS_SCHEMA"."test3_cdsa.megyek" d,
+	"GABENS_SCHEMA"."test3_cdsa.nemgazd_agak" e,
+	"GABENS_SCHEMA"."test3_cdsa.nemgazd_agazatok" f,
+	"GABENS_SCHEMA"."test3_cdsa.nemgazd_szakagazatok" g,
+	"GABENS_SCHEMA"."test3_cdsa.orszagok" h,
+	"GABENS_SCHEMA"."test3_cdsa.regiok" i,
+	"GABENS_SCHEMA"."test3_cdsa.tarsasagnevek" j,
+	"GABENS_SCHEMA"."test3_cdsa.tars_tipusok" k,
+	"GABENS_SCHEMA"."test3_cdsa.telepulesek" l
+where
+	a."TARS_ROV_NEV"=j."TARS_ROV_NEV" and
+	a."ADOSZAM"=j."ADOSZAM" and
+	a."CEGALL_KOD"=b."CEGALL_KOD" and
+	a."GAZD_FORM_KOD"=c."GAZD_FORM_KOD" and
+	a."MEGYE_KOD"=d."MEGYE_KOD" and
+	a."NEMGAZD_AG_KOD"=e."NEMGAZD_AG_KOD" and
+	a."NEMGAZD_AGAZAT_KOD"=f."NEMGAZD_AGAZAT_KOD" and
+	a."NEMGAZD_SZAKAGAZAT_KOD"=g."NEMGAZD_SZAKAGAZAT_KOD" and
+	a."ORSZAG_KOD"=h."ORSZAG_KOD" and
+	a."REGION_KOD"=i."REGION_KOD" and
+	a."TARS_TIPUS_KOD"=k."TARS_TIPUS_KOD" and
+	a."TELEPULES_KOD"=l."TELEPULES_KOD"
+);
+
+
+
+select * from TARSASAGOK_JOINOLVA;
+
+select distinct "NEMGAZD_SZAKAGAZAT_KOD", "NEMGAZD_SZAKAGAZAT_MEGNEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" order by 1;
+
+select * from "GABENS_SCHEMA"."test3_cdsa.regiok" where "REGIO"='Nyugat-Dunántúl régió';
+
+select x."MEGYE", count(distinct z."TARS_ROV_NEV", z."ADOSZAM") from
+"GABENS_SCHEMA"."test3_cdsa.megyek" x, "GABENS_SCHEMA"."test3_cdsa.teljes_tabla" y, "GABENS_SCHEMA"."test3_cdsa.tarsasagnevek" z
+where x."MEGYE_KOD"=y."MEGYE_KOD" and y."TARS_ROV_NEV"=z."TARS_ROV_NEV" and y."ADOSZAM"=z."ADOSZAM" group by x."MEGYE";
+
+select "TARS_ROV_NEV", "ADOSZAM", count(*) from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_new" where "MEGYE"='Tolna' group by "TARS_ROV_NEV", "ADOSZAM";
+
+--AZ ÚJ TÁBLÁKAT LEÍRÓ SQL SELECT LEKÉRDEZÉSEK:
+select distinct "NEMGAZD_SZAKAGAZAT_KOD", "NEMGAZD_SZAKAGAZAT_MEGNEV", "NEMGAZD_AGAZAT_KOD" from "GABENS_SCHEMA"."t3_new.TARSASAGOK"
+where "NEMGAZD_SZAKAGAZAT_KOD" is not null order by 1;
+
+select distinct "NEMGAZD_AGAZAT_KOD", "NEMGAZD_AGAZAT_MEGNEV", "NEMGAZD_AG_KOD" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "NEMGAZD_AGAZAT_KOD" is not null order by 1;
+
+select distinct "NEMGAZD_AG_KOD", "NEMGAZD_AG_MEGNEV" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "NEMGAZD_AG_KOD" is not null order by 1;
+
+select distinct "TELEPULES_KOD", "TELEPULES", "MEGYE_KOD", "ORSZAG_KOD" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "TELEPULES_KOD" is not null order by 1;
+
+select distinct "MEGYE_KOD", "MEGYE", "REGIO_KOD" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "MEGYE_KOD" is not null order by 1;
+
+select distinct "REGIO_KOD", "REGIO" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "REGIO_KOD" is not null order by 1;
+
+select distinct "ORSZAG_KOD", "ORSZAG" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "ORSZAG_KOD" is not null order by 1;
+
+select distinct "GAZD_FORM_KOD", "GAZD_FORM" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "GAZD_FORM_KOD" is not null order by 1;
+
+select distinct "TARS_TIPUS_KOD", "TARS_TIPUS_MEGNEV" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "TARS_TIPUS_KOD" is not null order by 1;
+
+select distinct "CEGALL_KOD", "CEGALL" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "CEGALL_KOD" is not null order by 1;
+
+select distinct "ADOSZAM", "ASZ_EVE", "GAZD_FORM_KOD", "TARS_ROV_NEV", "TARS_HOSZ_NEV", "CIM_EGYBEN", "TARS_TIPUS_KOD", "CEGALL_KOD",
+	"NEMGAZD_SZAKAGAZAT_KOD", "TELEPULES_KOD", "JEGYZ_TOKE_ERT_HUF" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" order by 1, 2, 3;
+	
+	select distinct *
+from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where "TARS_ROV_NEV" in
+(
+	select "TARS_ROV_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "ADOSZAM" in
+(
+	select "ADOSZAM" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "ASZ_EVE" in
+(
+	select "ASZ_EVE" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "ORSZAG_KOD" in
+(
+	select "ORSZAG_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "GAZD_FORM_KOD" in
+(
+	select "GAZD_FORM_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "NEMGAZD_SZAKAGAZAT_KOD" in
+(
+	select "NEMGAZD_SZAKAGAZAT_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "TARS_TIPUS_KOD" in
+(
+	select "TARS_TIPUS_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "TELEPULES_KOD" in
+(
+	select "TELEPULES_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+) and "CEGALL_KOD" in
+(
+	select "CEGALL_KOD" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+	having count(*)>1
+)
+order by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD";
+select count(*) from (select distinct * from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re");
+select count(*) from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re";
+
+select distinct * from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re" where 
+("TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD") in
+(
+select "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+having count(*)>1
+order by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"	
+)
+order by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"	
+;
+
+select "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD", count(*)
+from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_re"
+group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD"
+having count(*)>1
+order by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "ORSZAG_KOD", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TARS_TIPUS_KOD", "TELEPULES_KOD", "CEGALL_KOD";
+
+select "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", count(distinct "CIM_EGYBEN") from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old"
+group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE"
+having count(distinct "CIM_EGYBEN")>1;
+
+select * from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old" where ("TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE") in
+(
+	select "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old"
+	group by "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE"
+	having count(distinct "CIM_EGYBEN")>1
+);
+
+select distinct "TARS_ROV_NEV", "ADOSZAM", "ASZ_EVE", "CIM_EGYBEN" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old";
+
+select distinct "TARS_ROV_NEV", "TARS_HOSZ_NEV" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old" order by 1;
+
+select distinct x."TARS_ROV_NEV" as veg_nelkul, x."ASZ_EVE", y."TARS_ROV_NEV" as veggel, y."TARS_HOSZ_NEV"
+from "TS2" x, "GABENS_SCHEMA"."TS2" y
+where y."TARS_ROV_NEV" like x."TARS_ROV_NEV"||'%' and y."TARS_ROV_NEV"!=x."TARS_ROV_NEV";
+
+select "CIM_EGYBEN" from "TS2";
+/*update "TS2" x set "CIM_EGYBEN"=(select distinct "CIM_EGYBEN" from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old" y
+
+	where x."TARS_HOSZ_NEV"=y."TARS_HOSZ_NEV" and
+);*/
+
+select "ADOSZAM", "ASZ_EVE"/*, count(distinct "TARS_ROV_NEV")*/ from "TS2" group by "ADOSZAM", "ASZ_EVE" having count(distinct "TARS_ROV_NEV")>1;
+
+select max("TARS_ROV_NEV"), "ADOSZAM", "ASZ_EVE" from "TS2" where ("ADOSZAM", "ASZ_EVE") in (
+	select "ADOSZAM", "ASZ_EVE"/*, count(distinct "TARS_ROV_NEV")*/ from "TS2" group by "ADOSZAM", "ASZ_EVE" having count(distinct "TARS_ROV_NEV")>1
+) group by "ADOSZAM", "ASZ_EVE";
+
+--delete from "TS2"; insert into "TS2" select distinct * from "TS3";
+
+select count(*) from (select distinct * from "TS2");
+select count(*) from
+	(select distinct "TARS_HOSZ_NEV", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TELEPULES_KOD", "ASZ_EVE", "JEGYZ_TOKE_ERT_HUF", "ADOSZAM", "CIM_EGYBEN"
+	from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old");
+select distinct "TARS_HOSZ_NEV", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TELEPULES_KOD", "ASZ_EVE", "JEGYZ_TOKE_ERT_HUF", "ADOSZAM", "CIM_EGYBEN", "TARS_ROV_NEV", count(*)
+from "GABENS_SCHEMA"."test3_cdsa.tarsasagok_old"
+group by "TARS_HOSZ_NEV", "GAZD_FORM_KOD", "NEMGAZD_SZAKAGAZAT_KOD", "TELEPULES_KOD", "ASZ_EVE", "JEGYZ_TOKE_ERT_HUF", "ADOSZAM", "CIM_EGYBEN", "TARS_ROV_NEV"
+having count(*)>1;
+
+select "ADOSZAM", "ASZ_EVE", "TELEPULES", "CIM_EGYBEN" from "TS2" where ("ADOSZAM", "ASZ_EVE") in
+(select "ADOSZAM", "ASZ_EVE" from "TS2" group by "ADOSZAM", "ASZ_EVE" having count(distinct "TELEPULES")>1) order by 1, 2;
+
+select distinct "CIM_EGYBEN" from "TS2" order by 1;
+
+select "ADOSZAM", "ASZ_EVE", count(distinct "CIM_EGYBEN") from "TS2" group by "ADOSZAM", "ASZ_EVE" having count(distinct "CIM_EGYBEN")>1;
+
+select "ADOSZAM", "ASZ_EVE", "TELEPULES", "CIM_EGYBEN" from "TS2" where ("ADOSZAM", "ASZ_EVE") in
+(select "ADOSZAM", "ASZ_EVE" from "TS2" group by "ADOSZAM", "ASZ_EVE" having count(distinct "CIM_EGYBEN")>1) order by 1, 2;
+
+select * from "TS2" where ("ADOSZAM", "ASZ_EVE", "GAZD_FORM_KOD") in (
+	select "ADOSZAM", "ASZ_EVE", "GAZD_FORM_KOD" from "TS2" group by "ADOSZAM", "ASZ_EVE", "GAZD_FORM_KOD" having count(*)>1
+);
+
+select * from "TS2" where ("ADOSZAM", "ASZ_EVE") in (
+	select "ADOSZAM", "ASZ_EVE" from "TS2" group by "ADOSZAM", "ASZ_EVE" having count(distinct "JEGYZ_TOKE_ERT_HUF")>1
+);
+
+select "ADOSZAM", "ASZ_EVE", "TELEPULES" from "TS2" where ("ADOSZAM", "ASZ_EVE") in (
+	select "ADOSZAM", "ASZ_EVE" from "TS2" group by "ADOSZAM", "ASZ_EVE" having count(distinct "TELEPULES")>1	
+) order by 1;
+
+select * from "TS2" where "ASZ_EVE"!=2013;
+
+select distinct "CEGALL_KOD", "CEGALL" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" where "CEGALL_KOD" in (
+	select "CEGALL_KOD" from "GABENS_SCHEMA"."t3_new.TARSASAGOK" group by "CEGALL_KOD" having count(distinct "CEGALL")>1
+) order by 1, 2;
+
+
+
+
+
+
+
+SQL a szenzor alkalmazáshoz:
+
+
+(select count(*) from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data");
+(select count(*) from (SELECT * FROM "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" where "data" is not null));
+
+select distinct a."date_time", a."sensor_id", (select b."data" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" b
+	where b."date_time"=a."date_time" and b."sensor_id"=a."sensor_id" and b."data_type"='temperature') temperature,
+	(select b."data" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" b
+	where b."date_time"=a."date_time" and b."sensor_id"=a."sensor_id" and b."data_type"='humidity') humidity,
+	(select b."data" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" b
+	where b."date_time"=a."date_time" and b."sensor_id"=a."sensor_id" and b."data_type"='pm1') pm1,
+	(select b."data" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" b
+	where b."date_time"=a."date_time" and b."sensor_id"=a."sensor_id" and b."data_type"='pm10') pm10,
+	(select b."data" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" b
+	where b."date_time"=a."date_time" and b."sensor_id"=a."sensor_id" and b."data_type"='pm25') pm25,
+	(select b."data" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" b
+	where b."date_time"=a."date_time" and b."sensor_id"=a."sensor_id" and b."data_type"='pressure') pressure
+from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data" a;
+
+select distinct substring("date_time", 12) from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2";
+
+select substring("date_time", 12), max("humidity") from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2" group by (substring("date_time", 12));
+
+--napi hőmérsékleti adatok
+select substring("date_time", 1, 10), max("temperature"), min("temperature"), avg("temperature")
+from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2"
+where "sensor_id" = 171 and "temperature" is not null
+group by (substring("date_time", 1, 10))
+order by 1;
+
+--havi hőmérsékleti adatok
+select substring("date_time", 1, 7), max("temperature"), min("temperature"), avg("temperature")
+from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2"
+where "sensor_id" = 171 and "temperature" is not null
+group by (substring("date_time", 1, 7))
+order by 1;
+
+--heti hőmérsékleti adatok -- hét sorszámával
+select week(cast(substring("date_time", 1, 10) as date)), max("temperature"), min("temperature"), avg("temperature")
+from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2"
+where "sensor_id" = 171 and "temperature" is not null
+group by week(cast(substring("date_time", 1, 10) as date))
+order by 1;
+
+--heti hőmérsékleti adatok - hét kezdőnapjától végnapjáig
+select
+	add_days(cast(substring("date_time", 1, 10) as date), -(mod(days_between( '1900-01-01', cast(substring("date_time", 1, 10) as date)), 7))) as first_day_of_week,
+	add_days(cast(substring("date_time", 1, 10) as date), 6-(mod(days_between( '1900-01-01', cast(substring("date_time", 1, 10) as date)), 7))) as last_day_of_week,
+	max("temperature"), min("temperature"), avg("temperature")
+from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2"
+where "sensor_id" = 171 and "temperature" is not null
+group by
+	add_days(cast(substring("date_time", 1, 10) as date), -(mod(days_between( '1900-01-01', cast(substring("date_time", 1, 10) as date)), 7))),
+	add_days(cast(substring("date_time", 1, 10) as date), 6-(mod(days_between( '1900-01-01', cast(substring("date_time", 1, 10) as date)), 7)))
+order by 1;
+
+/*
+A where feltételben a szenzor azonosítóján és az adattípuson kívül elhelyezhető az is, hogy melyik intervallumban kívánunk lekérdezni.
+A napi és a havi megadású lekérdezések magától értetődően beírhatók, a hetinél viszont megint csak el kell végezni néhány hasonló számítást,
+mint a heti lekéréseknél
+*/
+
+
+select "sensor_id", count(distinct substring("date_time", 1, 10))
+from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2"
+where "temperature" is not null
+group by "sensor_id"
+order by 2 desc, 1 asc;
+
+select distinct substring("date_time", 1, 10),
+week(cast(substring("date_time", 1, 10) as date)) as week,
+--datediff(dw, cast(substring("date_time", 1, 10) as date), cast('1900-01-01' as date))
+--mod(days_between( '1900-01-01', cast(substring("date_time", 1, 10) as date)), 7),
+add_days(cast(substring("date_time", 1, 10) as date), -(mod(days_between( '1900-01-01', cast(substring("date_time", 1, 10) as date)), 7))) as first_day_of_week,
+add_days(cast(substring("date_time", 1, 10) as date), 6-(mod(days_between( '1900-01-01', cast(substring("date_time", 1, 10) as date)), 7))) as last_day_of_week
+from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2" order by 1;
+
+SELECT days_between('1998-06-12', '1999-09-09') from dummy;
+
+SELECT distinct ROW_NUMBER() over (partition by "date_time" order by "date_time") as r, "date_time", "sensor_id" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2";
+
+select row_number() over (partition by "x" order by "date_time", "sensor_id") as row_id,
+"date_time", "sensor_id", "temperature", "humidity", "pm1", "pm10", "pm25", "pressure" from
+(select "date_time", "sensor_id", "temperature", "humidity", "pm1", "pm10", "pm25", "pressure", 0 as "x" from "SENSORS_HDI_SENSORS_DB"."sensors.sensor_data_2") order by 2, 3;

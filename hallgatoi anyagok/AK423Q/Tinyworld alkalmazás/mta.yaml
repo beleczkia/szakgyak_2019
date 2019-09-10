@@ -1,0 +1,43 @@
+ID: tinyworld
+_schema-version: '2.1'
+version: 0.0.1
+description: Tinyworld project for GFN
+modules:
+ - name: tinydb
+   type: hdb
+   path: tinydb
+   requires:
+    - name: hdi_tinydb
+
+
+ - name: tinyjs
+   type: nodejs
+   path: JS/tinyjs
+   provides:
+    - name: tinyjs_api
+      properties:
+         url: ${default-url}
+
+
+ 
+
+resources:
+ - name: hdi_tinydb
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container
+
+ - name: uaa_tinyworld
+   parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa
+   type: org.cloudfoundry.managed-service
+
+
+ - name: dest_tinyworld
+   parameters:
+      service-plan: lite
+      service: destination
+   type: org.cloudfoundry.managed-service
+

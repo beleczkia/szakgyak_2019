@@ -1,0 +1,178 @@
+@OData.publish : true
+context test3_cdsa {
+
+    /*@@layout{"layoutInfo":{"x":400.3359375,"y":-559}}*/
+    entity tarsasagok_old {
+        TARS_ROV_NEV              : String(255);
+        TARS_HOSZ_NEV             : String(255);
+        CIM_EGYBEN                : String(255);
+        TARS_TIPUS_MEGNEV         : String(255);
+        TARS_TIPUS_KOD            : Integer;
+        ADOSZAM                   : String(255);
+        GAZD_FORM                 : String(255);
+        GAZD_FORM_KOD             : Integer;
+        CEGALL                    : String(255);
+        CEGALL_KOD                : Integer;
+        NEMGAZD_AG_MEGNEV         : String(255);
+        NEMGAZD_AG_KOD            : String(255);
+        NEMGAZD_AGAZAT_MEGNEV     : String(255);
+        NEMGAZD_AGAZAT_KOD        : Integer;
+        NEMGAZD_SZAKAGAZAT_MEGNEV : String(255);
+        NEMGAZD_SZAKAGAZAT_KOD    : Integer;
+        JEGYZ_TOKE_ERT_HUF        : Double;
+        ORSZAG                    : String(255);
+        ORSZAG_KOD                : String(255);
+        REGIO                     : String(255);
+        REGIO_KOD                 : Integer;
+        MEGYE                     : String(255);
+        MEGYE_KOD                 : Integer;
+        TELEPULES                 : String(255);
+        TELEPULES_KOD             : Integer;
+        ASZ_EVE                   : Integer;
+    };
+
+    /*@@layout{"layoutInfo":{"x":-351.8515625,"y":-524}}*/
+    entity tars_tipusok {
+        key TARS_TIPUS_KOD    : Integer;
+            TARS_TIPUS_MEGNEV : String(255);
+    };
+
+    /*@@layout{"layoutInfo":{"x":-345.044921875,"y":-170}}*/
+    entity megyek {
+        key MEGYE_KOD : Integer;
+            MEGYE     : String(255);
+    };
+
+    /*@@layout{"layoutInfo":{"x":-1032.025390625,"y":-190}}*/
+    entity regiok {
+        key REGION_KOD : Integer;
+            REGIO      : String(255);
+    };
+
+    /*@@layout{"layoutInfo":{"x":-345.009765625,"y":-253}}*/
+    entity telepulesek {
+        key TELEPULES_KOD : Integer;
+            TELEPULES     : String(255);
+    };
+
+    /*@@layout{"layoutInfo":{"x":-344.96875,"y":-338}}*/
+    entity orszagok {
+        key ORSZAG_KOD : String(255);
+            ORSZAG     : String(255);
+    };
+
+    /*@@layout{"layoutInfo":{"x":-1031.619140625,"y":-296}}*/
+    entity nemgazd_agazatok {
+            NEMGAZD_AGAZAT_MEGNEV : String(255);
+        key NEMGAZD_AGAZAT_KOD    : String(255);
+    };
+
+    /*@@layout{"layoutInfo":{"x":-345.1484375,"y":-424}}*/
+    entity nemgazd_szakagazatok {
+            NEMGAZD_SZAKAGAZAT_MEGNEV : String(255);
+        key NEMGAZD_SZAKAGAZAT_KOD    : String(255);
+    };
+
+    /*@@layout{"layoutInfo":{"x":-1038.6640625,"y":-425}}*/
+    entity tarsasagnevek {
+        TARS_ROV_NEV  : String(255);
+        TARS_HOSZ_NEV : String(255);
+        ADOSZAM       : String(255);
+        CIM           : String(255);
+    }
+
+    /*@@layout{"layoutInfo":{"x":-1039.1953125,"y":-524}}*/
+    entity gazd_formok {
+            GAZD_FORM     : String(255);
+        key GAZD_FORM_KOD : Integer;
+    }
+
+    /*@@layout{"layoutInfo":{"x":-352.18359375,"y":-629}}*/
+    entity ceg_allok {
+            CEGALL     : String(255);
+        key CEGALL_KOD : Integer;
+    }
+
+    /*@@layout{"layoutInfo":{"x":-1039.150390625,"y":-630}}*/
+    entity nemgazd_agak {
+            NEMGAZD_AG_MEGNEV : String(255);
+        key NEMGAZD_AG_KOD    : String(255);
+    }
+
+    /*@@layout{"layoutInfo":{"x":-687.45703125,"y":-512}}*/
+    entity teljes_tabla {
+        NEMGAZD_AG_KOD         : String(255);
+        CEGALL_KOD             : Integer;
+        GAZD_FORM_KOD          : Integer;
+        TARS_TIPUS_KOD         : Integer;
+        TARS_ROV_NEV           : String(255);
+        ADOSZAM                : String(255);
+        NEMGAZD_SZAKAGAZAT_KOD : String(255);
+        NEMGAZD_AGAZAT_KOD     : String(255);
+        ORSZAG_KOD             : String(255);
+        TELEPULES_KOD          : Integer;
+        REGION_KOD             : Integer;
+        MEGYE_KOD              : Integer;
+        ASZ_EVE                : Integer;
+        JEGYZ_TOKE_ERT_HUF     : Double;
+    }
+
+    /*@@layout{"layoutInfo":{"x":134.3515625,"y":-560}}*/
+    entity tarsasagok_re {
+        TARS_ROV_NEV              : String(255);
+        TARS_HOSZ_NEV             : String(255);
+        CIM_EGYBEN                : String(255);
+        TARS_TIPUS_MEGNEV         : String(255);
+        TARS_TIPUS_KOD            : Integer;
+        ADOSZAM                   : String(255);
+        GAZD_FORM                 : String(255);
+        GAZD_FORM_KOD             : Integer;
+        CEGALL                    : String(255);
+        CEGALL_KOD                : Integer;
+        NEMGAZD_AG_MEGNEV         : String(255);
+        NEMGAZD_AG_KOD            : String(255);
+        NEMGAZD_AGAZAT_MEGNEV     : String(255);
+        NEMGAZD_AGAZAT_KOD        : Integer;
+        NEMGAZD_SZAKAGAZAT_MEGNEV : String(255);
+        NEMGAZD_SZAKAGAZAT_KOD    : Integer;
+        JEGYZ_TOKE_ERT_HUF        : Double;
+        ORSZAG                    : String(255);
+        ORSZAG_KOD                : String(255);
+        REGIO                     : String(255);
+        REGIO_KOD                 : Integer;
+        MEGYE                     : String(255);
+        MEGYE_KOD                 : Integer;
+        TELEPULES                 : String(255);
+        TELEPULES_KOD             : Integer;
+        ASZ_EVE                   : Integer;
+    };
+    
+    entity tarsasagok_new {
+        TARS_ROV_NEV              : String(255);
+        TARS_HOSZ_NEV             : String(255);
+        CIM_EGYBEN                : String(255);
+        TARS_TIPUS_MEGNEV         : String(255);
+        TARS_TIPUS_KOD            : Integer;
+        ADOSZAM                   : String(255);
+        GAZD_FORM                 : String(255);
+        GAZD_FORM_KOD             : Integer;
+        CEGALL                    : String(255);
+        CEGALL_KOD                : Integer;
+        NEMGAZD_AG_MEGNEV         : String(255);
+        NEMGAZD_AG_KOD            : String(255);
+        NEMGAZD_AGAZAT_MEGNEV     : String(255);
+        NEMGAZD_AGAZAT_KOD        : Integer;
+        NEMGAZD_SZAKAGAZAT_MEGNEV : String(255);
+        NEMGAZD_SZAKAGAZAT_KOD    : Integer;
+        JEGYZ_TOKE_ERT_HUF        : Double;
+        ORSZAG                    : String(255);
+        ORSZAG_KOD                : String(255);
+        REGIO                     : String(255);
+        REGIO_KOD                 : Integer;
+        MEGYE                     : String(255);
+        MEGYE_KOD                 : Integer;
+        TELEPULES                 : String(255);
+        TELEPULES_KOD             : Integer;
+        ASZ_EVE                   : Integer;
+    };
+};
