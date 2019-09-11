@@ -1,0 +1,41 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+		<div style="text-align:center">
+		  <h1>
+			Welcome to {{ title }}!
+		  </h1>
+		  <button (click)="MakeCoords()">Kódolatlan címek long-lat kódolása</button>
+		  <!--<button (click)="MakeAddresses()">Kódok címekké kódolása</button>-->
+		  <span #btnSpan></span>
+		  <br>
+		</div>
+			<table style="float:left" border=1>
+				<tr>
+					<th>Név</th>
+					<th>Cím</th>
+					<th>Alapítás éve</th>
+					<th>Geokoordináták megjelenítése</th>
+				</tr>
+				<tr *ngFor="let tarsasag of tarsasagok">
+					<td style="width: 400px">{{ tarsasag.TARS_ROV_NEV }}</td>
+					<td *ngIf="tarsasag.CIM; else elseBlock">{{ tarsasag.CIM}}</td>
+					<ng-template #elseBlock>
+						<td>Ismeretlen</td>
+					</ng-template>
+					<td>{{ tarsasag.ASZ_EVE }}</td>
+					<td>
+						<button *ngIf="tarsasag.CIM" (click)="Geocode(tarsasag)">Ok</button>
+					</td>
+				</tr>
+			</table>
+			<div>
+				<img style="position:fixed" #mapImg/>
+				<span style="position:fixed" #coordSpan></span>
+			</div>
+	</body>
+</html>

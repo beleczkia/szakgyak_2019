@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="calc_tarsasagok_h" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="calc_tarsasagok_h"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="cs.TARSASAGOK_H">
+    <resourceUri>cs.TARSASAGOK_H</resourceUri>
+  </DataSource>
+  <DataSource id="cs.NEMGAZD">
+    <resourceUri>cs.NEMGAZD</resourceUri>
+  </DataSource>
+  <DataSource id="cs.HELY">
+    <resourceUri>cs.HELY</resourceUri>
+  </DataSource>
+  <DataSource id="cs.CIM_REGI_UJ">
+    <resourceUri>cs.CIM_REGI_UJ</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Tarsasagok">
+    <viewAttributes>
+      <viewAttribute id="TARS_ROV_NEV"/>
+      <viewAttribute id="TARS_HOSZ_NEV"/>
+      <viewAttribute id="ADOSZAM"/>
+      <viewAttribute id="JEGYZ_TOKE_ERT_HUF"/>
+      <viewAttribute id="ASZ_EVE"/>
+      <viewAttribute id="CEGALL_KOD"/>
+      <viewAttribute id="GAZD_FORM_KOD"/>
+      <viewAttribute id="TARS_TIPUS_KOD"/>
+      <viewAttribute id="HELY_KOD"/>
+      <viewAttribute id="NEMGAZD_KOD"/>
+      <viewAttribute id="CIM_EGYBEN_CIM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="cs.TARSASAGOK_H">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_ROV_NEV" source="TARS_ROV_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_HOSZ_NEV" source="TARS_HOSZ_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADOSZAM" source="ADOSZAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JEGYZ_TOKE_ERT_HUF" source="JEGYZ_TOKE_ERT_HUF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASZ_EVE" source="ASZ_EVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CEGALL_KOD" source="CEGALL.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GAZD_FORM_KOD" source="GAZD_FORM.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_TIPUS_KOD" source="TARS_TIPUS.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HELY_KOD" source="HELY.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NEMGAZD_KOD" source="NEMGAZD.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CIM_EGYBEN_CIM" source="CIM_EGYBEN.CIM"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Nemgazd">
+    <viewAttributes>
+      <viewAttribute id="SZAKAGAZAT_KOD"/>
+      <viewAttribute id="AGAZAT_KOD"/>
+      <viewAttribute id="AG_KOD"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="cs.NEMGAZD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SZAKAGAZAT_KOD" source="SZAKAGAZAT.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGAZAT_KOD" source="AGAZAT.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AG_KOD" source="AG.KOD"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Hely">
+    <viewAttributes>
+      <viewAttribute id="TELEPULES_KOD"/>
+      <viewAttribute id="MEGYE_KOD"/>
+      <viewAttribute id="REGIO_KOD"/>
+      <viewAttribute id="ORSZAG_KOD"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="cs.HELY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TELEPULES_KOD" source="TELEPULES.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEGYE_KOD" source="MEGYE.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGIO_KOD" source="REGIO.KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORSZAG_KOD" source="ORSZAG.KOD"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Uj">
+    <viewAttributes>
+      <viewAttribute id="REGI_CIM"/>
+      <viewAttribute id="UJ"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="cs.CIM_REGI_UJ">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGI_CIM" source="REGI.CIM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UJ" source="UJ"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Facts_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Facts" multiJoinCentralTable="Tarsasagok" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="TARS_ROV_NEV"/>
+      <viewAttribute id="TARS_HOSZ_NEV"/>
+      <viewAttribute id="ADOSZAM"/>
+      <viewAttribute id="JEGYZ_TOKE_ERT_HUF" aggregationType="sum"/>
+      <viewAttribute id="ASZ_EVE"/>
+      <viewAttribute id="CEGALL_KOD"/>
+      <viewAttribute id="GAZD_FORM_KOD"/>
+      <viewAttribute id="TARS_TIPUS_KOD"/>
+      <viewAttribute id="REGI_CIM"/>
+      <viewAttribute id="UJ"/>
+      <viewAttribute id="HELY_KOD"/>
+      <viewAttribute id="NEMGAZD_KOD"/>
+      <viewAttribute hidden="true" id="JOIN$CIM_EGYBEN_CIM$REGI_CIM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Tarsasagok">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_ROV_NEV" source="TARS_ROV_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_HOSZ_NEV" source="TARS_HOSZ_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADOSZAM" source="ADOSZAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JEGYZ_TOKE_ERT_HUF" source="JEGYZ_TOKE_ERT_HUF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASZ_EVE" source="ASZ_EVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CEGALL_KOD" source="CEGALL_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GAZD_FORM_KOD" source="GAZD_FORM_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_TIPUS_KOD" source="TARS_TIPUS_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HELY_KOD" source="HELY_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NEMGAZD_KOD" source="NEMGAZD_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CIM_EGYBEN_CIM$REGI_CIM" source="CIM_EGYBEN_CIM"/>
+    </input>
+    <input node="Uj">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGI_CIM" source="REGI_CIM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UJ" source="UJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CIM_EGYBEN_CIM$REGI_CIM" source="REGI_CIM"/>
+    </input>
+    <joinAttribute name="JOIN$CIM_EGYBEN_CIM$REGI_CIM"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Facts_2" cardinality="C1_N" joinType="leftOuter" multiJoinNode="Facts" multiJoinCentralTable="Tarsasagok" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="TARS_ROV_NEV"/>
+      <viewAttribute id="TARS_HOSZ_NEV"/>
+      <viewAttribute id="ADOSZAM"/>
+      <viewAttribute id="JEGYZ_TOKE_ERT_HUF" aggregationType="sum"/>
+      <viewAttribute id="ASZ_EVE" aggregationType="sum"/>
+      <viewAttribute id="CEGALL_KOD" aggregationType="sum"/>
+      <viewAttribute id="GAZD_FORM_KOD" aggregationType="sum"/>
+      <viewAttribute id="TARS_TIPUS_KOD" aggregationType="sum"/>
+      <viewAttribute id="TELEPULES_KOD" aggregationType="sum"/>
+      <viewAttribute id="MEGYE_KOD" aggregationType="sum"/>
+      <viewAttribute id="REGIO_KOD" aggregationType="sum"/>
+      <viewAttribute id="ORSZAG_KOD"/>
+      <viewAttribute id="REGI_CIM"/>
+      <viewAttribute id="UJ"/>
+      <viewAttribute id="NEMGAZD_KOD" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$HELY_KOD$TELEPULES_KOD"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Facts_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_ROV_NEV" source="TARS_ROV_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_HOSZ_NEV" source="TARS_HOSZ_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADOSZAM" source="ADOSZAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JEGYZ_TOKE_ERT_HUF" source="JEGYZ_TOKE_ERT_HUF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASZ_EVE" source="ASZ_EVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CEGALL_KOD" source="CEGALL_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GAZD_FORM_KOD" source="GAZD_FORM_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_TIPUS_KOD" source="TARS_TIPUS_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGI_CIM" source="REGI_CIM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UJ" source="UJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NEMGAZD_KOD" source="NEMGAZD_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HELY_KOD$TELEPULES_KOD" source="HELY_KOD"/>
+    </input>
+    <input node="Hely">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TELEPULES_KOD" source="TELEPULES_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEGYE_KOD" source="MEGYE_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGIO_KOD" source="REGIO_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORSZAG_KOD" source="ORSZAG_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HELY_KOD$TELEPULES_KOD" source="TELEPULES_KOD"/>
+    </input>
+    <joinAttribute name="JOIN$HELY_KOD$TELEPULES_KOD"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Facts_3" cardinality="C1_N" joinType="leftOuter" multiJoinNode="Facts" multiJoinCentralTable="Tarsasagok" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="TARS_ROV_NEV"/>
+      <viewAttribute id="TARS_HOSZ_NEV"/>
+      <viewAttribute id="ADOSZAM"/>
+      <viewAttribute id="JEGYZ_TOKE_ERT_HUF" aggregationType="sum"/>
+      <viewAttribute id="ASZ_EVE"/>
+      <viewAttribute id="CEGALL_KOD"/>
+      <viewAttribute id="GAZD_FORM_KOD"/>
+      <viewAttribute id="TARS_TIPUS_KOD"/>
+      <viewAttribute id="TELEPULES_KOD"/>
+      <viewAttribute id="MEGYE_KOD"/>
+      <viewAttribute id="REGIO_KOD"/>
+      <viewAttribute id="ORSZAG_KOD"/>
+      <viewAttribute id="REGI_CIM"/>
+      <viewAttribute id="UJ"/>
+      <viewAttribute id="SZAKAGAZAT_KOD"/>
+      <viewAttribute id="AGAZAT_KOD"/>
+      <viewAttribute id="AG_KOD"/>
+      <viewAttribute hidden="true" id="JOIN$NEMGAZD_KOD$SZAKAGAZAT_KOD"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Facts_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_ROV_NEV" source="TARS_ROV_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_HOSZ_NEV" source="TARS_HOSZ_NEV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADOSZAM" source="ADOSZAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JEGYZ_TOKE_ERT_HUF" source="JEGYZ_TOKE_ERT_HUF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASZ_EVE" source="ASZ_EVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CEGALL_KOD" source="CEGALL_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GAZD_FORM_KOD" source="GAZD_FORM_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TARS_TIPUS_KOD" source="TARS_TIPUS_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TELEPULES_KOD" source="TELEPULES_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEGYE_KOD" source="MEGYE_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGIO_KOD" source="REGIO_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORSZAG_KOD" source="ORSZAG_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGI_CIM" source="REGI_CIM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UJ" source="UJ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NEMGAZD_KOD$SZAKAGAZAT_KOD" source="NEMGAZD_KOD"/>
+    </input>
+    <input node="Nemgazd">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SZAKAGAZAT_KOD" source="SZAKAGAZAT_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGAZAT_KOD" source="AGAZAT_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AG_KOD" source="AG_KOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NEMGAZD_KOD$SZAKAGAZAT_KOD" source="SZAKAGAZAT_KOD"/>
+    </input>
+    <joinAttribute name="JOIN$NEMGAZD_KOD$SZAKAGAZAT_KOD"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Facts_3">
+  <attributes>
+    <attribute id="TARS_ROV_NEV" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARS_ROV_NEV"/>
+      <keyMapping columnObjectName="Facts_3" columnName="TARS_ROV_NEV"/>
+    </attribute>
+    <attribute id="TARS_HOSZ_NEV" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARS_HOSZ_NEV"/>
+      <keyMapping columnObjectName="Facts_3" columnName="TARS_HOSZ_NEV"/>
+    </attribute>
+    <attribute id="ADOSZAM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADOSZAM"/>
+      <keyMapping columnObjectName="Facts_3" columnName="ADOSZAM"/>
+    </attribute>
+    <attribute id="ASZ_EVE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASZ_EVE"/>
+      <keyMapping columnObjectName="Facts_3" columnName="ASZ_EVE"/>
+    </attribute>
+    <attribute id="UJ" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UJ"/>
+      <keyMapping columnObjectName="Facts_3" columnName="UJ"/>
+    </attribute>
+    <attribute id="AG_KOD$local">
+      <descriptions defaultDescription="AG_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="AG_KOD"/>
+    </attribute>
+    <attribute id="AGAZAT_KOD$local">
+      <descriptions defaultDescription="AGAZAT_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="AGAZAT_KOD"/>
+    </attribute>
+    <attribute id="CEGALL_KOD$local">
+      <descriptions defaultDescription="CEGALL_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="CEGALL_KOD"/>
+    </attribute>
+    <attribute id="REGI_CIM$local">
+      <descriptions defaultDescription="REGI_CIM"/>
+      <keyMapping columnObjectName="Facts_3" columnName="REGI_CIM"/>
+    </attribute>
+    <attribute id="GAZD_FORM_KOD$local">
+      <descriptions defaultDescription="GAZD_FORM_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="GAZD_FORM_KOD"/>
+    </attribute>
+    <attribute id="MEGYE_KOD$local">
+      <descriptions defaultDescription="MEGYE_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="MEGYE_KOD"/>
+    </attribute>
+    <attribute id="ORSZAG_KOD$local">
+      <descriptions defaultDescription="ORSZAG_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="ORSZAG_KOD"/>
+    </attribute>
+    <attribute id="REGIO_KOD$local">
+      <descriptions defaultDescription="REGIO_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="REGIO_KOD"/>
+    </attribute>
+    <attribute id="SZAKAGAZAT_KOD$local">
+      <descriptions defaultDescription="SZAKAGAZAT_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="SZAKAGAZAT_KOD"/>
+    </attribute>
+    <attribute id="TARS_TIPUS_KOD$local">
+      <descriptions defaultDescription="TARS_TIPUS_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="TARS_TIPUS_KOD"/>
+    </attribute>
+    <attribute id="TELEPULES_KOD$local">
+      <descriptions defaultDescription="TELEPULES_KOD"/>
+      <keyMapping columnObjectName="Facts_3" columnName="TELEPULES_KOD"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="JEGYZ_TOKE_ERT_HUF" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="JEGYZ_TOKE_ERT_HUF"/>
+      <measureMapping columnObjectName="Facts_3" columnName="JEGYZ_TOKE_ERT_HUF"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+  <sharedDimensions>
+    <logicalJoin associatedObjectUri="dim_ag" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>AG_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="AG_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="AG" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_agazat" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>AGAZAT_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="AGAZAT_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="AGAZAT" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_cegall" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>CEGALL_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="CEGALL_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="CEGALL" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_cim" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>REGI_CIM$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>CIM</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures/>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_gazd_form" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>GAZD_FORM_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="GAZD_FORM_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="GAZD_FORM" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_megye" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>MEGYE_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="MEGYE_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="MEGYE" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_orszag" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>ORSZAG_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="ORSZAG_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="ORSZAG" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_regio" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>REGIO_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="REGIO_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="REGIO" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_szakagazat" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>SZAKAGAZAT_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="SZAKAGAZAT_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="SZAKAGAZAT" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_tars_tipus" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>TARS_TIPUS_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="TARS_TIPUS_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="TARS_TIPUS" attributeName="MEGNEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="dim_telepules" useDimensionViewHierarchies="true">
+      <attributes>
+        <attributeRef>TELEPULES_KOD$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>KOD</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="C1_N" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="TELEPULES_KOD" attributeName="KOD" hidden="true"/>
+        <attributeReference alias="TELEPULES" attributeName="NEV"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+  </sharedDimensions>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Facts" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="379"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Tarsasagok" modelObjectNameSpace="Facts" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Facts">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="129.8125"/>
+    </shape>
+    <shape modelObjectName="Nemgazd" modelObjectNameSpace="Facts" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Facts">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="187.87353515625"/>
+    </shape>
+    <shape modelObjectName="Hely" modelObjectNameSpace="Facts" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Facts">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="179.53759765625"/>
+    </shape>
+    <shape modelObjectName="Uj" modelObjectNameSpace="Facts" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Facts">
+      <upperLeftCorner x="920" y="30"/>
+      <rectangleSize width="139.173828125"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Tarsasagok" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-60" y="505"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Nemgazd" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="260" y="505"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Hely" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-60" y="633"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Uj" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="260" y="638"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Facts_3" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="dim_ag" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="109.8369140625"/>
+    </shape>
+    <shape modelObjectName="dim_agazat" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="129.35546875"/>
+    </shape>
+    <shape modelObjectName="dim_cegall" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="920" y="30"/>
+      <rectangleSize width="126.02734375"/>
+    </shape>
+    <shape modelObjectName="dim_cim" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="1220" y="30"/>
+      <rectangleSize width="117.173828125"/>
+    </shape>
+    <shape modelObjectName="dim_gazd_form" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="1520" y="30"/>
+      <rectangleSize width="152.681640625"/>
+    </shape>
+    <shape modelObjectName="dim_megye" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="1820" y="30"/>
+      <rectangleSize width="130.029296875"/>
+    </shape>
+    <shape modelObjectName="dim_orszag" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="2120" y="30"/>
+      <rectangleSize width="130.685546875"/>
+    </shape>
+    <shape modelObjectName="dim_regio" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="2420" y="30"/>
+      <rectangleSize width="121.345703125"/>
+    </shape>
+    <shape modelObjectName="dim_szakagazat" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="2720" y="30"/>
+      <rectangleSize width="155.376953125"/>
+    </shape>
+    <shape modelObjectName="dim_tars_tipus" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="3020" y="30"/>
+      <rectangleSize width="149.359375"/>
+    </shape>
+    <shape modelObjectName="dim_telepules" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="3320" y="30"/>
+      <rectangleSize width="144.02734375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

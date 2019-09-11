@@ -1,0 +1,12 @@
+TRIGGER DATA_SYNC
+	AFTER INSERT ON "Weather.Data"
+	REFERENCING NEW ROW mynewrow
+	FOR EACH ROW
+BEGIN
+		DECLARE MAX_ID INT;
+		SELECT IFNULL(MAX("Id"),0) INTO MAX_ID from "Weather.Data2";
+		MAX_ID := MAX_ID + 1;
+		INSERT INTO "Weather.Data2" ("Id","Time","Sensor","Temperature","Humidity","Pressure","Pm1","Pm25","Pm10")
+			VALUES(MAX_ID,:mynewrow."Time",:mynewrow."Sensor.Id",:mynewrow."Temperature",:mynewrow."Humidity",
+				:mynewrow."Pressure",:mynewrow."Pm1",:mynewrow."Pm25",:mynewrow."Pm10");
+END;

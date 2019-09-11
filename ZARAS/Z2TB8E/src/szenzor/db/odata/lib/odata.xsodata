@@ -1,0 +1,14 @@
+service{
+	"View_Data" as "Data" key("Time","Sensor_Id");
+	"View_Data2" as "Data2" key("Id");
+	"Weather.Sensors" as "Sensors" key("Id");
+	"Weather.Upload" as "Upload" key("Time","Sensor");
+//	association "Data_Sensors" with referential constraint principal "Data"("Id") multiplicity "1" dependent "Sensors"("Id") multiplicity "*"; 
+}
+settings{
+	support null;
+	content cache-control "no-store"; 
+	metadata cache-control "max-age=86401,must-revalidate";
+	limits
+		max_records = 10000;
+}

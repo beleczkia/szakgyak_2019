@@ -1,0 +1,54 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<table style="float:left;margin-right:100px" border=1>
+	<tr>
+		<td>Idő</td>
+		<td>Azonosító</td>
+		<td>Hőmérséklet</td>
+		<td>Páratartalom</td>
+		<td>Légnyomás</td>
+		<td>Por(1)</td>
+		<td>Por(2,5)</td>
+		<td>Por(10)</td>
+	</tr>
+	<tr *ngFor="let rec of data">
+		<td>{{rec.Time}}</td>
+		<td>{{rec.Sensor_Id}}</td>
+		<td *ngIf="rec.Temperature!=null; else elseBlock">{{ rec.Temperature}}</td>
+		<ng-template #elseBlock>
+			<td>N/A</td>
+		</ng-template>
+		<td *ngIf="rec.Humidity!=null; else elseBlock">{{ rec.Humidity}}</td>
+		<ng-template #elseBlock>
+			<td>N/A</td>
+		</ng-template>
+		<td *ngIf="rec.Pressure!=null; else elseBlock">{{ rec.Pressure}}</td>
+		<ng-template #elseBlock>
+			<td>N/A</td>
+		</ng-template>
+		<td *ngIf="rec.Pm1!=null; else elseBlock">{{ rec.Pm1}}</td>
+		<ng-template #elseBlock>
+			<td>N/A</td>
+		</ng-template>
+		<td *ngIf="rec.Pm25!=null; else elseBlock">{{ rec.Pm25}}</td>
+		<ng-template #elseBlock>
+			<td>N/A</td>
+		</ng-template>
+		<td *ngIf="rec.Pm10!=null; else elseBlock">{{ rec.Pm10}}</td>
+		<ng-template #elseBlock>
+			<td>N/A</td>
+		</ng-template>
+	</tr>
+</table>
+<div>
+	<h2>Szűrés szenzor szerint</h2>
+	<select name="Sensor" #filter>
+		<option value="">Összes</option>
+		<option *ngFor="let obj of sensorIds" value="{{ obj.Id }}">{{obj.Id }}</option>
+	</select>
+	<button (click)="Filter()">Szűrés</button>
+</div>
+

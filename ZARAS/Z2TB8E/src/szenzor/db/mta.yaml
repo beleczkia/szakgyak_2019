@@ -1,0 +1,30 @@
+ID: sensor
+_schema-version: '2.1'
+version: 0.0.1
+
+modules:
+ - name: db
+   type: hdb
+   path: db
+   requires:
+    - name: hdi_db
+
+
+ 
+
+
+ - name: odata
+   type: nodejs
+   path: odata
+   requires:
+    - name: hdi_db
+   provides:
+    - name: odata_api
+      properties:
+         url: ${default-url}
+
+resources:
+ - name: hdi_db
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container

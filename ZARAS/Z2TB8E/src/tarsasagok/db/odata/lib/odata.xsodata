@@ -1,0 +1,9 @@
+service{
+	"calc_tarsasagok_h" as "Tarsasagok" key("TARS_ROV_NEV","TARS_HOSZ_NEV","ASZ_EVE");
+	"cs.CIM_EGYBEN" as "Cimek" key("CIM");
+}
+settings{
+	support null;
+	limits
+		max_records = 10000;
+}

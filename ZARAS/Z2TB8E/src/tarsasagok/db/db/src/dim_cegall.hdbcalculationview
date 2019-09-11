@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="dim_cegall" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="dim_cegall"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="cs.CEGALL">
+    <resourceUri>cs.CEGALL</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="cs.CEGALL">
+  <attributes>
+    <attribute id="KOD" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KOD"/>
+      <keyMapping columnObjectName="cs.CEGALL" columnName="KOD"/>
+    </attribute>
+    <attribute id="NEV" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NEV"/>
+      <keyMapping columnObjectName="cs.CEGALL" columnName="NEV"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

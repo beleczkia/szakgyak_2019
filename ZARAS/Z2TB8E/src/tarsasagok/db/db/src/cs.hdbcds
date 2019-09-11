@@ -1,0 +1,137 @@
+context cs {
+    entity raw {
+        TARS_ROV_NEV              : String(255);
+        TARS_HOSZ_NEV             : String(512);
+        CIM_EGYBEN                : String(255);
+        TARS_TIPUS_MEGNEV         : String(255);
+        TARS_TIPUS_KOD            : Integer;
+        ADOSZAM                   : String(255);
+        GAZD_FORM                 : String(255);
+        GAZD_FORM_KOD             : Integer;
+        CEGALL                    : String(255);
+        CEGALL_KOD                : Integer;
+        NEMGAZD_AG_MEGNEV         : String(255);
+        NEMGAZD_AG_KOD            : String(255);
+        NEMGAZD_AGAZAT_MEGNEV     : String(255);
+        NEMGAZD_AGAZAT_KOD        : Integer;
+        NEMGAZD_SZAKAGAZAT_MEGNEV : String(255);
+        NEMGAZD_SZAKAGAZAT_KOD    : Integer;
+        JEGYZ_TOKE_ERT_HUF        : Double;
+        ORSZAG                    : String(255);
+        ORSZAG_KOD                : String(255);
+        REGIO                     : String(255);
+        REGIO_KOD                 : Integer;
+        MEGYE                     : String(255);
+        MEGYE_KOD                 : Integer;
+        TELEPULES                 : String(255);
+        TELEPULES_KOD             : Integer;
+        ASZ_EVE                   : Integer;
+    };
+
+    entity ORSZAG {
+        key KOD : String(255);
+            NEV : String(255);
+    };
+
+    entity REGIO {
+        key KOD : Integer;
+            NEV : String(255);
+    };
+
+    entity MEGYE {
+        key KOD : Integer;
+            NEV : String(255);
+    };
+
+    entity TELEPULES {
+        key KOD : Integer;
+            NEV : String(255);
+    };
+
+    entity HELY {
+        key TELEPULES : association[1, 1..1] to cs.TELEPULES { KOD };
+            MEGYE     : association[1, 1..1] to cs.MEGYE { KOD };
+            REGIO     : association[1, 1..1] to cs.REGIO { KOD };
+            ORSZAG    : association[1, 1..1] to cs.ORSZAG { KOD };
+    };
+
+    entity NEMGAZD {
+        key SZAKAGAZAT : association[1, 1..1] to cs.NEMGAZD_SZAKAGAZAT { KOD };
+            AGAZAT     : association[1, 1..1] to cs.NEMGAZD_AGAZAT { KOD };
+            AG         : association[1, 1..1] to cs.NEMGAZD_AG { KOD };
+    };
+
+    entity NEMGAZD_AG {
+        key KOD : String(255);
+            NEV : String(255);
+    };
+
+    entity NEMGAZD_AGAZAT {
+        key KOD : Integer;
+            NEV : String(255);
+    };
+
+    entity NEMGAZD_SZAKAGAZAT {
+        key KOD : Integer;
+            NEV : String(255);
+    };
+
+    entity CEGALL {
+        key KOD : Integer;
+            NEV : String(255);
+    };
+
+    entity GAZD_FORM {
+        key KOD : Integer;
+            NEV : String(255);
+    };
+
+    entity TARS_TIPUS {
+        key KOD    : Integer;
+            MEGNEV : String(255);
+    };
+
+    entity CIM_EGYBEN {
+        key CIM  : String(255);
+            LONG : Double default null;
+            LAT  : Double default null;
+    };
+
+    entity CIM_REGI_UJ {
+        key REGI : association[1, 1..1] to cs.CIM_EGYBEN { CIM };
+            UJ   : String(255);
+    };
+
+    entity TARSASAGOK {
+        key TARS_ROV_NEV       : String(255);
+        key TARS_HOSZ_NEV      : String(512);
+            ADOSZAM            : String(255);
+            JEGYZ_TOKE_ERT_HUF : Double;
+        key ASZ_EVE            : Integer;
+            ORSZAG             : association[1, 1..1] to cs.ORSZAG { KOD };
+            REGIO              : association[1, 1..1] to cs.REGIO { KOD };
+            MEGYE              : association[1, 1..1] to cs.MEGYE { KOD };
+            TELEPULES          : association[1, 1..1] to cs.TELEPULES { KOD };
+            NEMGAZD_AG         : association[1, 1..1] to cs.NEMGAZD_AG { KOD };
+            NEMGAZD_AGAZAT     : association[1, 1..1] to cs.NEMGAZD_AGAZAT { KOD };
+            NEMGAZD_SZAKAGAZAT : association[1, 1..1] to cs.NEMGAZD_SZAKAGAZAT { KOD };
+            CEGALL             : association[1, 1..1] to cs.CEGALL { KOD };
+            GAZD_FORM          : association[1, 1..1] to cs.GAZD_FORM { KOD };
+            TARS_TIPUS         : association[1, 1..1] to cs.TARS_TIPUS { KOD };
+            CIM                : association[1, 0..1] to cs.CIM_EGYBEN { CIM };
+    };
+
+    entity TARSASAGOK_H {
+        key TARS_ROV_NEV       : String(255);
+        key TARS_HOSZ_NEV      : String(512);
+            ADOSZAM            : String(255);
+            JEGYZ_TOKE_ERT_HUF : Double;
+        key ASZ_EVE            : Integer;
+            HELY               : association[1, 1..1] to cs.HELY { TELEPULES.KOD };
+            NEMGAZD            : association[1, 1..1] to cs.NEMGAZD { SZAKAGAZAT.KOD };
+            CEGALL             : association[1, 1..1] to cs.CEGALL { KOD };
+            GAZD_FORM          : association[1, 1..1] to cs.GAZD_FORM { KOD };
+            TARS_TIPUS         : association[1, 1..1] to cs.TARS_TIPUS { KOD };
+            CIM_EGYBEN         : association[1, 0..1] to cs.CIM_EGYBEN { CIM };
+    };
+}

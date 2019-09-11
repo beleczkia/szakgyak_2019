@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="dim_gazd_form" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="dim_"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="cs.GAZD_FORM">
+    <resourceUri>cs.GAZD_FORM</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="cs.GAZD_FORM">
+  <attributes>
+    <attribute id="KOD" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KOD"/>
+      <keyMapping columnObjectName="cs.GAZD_FORM" columnName="KOD"/>
+    </attribute>
+    <attribute id="NEV" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NEV"/>
+      <keyMapping columnObjectName="cs.GAZD_FORM" columnName="NEV"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

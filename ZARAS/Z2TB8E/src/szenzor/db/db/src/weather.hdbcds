@@ -1,0 +1,42 @@
+context Weather {
+    entity Sensors {
+        key Id   : Integer;
+            Lat  : Double;
+            Long : Double;
+    };
+
+    entity Data {
+        key Time        : UTCDateTime;
+        key Sensor      : association[*, 1] to Weather.Sensors { Id };
+            Temperature : Integer;
+            Humidity    : Integer;
+            Pressure    : Integer;
+            Pm1         : Integer;
+            Pm25        : Integer;
+            Pm10        : Integer;
+    };
+
+    /*@@layout{"layoutInfo":{"x":328,"y":-160.5}}*/
+    entity Data2 {
+        key Id          : Integer;
+            Time        : UTCDateTime;
+            Sensor      : Integer;
+            Temperature : Integer;
+            Humidity    : Integer;
+            Pressure    : Integer;
+            Pm1         : Integer;
+            Pm25        : Integer;
+            Pm10        : Integer;
+    };
+
+    entity Upload {
+        Time        : String(50) not null;
+        Sensor      : Integer    not null;
+        Temperature : Integer;
+        Humidity    : Integer;
+        Pressure    : Integer;
+        Pm1         : Integer;
+        Pm25        : Integer;
+        Pm10        : Integer;
+    };
+}

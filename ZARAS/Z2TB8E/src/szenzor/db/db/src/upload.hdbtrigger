@@ -1,0 +1,9 @@
+TRIGGER UPLOAD
+	AFTER INSERT ON "Weather.Upload"
+	REFERENCING NEW ROW mynewrow
+	FOR EACH ROW
+BEGIN
+		INSERT INTO "Weather.Data" ("Time","Sensor.Id","Temperature","Humidity","Pressure","Pm1","Pm25","Pm10")
+			VALUES(:mynewrow."Time",:mynewrow."Sensor",:mynewrow."Temperature",:mynewrow."Humidity",
+				:mynewrow."Pressure",:mynewrow."Pm1",:mynewrow."Pm25",:mynewrow."Pm10");
+END;

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="dim_szakagazat" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="dim_szakagazat"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="cs.NEMGAZD_SZAKAGAZAT">
+    <resourceUri>cs.NEMGAZD_SZAKAGAZAT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="cs.NEMGAZD_SZAKAGAZAT">
+  <attributes>
+    <attribute id="KOD" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KOD"/>
+      <keyMapping columnObjectName="cs.NEMGAZD_SZAKAGAZAT" columnName="KOD"/>
+    </attribute>
+    <attribute id="NEV" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NEV"/>
+      <keyMapping columnObjectName="cs.NEMGAZD_SZAKAGAZAT" columnName="NEV"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

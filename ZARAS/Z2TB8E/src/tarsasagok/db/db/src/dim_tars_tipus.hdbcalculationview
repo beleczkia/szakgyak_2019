@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="dim_tars_tipus" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="dim_tars_tipus"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="cs.TARS_TIPUS">
+    <resourceUri>cs.TARS_TIPUS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="cs.TARS_TIPUS">
+  <attributes>
+    <attribute id="KOD" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KOD"/>
+      <keyMapping columnObjectName="cs.TARS_TIPUS" columnName="KOD"/>
+    </attribute>
+    <attribute id="MEGNEV" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEGNEV"/>
+      <keyMapping columnObjectName="cs.TARS_TIPUS" columnName="MEGNEV"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="dim_cim" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="dim_cim"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="cs.CIM_EGYBEN">
+    <resourceUri>cs.CIM_EGYBEN</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="cs.CIM_EGYBEN">
+  <attributes>
+    <attribute id="LONG" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LONG"/>
+      <keyMapping columnObjectName="cs.CIM_EGYBEN" columnName="LONG"/>
+    </attribute>
+    <attribute id="LAT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAT"/>
+      <keyMapping columnObjectName="cs.CIM_EGYBEN" columnName="LAT"/>
+    </attribute>
+    <attribute id="CIM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CIM"/>
+      <keyMapping columnObjectName="cs.CIM_EGYBEN" columnName="CIM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

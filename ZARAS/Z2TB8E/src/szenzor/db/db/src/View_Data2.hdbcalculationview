@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="View_Data2" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="View_Data2"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Weather.Data2">
+    <resourceUri>Weather.Data2</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="Weather.Data2" filterExpressionLanguage="SQL">
+  <attributes>
+    <attribute id="Id" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Id"/>
+    </attribute>
+    <attribute id="Time_date" order="3" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="Time_date"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Time"/>
+    </attribute>
+    <attribute id="Sensor_Id" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sensor_Id"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Sensor"/>
+    </attribute>
+    <attribute id="Temperature" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Temperature"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Temperature"/>
+    </attribute>
+    <attribute id="Humidity" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Humidity"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Humidity"/>
+    </attribute>
+    <attribute id="Pressure" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Pressure"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Pressure"/>
+    </attribute>
+    <attribute id="Pm1" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Pm1"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Pm1"/>
+    </attribute>
+    <attribute id="Pm25" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Pm25"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Pm25"/>
+    </attribute>
+    <attribute id="Pm10" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Pm10"/>
+      <keyMapping columnObjectName="Weather.Data2" columnName="Pm10"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="Time" order="2" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="VARCHAR" expressionLanguage="SQL" length="20">
+        <formula>CAST(&quot;Time_date&quot; as VARCHAR)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+  <filter>not(&quot;Temperature&quot; is null or &quot;Humidity&quot; is null or &quot;Pressure&quot; is null or &quot;Pm1&quot; is null or &quot;Pm25&quot; is null or &quot;Pm10&quot; is null)</filter>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
