@@ -1,0 +1,6 @@
+Leaflet:
+Megyéket a megyében szereplõ városok össz pénzforgalma alapján sínezni
+Településekre: minden településre kattintva a benne lévõ cég és adatainak megjelenítése
+Minimális statisztika
+Egyik térkep stílusát megjeleníteni.
+Települések nevének megjelenítése a térképen
