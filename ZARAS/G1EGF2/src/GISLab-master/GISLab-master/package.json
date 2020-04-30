@@ -26,7 +26,7 @@
     "colormap": "^2.3.1",
     "fs": "0.0.1-security",
     "jake": "^8.1.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "leaflet": "^1.5.1",
     "leaflet-draw": "^1.0.4",
     "leaflet-geodesy": "^0.2.1",
